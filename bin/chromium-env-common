@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Make sure we're being sourced (possibly by another script). Check for bash
+# since zsh sets $0 when sourcing.
+if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
+  echo "ERROR: $0 must be sourced."
+  exit 1
+fi
+
+if [ ! -f ~/.boto ]; then
+  echo "ERROR: ~/.boto should exist."
+  exit 1
+fi
+
+# Workaround for gclient sync issue
+export NO_AUTH_BOTO_CONFIG=~/.boto
+
+if [ "$(uname)" = 'Linux' ]; then
+  # Sandbox setup
+  export CHROME_DEVEL_SANDBOX=/usr/local/sbin/chrome-devel-sandbox
+fi
+
+if [ "$(uname)" = 'Darwin' ]; then
+  export CC="ccache clang -Qunused-arguments"
+  export CXX="ccache clang++ -Qunused-arguments"
+
+  export CCACHE_CPP2=yes
+  export CCACHE_SLOPPINESS=time_macros
+
+  export PATH=/usr/local/opt/ccache/libexec:$PATH
+fi
+
+# Crosswalk setup
+export GYP_GENERATORS='ninja'
+

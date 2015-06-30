@@ -1,0 +1,31 @@
+#set data-directory /usr/share/gdb
+
+source /home/jonathan/configure/gdb/stl_views
+
+# Print a C++ string.
+#define ps
+  #print $arg0.c_str()
+#end
+
+#Print a C++ wstring or wchar_t*.
+#define pws
+  #printf "\""
+  #set $c = (wchar_t*)$arg0
+  #while ( *$c )
+    #if ( *$c > 0x7f )
+      #printf "[%x]", *$c
+    #else
+      #printf "%c", *$c
+    #end
+    #set $c++
+  #end
+  #printf "\"\n"
+#end
+
+python
+import sys
+sys.path.insert(0, "/home/jonathan/projects/chromium-upstream/src/third_party/WebKit/Tools/gdb/")
+import webkit
+sys.path.insert(0, "/home/jonathan/projects/chromium-upstream/src/tools/gdb/")
+import gdb_chrome
+

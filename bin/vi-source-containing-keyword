@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "usage: $(basename "$0") <keyword>"
+    exit 1;
+fi
+
+vim "$(grep-source "$1" 2>/dev/null | cut -d: -f1 | uniq)"

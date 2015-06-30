@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "usage: $(basename "$0") <file.des3>"
+    exit 1;
+fi
+
+IS_DES3_FILE=$(basename "$1" | sed -n '/.*\.des3/p')
+if [ ! -f "$1" -o -z "$IS_DES3_FILE" ]; then
+    echo "$1 should be a .des3 encrypted file."
+    exit 2;
+fi
+
+read -ersp "Password for decryption:"
+echo ""
+
+dd if="$1" | openssl des3 -d -k "$REPLY" | tar zxf -

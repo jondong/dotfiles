@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# This script is used to rm .swp files recursively if the vim exited abnormally.
+
+list_alldir(){
+  files=$(ls)
+  for file in $files
+  do
+    if [ -d "$file" ]; then
+      pushd "$file" > /dev/null
+      list_alldir "$(basename "$file")"
+
+      swapFiles=$(ls .*.swp 2>/dev/null)
+      for swapFile in $swapFiles
+      do
+        echo "$swapFile"
+        rm "$swapFile"
+      done
+
+      popd > /dev/null
+    fi
+  done
+}
+
+list_alldir "."

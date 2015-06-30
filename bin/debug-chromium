@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -z "$CHROMIUM_ROOT" ]; then
+    echo "CHROMIUM_ROOT has not been set. run chromium-setup-env first."
+    exit 1
+fi
+
+#$CHROMIUM_ROOT/src/out/Debug/chrome --disable-seccomp-sandbox --disable-hang-monitor --renderer-cmd-prefix='xterm -title renderer -e gdb --args'
+"$CHROMIUM_ROOT"/src/out/Debug/chrome --disable-seccomp-sandbox --disable-hang-monitor --renderer-cmd-prefix='xterm -title renderer -e chromium-debug-prefix'
+#cgdb --args $CHROMIUM_ROOT/src/out/Debug/chrome --single-process

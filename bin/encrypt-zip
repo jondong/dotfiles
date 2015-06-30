@@ -1,0 +1,22 @@
+#!/bin/bash
+#set -v
+
+if [ -z "$1" ]; then
+    echo "usage: $(basename "$0") <file>"
+    exit 1;
+fi
+
+if [ ! -f "$1" -a ! -d "$1" ]; then
+    echo "$1 should be regular file or directory."
+    exit 2;
+fi
+
+read -ersp "Password for encryption:"
+echo ""
+
+INPUTNAME=$(basename "$1")
+OUTPUTNAME=$(echo "$INPUTNAME" | sed 's/\..*$//')
+
+tar czvf - "$INPUTNAME" | openssl des3 -salt -k "$REPLY" | dd of="$OUTPUTNAME.des3"
+
+echo -e "Encrypted file: $OUTPUTNAME.des3"

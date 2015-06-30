@@ -1,0 +1,36 @@
+#!/bin/bash
+
+if [ -z "$XWALK_ROOT" ]; then
+  echo "source xwalk-env-linux scripts first."
+fi
+if [ -z "$1" ]; then
+  echo "usage: $(basename "$0") [browser|renderer|extension|ppapi]"
+  exit 1;
+fi
+
+if [ "$1" == "renderer" ]; then
+  process_name="\-\-type\=renderer"
+elif [ "$1" == "extension" ]; then
+  process_name="\-\-type\=xwalk\-extension\-process"
+elif [ "$1" == "ppapi" ]; then
+  process_name="\-\-type\=ppapi"
+elif [ "$1" == "browser" ]; then
+  process_id=$(ps axf | grep xwalk | sed '/--type=/d' | sed '/grep /d' | cut -d ' ' -f 1)
+else
+  echo "unsupported parameter:$1, exit."
+  exit 2
+fi
+
+enable-attach-process
+
+if [ -z "$process_id" ]; then
+  process_id=$(ps axf | grep xwalk | grep ${process_name} | sed 's/^ *//' | cut -d ' ' -f 1)
+fi
+echo "$process_id"
+if [ -z "$process_id" ]; then
+  echo "the process id of $1 is not available, are you sure the xwalk process has been started?"
+  exit 3
+fi
+
+#cgdb -- $XWALK_ROOT/src/out/Debug/xwalk $process_id
+gdb "$XWALK_ROOT/src/out/Debug/xwalk" "$process_id"

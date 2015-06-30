@@ -1,0 +1,22 @@
+#!/usr/bin/expect -f
+
+set BBSTYPE ssh
+set BBSUSER tdns
+set BBSHOST newsmth.net
+set BBSPORT 22
+set TIMEOUT 300
+
+
+spawn -noecho luit -encoding gb2312 ssh -1 -l $BBSUSER $BBSHOST -p $BBSPORT
+
+expect_background {
+    eof {
+        exit 0
+    }
+}
+
+for {} 1 {} {
+    interact timeout $TIMEOUT {
+        send "\033\133\101\033\133\102"
+    }
+}

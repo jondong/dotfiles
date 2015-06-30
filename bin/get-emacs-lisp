@@ -1,0 +1,66 @@
+#!/bin/bash
+LISP_ROOT_DIR=$HOME/.emacs.d/lisp
+if [ ! -d "$LISP_ROOT_DIR" ]; then
+    mkdir -p "$LISP_ROOT_DIR"
+fi
+pushd "$LISP_ROOT_DIR"
+
+#auto-complete
+if [ ! -d auto-complete ]; then
+    git clone https://github.com/m2ym/auto-complete.git
+else
+    pushd auto-complete; git pull --rebase; popd
+fi
+
+#cecdt
+if [ ! -d cedet ]; then
+    cvs -d:pserver:anonymous@cedet.cvs.sourceforge.net:/cvsroot/cedet login
+    cvs -z3 -d:pserver:anonymous@cedet.cvs.sourceforge.net:/cvsroot/cedet co -P cedet
+else
+    cvs update
+fi
+pushd cedet; make; popd
+
+#icicles
+if [ ! -d icicles ]; then
+    git clone https://github.com/emacsmirror/icicles.git
+else
+    pushd icicles; git pull --rebase; popd
+fi
+
+#evil
+if [ ! -d evil ]; then
+    git clone git://gitorious.org/evil/evil.git
+else
+    pushd evil; git pull --rebase; popd
+fi
+
+#undo-tree
+if [ ! -d undo-tree ]; then
+    git clone http://www.dr-qubit.org/git/undo-tree.git
+else
+    pushd undo-tree; git pull --rebase; popd
+fi
+
+#yasnippet
+if [ ! -d yasnippet ]; then
+    git clone http://github.com/capitaomorte/yasnippet
+else
+    pushd yasnippet; git pull --rebase; popd
+fi
+
+#color theme
+wget -N http://lifegoo.pluskid.org/wiki/lisp/color-theme.el
+
+#multi-term
+wget -N http://www.emacswiki.org/emacs/download/multi-term.el
+
+#cmake-mode
+wget -N http://www.cmake.org/CMakeDocs/cmake-mode.el
+
+#twitter mode
+if [ ! -d twittering-mode ]; then
+    git clone https://github.com/xwl/twittering-mode.git
+else
+    pushd twittering-mode; git pull --rebase; popd
+fi

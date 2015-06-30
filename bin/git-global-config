@@ -1,0 +1,37 @@
+#!/bin/bash
+echo 'Enter user.name:'; read -r username
+echo 'Enter user.email:'; read -r email
+
+git config --global user.name "$username"
+git config --global user.email "$email"
+
+git config --global core.editor vim
+git config --global core.autocrlf input
+git config --global core.whitespace trailing-space,space-before-tab
+
+git config --global color.ui true
+# color.branch, color.diff, color.interactive, color.status
+
+if [ "$(uname)" = 'Darwin' ]; then
+  if [ -f /usr/local/bin/kdiff3 ]; then
+    git config --global merge.tool kdiff3
+  else
+    echo "Failed to find kdiff3, you need to install it through Homebrew."
+  fi
+  git config --global credential.helper osxkeychain
+elif [ "$(uname)" = 'Linux' ]; then
+  echo 'Setup gnome-keyring. Please refers to: http://stackoverflow.com/questions/13385690/how-to-use-git-with-gnome-keyring-integration'
+  GNOME_KEYRING_DIR="/usr/share/doc/git/contrib/credential/gnome-keyring"
+  GNOME_KEYRING_APP="$GNOME_KEYRING_DIR/git-credential-gnome-keyring"
+  if [ ! -f $GNOME_KEYRING_APP ]; then
+    sudo apt-get install libgnome-keyring-dev
+    pushd $GNOME_KEYRING_DIR
+    sudo make
+    popd
+  fi
+  git config --global credential.helper $GNOME_KEYRING_APP
+fi
+
+echo -e '\nGit global config has been set. the ~/.gitconfig looks like:'
+cat ~/.gitconfig
+

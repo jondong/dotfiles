@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Make sure we're being sourced (possibly by another script). Check for bash
+# since zsh sets $0 when sourcing.
+if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
+  echo "ERROR: $0 must be sourced."
+  exit 1
+fi
+
+source "$DEV_CONF_ROOT"/scripts/chromium-env-common
+
+export XWALK_ROOT=$PROJECT_ROOT/crosswalk-android
+
+# Crosswalk setup
+export XWALK_OS_ANDROID=1
+export GYP_DEFINES='OS=android target_arch=ia32'
+
+source "$XWALK_ROOT"/src/xwalk/build/android/envsetup.sh
+echo "Run 'xwalk/gyp_xwalk -Dtarget_arch=[ia32|arm] -DOS=android' in $XWALK_ROOT/src to generate projects."
+export PS1="%B%F{yellow}[XWALK-ANDROID]$PS1"

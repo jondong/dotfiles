@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ptrace_scope_file="/proc/sys/kernel/yama/ptrace_scope"
+if [ -e  $ptrace_scope_file ]; then
+  ptrace_check=$(cat $ptrace_scope_file)
+  if [ "$ptrace_check" != 0 ]; then
+    echo "the debugger won't attach because of the content of $ptrace_scope_file is not 0. Setting it to 0..."
+    echo "0" | sudo tee $ptrace_scope_file > /dev/null
+    echo "Done."
+  fi
+fi

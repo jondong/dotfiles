@@ -1,0 +1,31 @@
+#!/bin/bash
+
+BUSYBOX_EXEC=busybox-i686
+TMP_DIR=/tmp/busybox-tmp
+
+mkdir $TMP_DIR
+pushd $TMP_DIR
+
+# grab the latest busybox executable
+wget http://busybox.net/downloads/binaries/latest/$BUSYBOX_EXEC
+chmod +x ./$BUSYBOX_EXEC
+mv ./$BUSYBOX_EXEC busybox
+
+# install busybox on device
+adb remount
+adb shell rm -rf /system/bbin
+adb shell mkdir /system/bbin
+adb push busybox /system/bin/
+adb shell "for i in $(busybox --list); do ln -s /system/bin/busybox /system/bbin/$i; done"
+
+# setup shell
+echo "#!/system/bbin/sh
+PATH=/system/bbin:$PATH /system/bbin/sh" > busybox-shell
+chmod +x busybox-shell
+adb push busybox-shell /system/bin/
+
+# cleanup
+popd
+rm -rf $TMP_DIR
+
+echo "You can use 'adb shell' to login your android device and run 'busybox-shell' to start using busybox toolkits."

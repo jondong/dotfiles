@@ -1,0 +1,186 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" This is my vimrc based on vundle package management.
+" Feel free to use and distribute.
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function! GetRunningOS()
+  if has("win32")
+    return "win"
+  endif
+  if has("unix")
+    if system('uname')=~'Darwin'
+      return "mac"
+    else
+      return "linux"
+    endif
+  endif
+endfunction
+let os=GetRunningOS()
+
+
+set number
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set showmatch
+set cindent
+set nocp
+set nocompatible
+set hls
+set gfn=Monaco:h14
+set incsearch
+
+syntax enable
+
+let mapleader = ','
+let maplocalleader = ','
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Setup Vundle
+" Use gmarik/Vundle to setup vim. Run:
+" git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" Please refer to: https://github.com/gmarik/Vundle.vim for more details.
+filetype off
+set rtp+=~/.vim/bundle/vundle
+call vundle#begin()
+Plugin 'gmarik/vundle'
+
+" Navigation tools
+Plugin 'The-NERD-tree'
+Plugin 'bufexplorer.zip'
+Plugin 'a.vim'
+Plugin 'EasyMotion'
+Plugin 'Tagbar'
+Plugin 'https://github.com/tpope/vim-unimpaired.git'
+
+" Editing tools
+Plugin 'AutoClose'
+Plugin 'The-NERD-Commenter'
+Plugin 'trailing-whitespace'
+Plugin 'snipMate'
+Plugin 'Markdown'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+
+" GUI tools
+Plugin 'https://github.com/Lokaltog/vim-powerline.git'
+Plugin 'https://github.com/bling/vim-airline.git'
+Plugin 'https://github.com/Valloric/YouCompleteMe.git'
+Plugin 'Colour-Sampler-Pack'
+Plugin 'molokai'
+Plugin 'ScrollColors'
+Plugin 'rizzatti/dash.vim'
+Plugin 'https://github.com/christoomey/vim-tmux-navigator.git'
+Plugin 'wellle/tmux-complete.vim'
+Plugin 'benmills/vimux'
+
+" Source Browsing
+"Plugin 'exUtility'
+Plugin 'https://github.com/vim-scripts/taglist.vim.git'
+Plugin 'gtags.vim'
+
+" Git
+Plugin 'fugitive.vim'
+
+" Syntax checking
+Plugin 'Syntastic'
+Plugin 'JavaScript-syntax'
+
+" Go
+Plugin 'go.vim'
+"Plugin 'Go-Syntax'
+
+if os=='mac'
+  " Xcode
+  Plugin 'clang-complete'
+  Plugin 'cocoa.vim'
+  Plugin 'https://github.com/eraserhd/vim-ios.git'
+endif
+
+" Swift
+Plugin 'https://github.com/toyamarinyon/vim-swift.git'
+
+" CoffeeScript
+Plugin 'vim-coffee-script'
+Plugin 'coffee-check.vim'
+
+call vundle#end()
+filetype plugin indent on
+"filetype plugin on
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" Setup Color Scheme
+""colorscheme ron
+""colorscheme neon
+""colorscheme Mustang
+""colorscheme relaxedgreen
+colorscheme rdark
+
+" Setup for NERDTree
+nnoremap <leader>ne :NERDTreeToggle<CR>
+"let NERDTreeWinSize = 42
+
+
+" Setup for Powerline
+set laststatus=2
+set t_Co=256
+let g:Powerline_symbols = 'unicode'
+set encoding=utf8
+
+
+" Setup for Tagbar
+nnoremap <leader>tb :TagbarToggle<CR>
+" let g:tagbar_width = 52
+
+" Setup for Chromium
+so ~/projects/chromium/chromium/src/tools/vim/filetypes.vim
+so ~/projects/chromium/chromium/src/tools/vim/ninja-build.vim
+so ~/projects/chromium/chromium/src/tools/vim/clang-format.vim
+" Setup for YouCompleteMe on Chromium
+let g:ycm_global_ycm_extra_conf = '~/projects/chromium/src/tools/vim/chromium.ycm_extra_conf.py'
+
+" Setup for taglist
+"let Tlist_Ctags_Cmd='/usr/bin/ctags'
+"let Tlist_Inc_Winwidth=0
+
+" Gtags setup
+let Gtags_Auto_Map = 1
+":map <C-]> :Gtags<CR><CR>
+":map <C-\> :Gtags -r<CR><CR>
+":map <F10> :cclose<CR>
+":map <F11> :cp<CR>
+":map <F12> :cn<CR>
+
+"set formatoptions-=l
+"set formatoptions+=t
+set formatoptions=crqt
+
+"tmux setting
+if exists('$TMUX')
+  function! TmuxOrSplitSwitch(wincmd, tmuxdir)
+    let previous_winnr = winnr()
+    silent! execute "wincmd " . a:wincmd
+    if previous_winnr == winnr()
+      call system("tmux select-pane -" . a:tmuxdir)
+      redraw!
+    endif
+  endfunction
+
+  let previous_title = substitute(system("tmux display-message -p '#{pane_title}'"), '\n', '', '')
+  let &t_ti = "\<Esc>]2;vim\<Esc>\\" . &t_ti
+  let &t_te = "\<Esc>]2;". previous_title . "\<Esc>\\" . &t_te
+
+  nnoremap <silent> <C-h> :call TmuxOrSplitSwitch('h', 'L')<cr>
+  nnoremap <silent> <C-j> :call TmuxOrSplitSwitch('j', 'D')<cr>
+  nnoremap <silent> <C-k> :call TmuxOrSplitSwitch('k', 'U')<cr>
+  nnoremap <silent> <C-l> :call TmuxOrSplitSwitch('l', 'R')<cr>
+else
+  map <C-h> <C-w>h
+  map <C-j> <C-w>j
+  map <C-k> <C-w>k
+  map <C-l> <C-w>l
+endif
+
+set clipboard=unnamed
