@@ -59,9 +59,9 @@ export PROJECT_ROOT=$HOME/projects
 
 export EDITOR=vim
 
-# Add DevConfiguration scripts path
-export DEV_CONF_ROOT=$HOME/configure
-prepend_path_if_exists "$DEV_CONF_ROOT/scripts"
+# Add dotfiles scripts path
+export DOTFILES_ROOT="$HOME/dotfiles"
+prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
 # Scripts in dropbox
 prepend_path_if_exists "$HOME/Dropbox/bin"
@@ -123,7 +123,7 @@ if [ "$(uname)" = 'Linux' ]; then
   prepend_path_if_exists "$ANT_BIN_PATH"
 
   ## JDK setup
-  if [ -d $HOME/bin/jdk ]; then
+  if [ -d "$HOME/bin/jdk" ]; then
     export JAVA_HOME=$HOME/bin/jdk
     JDK_BIN_PATH=$JAVA_HOME/bin
     prepend_path_if_exists "$JDK_BIN_PATH"
