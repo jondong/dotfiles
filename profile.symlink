@@ -60,7 +60,7 @@ export PROJECT_ROOT=$HOME/projects
 export EDITOR=vim
 
 # Add dotfiles scripts path
-export DOTFILES_ROOT="$HOME/dotfiles"
+export DOTFILES_ROOT="$HOME/.dotfiles"
 prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
 # Scripts in dropbox
