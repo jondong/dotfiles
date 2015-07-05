@@ -108,7 +108,7 @@ install_dotfiles () {
     files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.linuxsymlink")
   fi
 
-  for src in "$files_to_link"
+  for src in $files_to_link
   do
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
