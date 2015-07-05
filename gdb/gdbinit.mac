@@ -22,7 +22,7 @@ end
 
 python
 import sys
-sys.path.insert(0, "/Users/jonathan/project/upstream/Tools/gdb")
+sys.path.insert(0, "/Users/jonathan/projects/chromium/chromium-mac/Tools/gdb")
 import webkit
-sys.path.insert(0, "/Users/jonathan/project/chromium/src/tools/gdb")
+sys.path.insert(0, "/Users/jonathan/projects/chromium/chromium-mac/src/tools/gdb")
 import gdb_chrome

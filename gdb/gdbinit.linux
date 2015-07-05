@@ -24,8 +24,8 @@ source /home/jonathan/configure/gdb/stl_views
 
 python
 import sys
-sys.path.insert(0, "/home/jonathan/projects/chromium-upstream/src/third_party/WebKit/Tools/gdb/")
+sys.path.insert(0, "/home/jonathan/projects/chromium/chromium-linux/src/third_party/WebKit/Tools/gdb/")
 import webkit
-sys.path.insert(0, "/home/jonathan/projects/chromium-upstream/src/tools/gdb/")
+sys.path.insert(0, "/home/jonathan/projects/chromium/chromium-linux/src/tools/gdb/")
 import gdb_chrome
 
