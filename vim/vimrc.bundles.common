@@ -43,13 +43,6 @@ Plugin 'JavaScript-syntax'
 Plugin 'go.vim'
 "Plugin 'Go-Syntax'
 
-if os=='mac'
-  " Xcode
-  Plugin 'clang-complete'
-  Plugin 'cocoa.vim'
-  Plugin 'https://github.com/eraserhd/vim-ios.git'
-endif
-
 " Swift
 Plugin 'https://github.com/toyamarinyon/vim-swift.git'
 

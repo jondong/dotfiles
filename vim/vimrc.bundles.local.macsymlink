@@ -1,0 +1,10 @@
+if filereadable(expand("~/.dotfiles/vim/vimrc.bundles.common"))
+  source ~/.dotfiles/vim/vimrc.bundles.common
+endif
+
+" Xcode
+Plugin 'clang-complete'
+Plugin 'cocoa.vim'
+Plugin 'https://github.com/eraserhd/vim-ios.git'
+
+
