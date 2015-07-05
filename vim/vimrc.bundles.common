@@ -1,28 +1,27 @@
 " Navigation tools
-Plugin 'The-NERD-tree'
-Plugin 'bufexplorer.zip'
-Plugin 'a.vim'
-Plugin 'EasyMotion'
-Plugin 'Tagbar'
+"Plugin 'The-NERD-tree'
+"Plugin 'bufexplorer.zip'
+"Plugin 'a.vim'
+"Plugin 'EasyMotion'
+"Plugin 'Tagbar'
 Plugin 'https://github.com/tpope/vim-unimpaired.git'
 
 " Editing tools
-Plugin 'AutoClose'
-Plugin 'The-NERD-Commenter'
+"Plugin 'AutoClose'
+"Plugin 'The-NERD-Commenter'
 Plugin 'trailing-whitespace'
-Plugin 'snipMate'
-Plugin 'Markdown'
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
+"Plugin 'snipMate'
+"Plugin 'Markdown'
+"Plugin 'mattn/webapi-vim'
+"Plugin 'mattn/gist-vim'
 
 " GUI tools
-Plugin 'https://github.com/Lokaltog/vim-powerline.git'
-Plugin 'https://github.com/bling/vim-airline.git'
-Plugin 'https://github.com/Valloric/YouCompleteMe.git'
-Plugin 'Colour-Sampler-Pack'
-Plugin 'molokai'
-Plugin 'ScrollColors'
-Plugin 'rizzatti/dash.vim'
+"Plugin 'https://github.com/Lokaltog/vim-powerline.git'
+"Plugin 'https://github.com/bling/vim-airline.git'
+"Plugin 'https://github.com/Valloric/YouCompleteMe.git'
+"Plugin 'Colour-Sampler-Pack'
+"Plugin 'molokai'
+"Plugin 'ScrollColors'
 Plugin 'https://github.com/christoomey/vim-tmux-navigator.git'
 Plugin 'wellle/tmux-complete.vim'
 Plugin 'benmills/vimux'
@@ -33,20 +32,20 @@ Plugin 'https://github.com/vim-scripts/taglist.vim.git'
 Plugin 'gtags.vim'
 
 " Git
-Plugin 'fugitive.vim'
+"Plugin 'fugitive.vim'
 
 " Syntax checking
-Plugin 'Syntastic'
+"Plugin 'Syntastic'
 Plugin 'JavaScript-syntax'
 
 " Go
-Plugin 'go.vim'
+"Plugin 'go.vim'
 "Plugin 'Go-Syntax'
 
 " Swift
 Plugin 'https://github.com/toyamarinyon/vim-swift.git'
 
 " CoffeeScript
-Plugin 'vim-coffee-script'
+"Plugin 'vim-coffee-script'
 Plugin 'coffee-check.vim'
 
