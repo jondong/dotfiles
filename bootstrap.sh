@@ -111,7 +111,7 @@ install_dotfiles () {
 
 if [ ! -d "$DOTFILES_ROOT" ]; then
   info "installing dotfiles for the first time."
-  git clone https:://github.com/jondong/dotfiles.git "$DOTFILES_ROOT"
+  git clone https://github.com/jondong/dotfiles.git "$DOTFILES_ROOT"
   pushd "$DOTFILES_ROOT" > /dev/null
 
   install_dotfiles
