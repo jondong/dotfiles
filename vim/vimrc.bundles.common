@@ -1,6 +1,6 @@
 " Navigation tools
 "Plugin 'The-NERD-tree'
-"Plugin 'bufexplorer.zip'
+Plugin 'bufexplorer.zip'
 "Plugin 'a.vim'
 "Plugin 'EasyMotion'
 "Plugin 'Tagbar'
