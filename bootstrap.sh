@@ -115,6 +115,15 @@ install_dotfiles () {
   done
 }
 
+install_vim_config () {
+    info 'installing vim configurations...'
+    sh <(curl https://j.mp/spf13-vim3 -L)
+}
+
+update_vim_config () {
+    info 'updating vim configurations...'
+    sh <(curl https://j.mp/spf13-vim3 -L -o -)
+}
 
 if [ ! -d "$DOTFILES_ROOT" ]; then
   info "installing dotfiles for the first time."
@@ -129,3 +138,10 @@ else
 fi
 
 popd > /dev/null
+
+if [ ! -d "$HOME/.spf13-vim-3" ]; then
+    install_vim_config
+else
+    update_vim_config
+fi
+
