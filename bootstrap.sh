@@ -101,7 +101,14 @@ install_dotfiles () {
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink')
+  local files_to_link=""
+  if [ "$(uname)" = "Darwin" ]; then
+    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.macsymlink")
+  elif [ "$(uname)" = "Linux" ]; then
+    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.linuxsymlink")
+  fi
+
+  for src in "$files_to_link"
   do
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
