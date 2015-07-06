@@ -7,9 +7,9 @@ if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
   exit 1
 fi
 
-source "$DEV_CONF_ROOT/scripts/chromium-env-common"
+source "$DOTFILES_ROOT/bin/chromium-env-common"
 
-export CHROMIUM_ROOT=$PROJECT_ROOT/chromium-android
+export CHROMIUM_ROOT=$PROJECT_ROOT/chromium/chromium-android
 
 # Crosswalk setup
 source "$CHROMIUM_ROOT/src/build/android/envsetup.sh"

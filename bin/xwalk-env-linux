@@ -12,9 +12,9 @@ if [ "$(uname)" != 'Linux' ]; then
   exit 1
 fi
 
-source "$DEV_CONF_ROOT"/scripts/chromium-env-common
+source "$DOTFILES_ROOT/bin/chromium-env-common"
 
-export XWALK_ROOT=$PROJECT_ROOT/crosswalk
+export XWALK_ROOT="$PROJECT_ROOT/crosswalk/crosswalk-linux"
 
 echo "Run 'xwalk/gyp_xwalk' in $XWALK_ROOT/src to generate projects."
 export PS1="%B%F{blue}[XWALK-LINUX]$PS1"

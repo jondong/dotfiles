@@ -12,6 +12,6 @@ if [ "$(uname)" != 'Linux' ]; then
   exit 1
 fi
 
-source "$DEV_CONF_ROOT/scripts/chromium-env-common"
+source "$DOTFILES_ROOT/bin/chromium-env-common"
 
 export PS1="%B%F{blue}[CHROMIUM-LINUX]$PS1"

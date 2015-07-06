@@ -14,7 +14,7 @@ fi
 
 source "$DEV_CONF_ROOT"/scripts/chromium-env-common
 
-export XWALK_ROOT=$PROJECT_ROOT/crosswalk
+export XWALK_ROOT=$PROJECT_ROOT/crosswalk/crosswalk-mac
 
 export PATH=$XWALK_ROOT/src/third_party/llvm-build/Release+Asserts/bin:$PATH
 

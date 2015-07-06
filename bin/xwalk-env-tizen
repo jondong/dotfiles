@@ -7,16 +7,12 @@ if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
   exit 1
 fi
 
-source "$DEV_CONF_ROOT"/scripts/chromium-env-common
+source "$DOTFILES_ROOT/bin/chromium-env-common"
 
-export XWALK_ROOT=$PROJECT_ROOT/crosswalk
+export XWALK_ROOT="$PROJECT_ROOT/crosswalk/crosswalk-tizen"
 
-# Replace proxy setting
-export http_proxy=http://proxy01.cd.intel.com:911
-export https_proxy=http://proxy01.cd.intel.com:911
-
-export TIZEN_ROOT=$HOME/tizen
-export TIZEN_TEMP_BUILD_DIR=/var/tmp/xwalk-build
+export TIZEN_ROOT="$HOME/tizen"
+export TIZEN_TEMP_BUILD_DIR="/var/tmp/xwalk-build"
 
 echo "Run 'xwalk/gyp_xwalk' in $XWALK_ROOT/src to generate projects."
 export PS1="%B%F{cyan}[XWALK-TIZEN]$PS1"

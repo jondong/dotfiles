@@ -7,14 +7,14 @@ if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
   exit 1
 fi
 
-source "$DEV_CONF_ROOT"/scripts/chromium-env-common
+source "$DOTFILES_ROOT/bin/chromium-env-common"
 
-export XWALK_ROOT=$PROJECT_ROOT/crosswalk-android
+export XWALK_ROOT="$PROJECT_ROOT/crosswalk/crosswalk-android"
 
 # Crosswalk setup
 export XWALK_OS_ANDROID=1
 export GYP_DEFINES='OS=android target_arch=ia32'
 
-source "$XWALK_ROOT"/src/xwalk/build/android/envsetup.sh
+source "$XWALK_ROOT/src/xwalk/build/android/envsetup.sh"
 echo "Run 'xwalk/gyp_xwalk -Dtarget_arch=[ia32|arm] -DOS=android' in $XWALK_ROOT/src to generate projects."
 export PS1="%B%F{yellow}[XWALK-ANDROID]$PS1"
