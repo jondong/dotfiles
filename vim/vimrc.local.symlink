@@ -18,28 +18,10 @@ endfunction
 let os=GetRunningOS()
 
 set wrap
-
-set number
+set virtualedit=
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-set expandtab
-set showmatch
-set cindent
-set nocp
-set nocompatible
-set hls
-set gfn=Monaco:h14
-set incsearch
-
-syntax enable
-
-let mapleader = ','
-let maplocalleader = ','
-
-filetype plugin indent on
-"filetype plugin on
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Setup Color Scheme
@@ -51,19 +33,9 @@ colorscheme rdark
 
 " Setup for NERDTree
 nnoremap <leader>ne :NERDTreeToggle<CR>
-"let NERDTreeWinSize = 42
-
 
 " Setup for Powerline
-set laststatus=2
-set t_Co=256
 let g:Powerline_symbols = 'unicode'
-set encoding=utf8
-
-
-" Setup for Tagbar
-nnoremap <leader>tb :TagbarToggle<CR>
-" let g:tagbar_width = 52
 
 " Setup for Chromium
 if os=='mac'
@@ -80,10 +52,6 @@ elseif os=='linux'
   let g:ycm_global_ycm_extra_conf = '~/projects/chromium/chromium-linux/src/tools/vim/chromium.ycm_extra_conf.py'
 endif
 
-" Setup for taglist
-"let Tlist_Ctags_Cmd='/usr/bin/ctags'
-"let Tlist_Inc_Winwidth=0
-
 " Gtags setup
 let Gtags_Auto_Map = 1
 ":map <C-]> :Gtags<CR><CR>
@@ -92,8 +60,6 @@ let Gtags_Auto_Map = 1
 ":map <F11> :cp<CR>
 ":map <F12> :cn<CR>
 
-"set formatoptions-=l
-"set formatoptions+=t
 set formatoptions=crqt
 
 "tmux setting
@@ -122,4 +88,3 @@ else
   map <C-l> <C-w>l
 endif
 
-set clipboard=unnamed
