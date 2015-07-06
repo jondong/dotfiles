@@ -17,6 +17,7 @@ function! GetRunningOS()
 endfunction
 let os=GetRunningOS()
 
+set wrap
 
 set number
 set tabstop=2
