@@ -33,3 +33,9 @@ fi
 # Crosswalk setup
 export GYP_GENERATORS='ninja'
 
+# Disable zsh theme
+type antigen > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+  antigen theme
+fi
+
