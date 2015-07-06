@@ -23,6 +23,12 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 
+" Unmap H and L which has been set within .vimrc
+nunmap H
+nunmap L
+vunmap H
+vunmap L
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Setup Color Scheme
 ""colorscheme ron
