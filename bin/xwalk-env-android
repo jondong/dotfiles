@@ -13,8 +13,11 @@ export XWALK_ROOT="$PROJECT_ROOT/crosswalk/crosswalk-android"
 
 # Crosswalk setup
 export XWALK_OS_ANDROID=1
-export GYP_DEFINES='OS=android target_arch=ia32'
+
+if [ ! -f "$XWALK_ROOT/chromium.gyp_env" ]; then
+  echo "{ 'GYP_DEFINES': 'OS=android target_arch=ia32',  }" > $XWALK_ROOT/chromium.gyp_env
+fi
 
 source "$XWALK_ROOT/src/xwalk/build/android/envsetup.sh"
-echo "Run 'xwalk/gyp_xwalk -Dtarget_arch=[ia32|arm] -DOS=android' in $XWALK_ROOT/src to generate projects."
+echo "Run 'python xwalk/gyp_xwalk' in $XWALK_ROOT/src to generate projects."
 export PS1="%B%F{yellow}[XWALK-ANDROID]$PS1"
