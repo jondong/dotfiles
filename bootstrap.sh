@@ -145,3 +145,7 @@ else
     update_vim_config
 fi
 
+# Create logs directory.
+if [ ! -d "$HOME/logs" ]; then
+    mkdir -p $HOME/logs
+fi
