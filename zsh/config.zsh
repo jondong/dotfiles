@@ -14,7 +14,7 @@ antigen bundle pip
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
-antigen theme agnoster
+antigen theme arrow
 
 # Tell antigen that you're done.
 antigen apply
