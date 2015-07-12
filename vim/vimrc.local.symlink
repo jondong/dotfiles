@@ -28,6 +28,7 @@ nunmap H
 nunmap L
 vunmap H
 vunmap L
+iunmap <Esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Setup Color Scheme

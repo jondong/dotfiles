@@ -3,3 +3,5 @@ let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming',
 
 " Use powerline
 let g:spf13_use_powerline = 1
+
+set nospell
