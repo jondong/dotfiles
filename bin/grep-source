@@ -5,4 +5,4 @@ if [ -z "$@" ]; then
     exit 1;
 fi
 
-find . -type f -name "*.[cChH]" -o -name "*.cc" -o -name "*.[ch]pp" -o -name "*.[ch]xx" -o -name "*.c++" -o -name "*.java" -exec grep -n "$@" {} +
+find . -type f \( -name "*.[cChH]" -o -name "*.cc" -o -name "*.[ch]pp" -o -name "*.[ch]xx" -o -name "*.c++" -o -name "*.java" \) -exec grep -n "$@" {} +
