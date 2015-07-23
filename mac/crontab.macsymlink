@@ -1,1 +1,1 @@
-0 7 * * * /usr/local/bin/gitup > /Users/jonathan/logs/gitup.log
+0 7 * * * /Users/jonathan/bin/exec-with-proxy /usr/local/bin/gitup > /Users/jonathan/logs/gitup.log
