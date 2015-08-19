@@ -58,5 +58,9 @@ brew install gitup
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
 
+brew install nvm
+mkdir ~/.nvm
+cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+
 # Remove outdated versions from the cellar.
 brew cleanup
