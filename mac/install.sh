@@ -54,6 +54,7 @@ brew install tmux
 brew install autojump
 brew install reattach-to-user-namespace
 brew install gitup
+brew install ag htop ccat
 
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
