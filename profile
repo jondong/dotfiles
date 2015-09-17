@@ -102,8 +102,15 @@ prepend_path_if_exists "$DEPOT_TOOLS_HOME"
 
 # Android SDK setup
 ANDROID_SDK_ROOT=$HOME/bin/android-sdk
-append_path_if_exists "$ANDROID_SDK_ROOT/tools"
-append_path_if_exists "$ANDROID_SDK_ROOT/platform-tools"
+ANDROID_NDK_ROOT=$HOME/bin/android-ndk
+if [ -d "$ANDROID_SDK_ROOT" ]; then
+  export ANDROID_HOME=$ANDROID_SDK_ROOT
+  append_path_if_exists "$ANDROID_SDK_ROOT/tools"
+  append_path_if_exists "$ANDROID_SDK_ROOT/platform-tools"
+fi
+if [ -d "$ANDROID_NDK_ROOT" ]; then
+  export ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
+fi
 
 # Coverity config
 export COVERITY_UNSUPPORTED=1
