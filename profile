@@ -110,6 +110,7 @@ if [ -d "$ANDROID_SDK_ROOT" ]; then
 fi
 if [ -d "$ANDROID_NDK_ROOT" ]; then
   export ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
+  append_path_if_exists "$ANDROID_NDK_HOME"
 fi
 
 # Coverity config
