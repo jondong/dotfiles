@@ -32,9 +32,10 @@ unbind C-b
 bind C-a send-prefix
 
 # mouse mode
-set -g mode-mouse on
-setw -g mouse-select-window on
-setw -g mouse-select-pane on
+set -g mouse on
+set -g mouse-utf8 on
+bind -n WheelUpPane   select-pane -t= \; copy-mode -e \; send-keys -M
+bind -n WheelDownPane select-pane -t= \;                 send-keys -M
 
 # Load configurations for Mac.
 if-shell 'test "$(uname)" = "Darwin"' 'source ~/.tmux-osx.conf'

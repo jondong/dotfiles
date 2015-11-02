@@ -25,9 +25,9 @@ brew install findutils
 brew install gnu-sed --with-default-names
 
 # Install Bash 4.
-# Note: don’t forget to add `/usr/local/bin/bash` to `/etc/shells` before
-# running `chsh`.
-brew install bash
+# Note: don’t forget to add `/usr/local/bin/bash` and `/usr/local/bin/zsh`
+# to `/etc/shells` before running `chsh`.
+brew install bash zsh
 brew tap homebrew/versions
 brew install bash-completion2
 
@@ -50,7 +50,7 @@ brew install ssh-copy-id
 brew install tree
 
 brew install npm
-brew install tmux
+brew install tmux --HEAD
 brew install autojump
 brew install reattach-to-user-namespace
 brew install gitup
@@ -62,6 +62,9 @@ brew install homebrew/dupes/openssh
 brew install nvm
 mkdir ~/.nvm
 cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+
+# Installations using cask
+brew cask install easysimbl
 
 # Remove outdated versions from the cellar.
 brew cleanup

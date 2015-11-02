@@ -19,3 +19,7 @@ bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
 # Bind ']' to use pbpaste
 bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
 
+# Mouse settings
+# 1. Download .dmg of MouseTerm-plus from: https://github.com/saitoha/mouseterm-plus/releases
+# 2. Open the MouseTerm.dmg, install it.
+# 2. Reload tmux. That's all.

@@ -1,0 +1,7 @@
+# This is for the tmux version < 2.0. When tmux is upgraded to 2.0 above, this can be removed.
+
+# mouse mode
+set -g mode-mouse on
+set -g mouse-resize-pane on
+set -g mouse-select-pane on
+set -g mouse-select-window on
