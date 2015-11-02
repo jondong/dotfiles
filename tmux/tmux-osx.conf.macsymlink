@@ -23,3 +23,8 @@ bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux past
 # 1. Download .dmg of MouseTerm-plus from: https://github.com/saitoha/mouseterm-plus/releases
 # 2. Open the MouseTerm.dmg, install it.
 # 2. Reload tmux. That's all.
+
+# Setting for continuum.
+set -g @continuum-boot 'on'
+set -g @continuum-boot-options 'iterm,fullscreen'
+set -g @continuum-restore 'on'
