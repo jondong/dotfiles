@@ -5,7 +5,7 @@
 echo "Installing gitup..."
 git clone https://github.com/earwig/git-repo-updater.git /tmp/git-repo-updater
 pushd /tmp/git-repo-updater
-
 python setup.py install --user
-
 popd
+
+sudo gem install ghi
