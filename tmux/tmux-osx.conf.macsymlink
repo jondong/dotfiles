@@ -24,6 +24,13 @@ bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux past
 # 2. Open the MouseTerm.dmg, install it.
 # 2. Reload tmux. That's all.
 
+# Mouse mode - This settings can only be placed in mac as tmux for mac is V2.0 above.
+# Will move to tmux.conf when tmux for linux upgraded to V2.0 above.
+set -g mouse on
+set -g mouse-utf8 on
+bind -n WheelUpPane   select-pane -t= \; copy-mode -e \; send-keys -M
+bind -n WheelDownPane select-pane -t= \;                 send-keys -M
+
 # Setting for continuum.
 set -g @continuum-boot 'on'
 set -g @continuum-boot-options 'iterm,fullscreen'
