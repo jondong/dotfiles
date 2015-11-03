@@ -1,5 +1,13 @@
 # This is for the tmux version < 2.0. When tmux is upgraded to 2.0 above, this can be removed.
 
+# Setup 'v' to begin selection as in Vim
+bind-key -t vi-copy v begin-selection
+bind-key -t vi-copy y copy-pipe "xclip -in -selection clipboard"
+
+# Update default binding of `Enter` to also use copy-pipe
+unbind -t vi-copy Enter
+bind-key -t vi-copy Enter copy-pipe "xclip -in -selection clipboard"
+
 # mouse mode
 set -g mode-mouse on
 set -g mouse-resize-pane on
