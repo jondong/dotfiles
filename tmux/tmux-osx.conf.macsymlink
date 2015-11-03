@@ -2,9 +2,6 @@
 # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 # run: `brew install reattach-to-user-namespace`
 
-# Copy-paste integration
-set-option -g default-command "reattach-to-user-namespace -l zsh"
-
 # Setup 'v' to begin selection as in Vim
 bind-key -t vi-copy v begin-selection
 bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"

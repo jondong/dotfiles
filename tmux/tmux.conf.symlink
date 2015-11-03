@@ -6,19 +6,14 @@ set -g set-titles on
 set -g set-titles-string '#(whoami) :: #h :: #(curl ipecho.net/plain;echo)'
 
 # Status bar customization
-set -g status-utf8 on
 set -g status-bg black
 set -g status-fg white
-set -g status-interval 5
 set -g status-left-length 90
 set -g status-right-length 60
+set -g status-justify left
 set -g status-left "#[fg=Green]#(whoami)#[fg=white]::#[fg=blue] \
 (hostname - s)#[fg=white]::##[fg=yellow]#(curl ipecho.net/plain;echo)"
-
-set -g status-justify left
 set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
-
-#set -g default-terminal "screen-256color"
 
 # Settings from: http://www.codeography.com/2013/06/19/navigating-vim-and-tmux-splits
 bind -n C-h run "(tmux display-message -p '#{pane_title}' | grep -iq vim && tmux send-keys C-h) || tmux select-pane -L"
@@ -41,19 +36,19 @@ if-shell 'test "$(uname)" = "Darwin"' 'source ~/.tmux-osx.conf'
 if-shell 'test "$(uname)" = "Linux"' 'source ~/.tmux-linux.conf'
 
 # TMUX plugins
-#set -g @plugin 'tmux-plugins/tpm'
-#set -g @plugin 'tmux-plugins/tmux-sensible'
-#set -g @plugin 'tmux-plugins/tmux-resurrect'
-#set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
 #set -g @plugin 'tmux-plugins/tmux-copycat'
 #set -g @plugin 'tmux-plugins/tmux-yank'
 #set -g @plugin 'tmux-plugins/tmux-open'
 
 # Tmux Plugin Settins
 # Setting for continuum.
-#set -g @continuum-boot 'on'
-#set -g @continuum-boot-options 'iterm,fullscreen'
-#set -g @continuum-restore 'on'
+set -g @continuum-boot 'on'
+set -g @continuum-boot-options 'iterm,fullscreen'
+set -g @continuum-restore 'on'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-#run '~/.tmux/plugins/tpm/tpm'
+run '~/.tmux/plugins/tpm/tpm'
