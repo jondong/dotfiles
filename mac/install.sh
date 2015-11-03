@@ -55,6 +55,8 @@ brew install autojump
 brew install reattach-to-user-namespace
 brew install gitup
 brew install ag htop ccat
+brew install ghi
+brew install mobile-shell
 
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
