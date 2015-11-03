@@ -9,3 +9,5 @@ python setup.py install --user
 popd
 
 sudo gem install ghi
+sodo apt-get install mosh
+sudo apt-get install xclip # or xsel. this is for tmux-yank plugin.
