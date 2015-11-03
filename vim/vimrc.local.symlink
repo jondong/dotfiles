@@ -22,6 +22,7 @@ set virtualedit=
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+set nospell
 
 " Unmap H and L which has been set within .vimrc
 nunmap H
