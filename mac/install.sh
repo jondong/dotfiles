@@ -57,6 +57,7 @@ brew install gitup
 brew install ag htop ccat
 brew install ghi
 brew install mobile-shell
+brew install mackup
 
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
