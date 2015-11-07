@@ -29,21 +29,47 @@ nunmap H
 nunmap L
 vunmap H
 vunmap L
-iunmap <Esc>
+"iunmap <Esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "" Setup Color Scheme
-""colorscheme ron
-""colorscheme neon
-""colorscheme Mustang
-""colorscheme relaxedgreen
-colorscheme rdark
-
-" Setup for NERDTree
-nnoremap <leader>ne :NERDTreeToggle<CR>
+"colorscheme Mustang
+"colorscheme relaxedgreen
+"colorscheme rdark
+"colorscheme solarized
+"colorscheme corporation
+"colorscheme inkport
+"colorscheme zenburn
+"colorscheme busybee
+"colorscheme codeschool
+"colorscheme badwolf
+"colorscheme distinguished
+colorscheme jellybeans
 
 " Setup for Powerline
 let g:Powerline_symbols = 'unicode'
+
+" Setup for syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_error_symbol = '✘'
+let g:syntastic_warning_symbol = "▲"
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_sh_checkers = ['shellcheck']
+"let g:syntastic_objc_checkers = ['oclint']
+
+" Setup for ctrlp
+map <C-P> :CtrlP<CR>
+let g:ctrlp_map = '<C-P>'
+let g:ctrlp_cmd = 'CtrlP'
+"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+
+" global wildignore
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 " Setup for Chromium
 if os=='mac'
@@ -99,4 +125,3 @@ else
   map <C-k> <C-w>k
   map <C-l> <C-w>l
 endif
-

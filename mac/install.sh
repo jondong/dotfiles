@@ -68,6 +68,7 @@ cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
 
 # Installations using cask
 brew cask install easysimbl
+brew cask install oclint
 
 # Remove outdated versions from the cellar.
 brew cleanup

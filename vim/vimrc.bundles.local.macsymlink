@@ -8,4 +8,6 @@ Plugin 'cocoa.vim'
 Plugin 'https://github.com/eraserhd/vim-ios.git'
 Plugin 'rizzatti/dash.vim'
 
-
+" Syntax checkers for syntastic
+Plugin 'ynkdir/vim-vimlparser'
+Plugin 'syngan/vim-vimlint'
