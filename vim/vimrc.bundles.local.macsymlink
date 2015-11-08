@@ -13,3 +13,4 @@ Plugin 'ynkdir/vim-vimlparser'
 Plugin 'syngan/vim-vimlint'
 
 Plugin 'tpope/vim-projectionist'
+Plugin 'jez/vim-superman'
