@@ -11,3 +11,5 @@ Plugin 'rizzatti/dash.vim'
 " Syntax checkers for syntastic
 Plugin 'ynkdir/vim-vimlparser'
 Plugin 'syngan/vim-vimlint'
+
+Plugin 'tpope/vim-projectionist'
