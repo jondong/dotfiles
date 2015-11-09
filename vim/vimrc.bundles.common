@@ -1,6 +1,7 @@
 " Navigation tools
 Plugin 'bufexplorer.zip'
 Plugin 'https://github.com/tpope/vim-unimpaired.git'
+Plugin 'tpope/vim-projectionist'
 
 " Editing tools
 Plugin 'trailing-whitespace'
@@ -9,6 +10,7 @@ Plugin 'trailing-whitespace'
 Plugin 'https://github.com/christoomey/vim-tmux-navigator.git'
 Plugin 'wellle/tmux-complete.vim'
 Plugin 'benmills/vimux'
+Plugin 'jez/vim-superman'
 
 " Source Browsing
 Plugin 'https://github.com/vim-scripts/taglist.vim.git'
@@ -23,3 +25,6 @@ Plugin 'https://github.com/toyamarinyon/vim-swift.git'
 " CoffeeScript
 Plugin 'coffee-check.vim'
 
+" Syntax checkers for syntastic
+Plugin 'ynkdir/vim-vimlparser'
+Plugin 'syngan/vim-vimlint'
