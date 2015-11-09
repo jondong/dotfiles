@@ -1,0 +1,17 @@
+if filereadable(expand("~/.dotfiles/vim/vimrc.local.common"))
+  source ~/.dotfiles/vim/vimrc.local.common
+endif
+
+"" Setup Color Scheme
+"colorscheme Mustang
+"colorscheme relaxedgreen
+"colorscheme rdark
+"colorscheme solarized
+"colorscheme corporation
+"colorscheme inkport
+"colorscheme zenburn
+"colorscheme busybee
+"colorscheme codeschool
+"colorscheme badwolf
+"colorscheme distinguished
+colorscheme jellybeans
