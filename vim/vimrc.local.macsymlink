@@ -10,10 +10,10 @@ endif
 "colorscheme corporation
 "colorscheme inkpot
 "colorscheme zenburn
-"colorscheme busybee
+colorscheme busybee
 "colorscheme codeschool
 "colorscheme badwolf
 "colorscheme distinguished
-colorscheme jellybeans
+"colorscheme jellybeans
 
 set background=dark
