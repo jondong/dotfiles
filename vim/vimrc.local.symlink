@@ -92,12 +92,11 @@ elseif os=='linux'
   let chromiumPath=$PROJECT_ROOT . '/chromium/chromium-linux/'
 endif
 if isdirectory(chromiumPath)
-  echo 'setup chromium related config files.'
-  so chromiumPath . 'src/tools/vim/filetypes.vim'
-  so chromiumPath . 'src/tools/vim/ninja-build.vim'
-  so chromiumPath . 'src/tools/vim/clang-format.vim'
+  execute 'so ' . chromiumPath . 'src/tools/vim/filetypes.vim'
+  execute 'so ' . chromiumPath . 'src/tools/vim/ninja-build.vim'
+  execute 'so ' . chromiumPath . 'src/tools/vim/clang-format.vim'
   " Setup for YouCompleteMe on Chromium
-  let g:ycm_global_ycm_extra_conf = projects . 'src/tools/vim/chromium.ycm_extra_conf.py'
+  let g:ycm_global_ycm_extra_conf = chromiumPath . 'src/tools/vim/chromium.ycm_extra_conf.py'
 endif
 
 " Gtags setup
