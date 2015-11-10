@@ -1,7 +1,6 @@
 " Navigation tools
 Plugin 'bufexplorer.zip'
 Plugin 'https://github.com/tpope/vim-unimpaired.git'
-Plugin 'tpope/vim-projectionist'
 
 " Editing tools
 Plugin 'trailing-whitespace'

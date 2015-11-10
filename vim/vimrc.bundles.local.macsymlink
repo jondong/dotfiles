@@ -8,3 +8,4 @@ Plugin 'cocoa.vim'
 Plugin 'https://github.com/eraserhd/vim-ios.git'
 Plugin 'rizzatti/dash.vim'
 
+Plugin 'tpope/vim-projectionist'
