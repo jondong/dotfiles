@@ -9,4 +9,4 @@ let g:spf13_no_omni_complete = 1
 
 set nospell
 
-map <C-P> :CtrlP<CR>
+nnoremap <C-P> :CtrlP<CR>
