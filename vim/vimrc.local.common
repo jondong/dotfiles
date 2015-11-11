@@ -70,6 +70,12 @@ nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
 
+" Setup for undotree
+if has("persistent_undo")
+  set undodir=~/.undodir/
+  set undofile
+endif
+
 " Setup for Chromium
 let chromiumPath=''
 if os=='mac'
