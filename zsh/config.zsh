@@ -40,3 +40,7 @@ vman() {
   fi
 }
 compdef vman="man"
+
+# A quick calculator written by awk.
+# http://lifehacker.com/5396183/create-an-awesome-command-line-calculator
+calc() { awk "BEGIN{ print $*  }" ; }
