@@ -7,6 +7,4 @@ let g:spf13_use_powerline = 1
 " Disable Omni Complete
 let g:spf13_no_omni_complete = 1
 
-set nospell
-
 nnoremap <C-P> :CtrlP<CR>

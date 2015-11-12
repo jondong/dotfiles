@@ -70,6 +70,26 @@ nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
 
+" Setup for wildfire
+nnoremap <leader>s <Plug>(wildfire-quick-select)
+
+" Setup for litecorrect
+augroup litecorrect
+  autocmd!
+  autocmd FileType markdown,mkd,md call litecorrect#init()
+  autocmd FileType textile,txt call litecorrect#init()
+augroup END
+
+" Setup for vim-textobj-sentence
+augroup textobj_sentence
+  autocmd!
+  autocmd FileType markdown,mkd,md call textobj#sentence#init()
+  autocmd FileType textile,txt call textobj#sentence#init()
+augroup END
+
+" Setup for wordy
+silent call wordy#init({})
+
 " Setup for Chromium
 let chromiumPath=''
 if os=='mac'

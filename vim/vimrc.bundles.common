@@ -1,3 +1,7 @@
+" UnBundle repos
+UnBundle 'osyo-manga/vim-over'
+UnBundle 'reedes/vim-textobj-quote'
+
 " Navigation tools
 Plugin 'bufexplorer.zip'
 Plugin 'https://github.com/tpope/vim-unimpaired.git'
