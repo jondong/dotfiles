@@ -35,19 +35,6 @@ vunmap L
 " Setup for Powerline
 let g:Powerline_symbols = 'unicode'
 
-" Setup for syntastic
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_error_symbol = '✘'
-"let g:syntastic_warning_symbol = "▲"
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_sh_checkers = ['shellcheck']
-"let g:syntastic_objc_checkers = ['oclint']
-
 " Setup for ctrlp: http://kien.github.io/ctrlp.vim/
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
@@ -72,23 +59,6 @@ let g:ctrlp_funky_syntax_highlight = 1
 
 " Setup for wildfire
 nnoremap <leader>s <Plug>(wildfire-quick-select)
-
-" Setup for litecorrect
-augroup litecorrect
-  autocmd!
-  autocmd FileType markdown,mkd,md call litecorrect#init()
-  autocmd FileType textile,txt call litecorrect#init()
-augroup END
-
-" Setup for vim-textobj-sentence
-augroup textobj_sentence
-  autocmd!
-  autocmd FileType markdown,mkd,md call textobj#sentence#init()
-  autocmd FileType textile,txt call textobj#sentence#init()
-augroup END
-
-" Setup for wordy
-silent call wordy#init({})
 
 " Setup for Chromium
 let chromiumPath=''
@@ -144,3 +114,28 @@ else
   nnoremap <C-k> <C-w>k
   nnoremap <C-l> <C-w>l
 endif
+
+" Setup for syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_error_symbol = '✘'
+"let g:syntastic_warning_symbol = "▲"
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_sh_checkers = ['shellcheck']
+"let g:syntastic_objc_checkers = ['oclint']
+
+" Writing configuration {
+    " Setup for litecorrect
+    "augroup litecorrect
+      "autocmd!
+      "autocmd FileType markdown,mkd,md call litecorrect#init()
+      "autocmd FileType textile,txt call litecorrect#init()
+    "augroup END
+
+    " Setup for wordy
+    "silent call wordy#init({})
+" }

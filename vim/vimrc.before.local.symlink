@@ -1,10 +1,8 @@
 " Bundle groups
-let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming', 'php', 'ruby', 'python', 'go', 'javascript', 'html', 'misc',]
+let g:spf13_bundle_groups=['general', 'youcompleteme', 'programming', 'php', 'ruby', 'python', 'go', 'javascript', 'html', 'misc',]
 
 " Use powerline
 let g:spf13_use_powerline = 1
 
 " Disable Omni Complete
 let g:spf13_no_omni_complete = 1
-
-nnoremap <C-P> :CtrlP<CR>
