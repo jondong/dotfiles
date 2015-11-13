@@ -17,3 +17,6 @@ colorscheme mustang
 "colorscheme jellybeans
 
 set background=dark
+
+" gist-vim settings
+let g:gist_clip_command = 'xclip -selection clipboard'
