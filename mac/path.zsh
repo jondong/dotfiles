@@ -4,6 +4,5 @@ if [ "$(uname)" = 'Darwin' ]; then
   # nvm configuration.
   export NVM_DIR=~/.nvm
   source $(brew --prefix nvm)/nvm.sh
+  alias cat='ccat'
 fi
-
-alias cat='ccat'
