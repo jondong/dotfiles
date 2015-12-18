@@ -1,5 +1,6 @@
 " UnBundle repos
 UnBundle 'osyo-manga/vim-over'
+UnBundle 'tpope/vim-commentary'
 
 " Navigation tools
 Plugin 'bufexplorer.zip'
