@@ -5,7 +5,7 @@ endif
 "" Setup Color Scheme
 "colorscheme mustang
 "colorscheme relaxedgreen
-"colorscheme rdark
+colorscheme rdark
 "colorscheme solarized
 "colorscheme corporation
 "colorscheme inkpot
@@ -14,7 +14,7 @@ endif
 "colorscheme codeschool
 "colorscheme badwolf
 "colorscheme distinguished
-colorscheme jellybeans
+"colorscheme jellybeans
 
 set background=dark
 
