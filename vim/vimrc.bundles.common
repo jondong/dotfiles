@@ -1,6 +1,7 @@
 " UnBundle repos
 UnBundle 'osyo-manga/vim-over'
 UnBundle 'tpope/vim-commentary'
+UnBundle 'altercation/vim-colors-solarized'
 
 " Navigation tools
 Plugin 'bufexplorer.zip'

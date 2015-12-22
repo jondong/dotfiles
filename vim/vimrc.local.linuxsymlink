@@ -3,11 +3,11 @@ if filereadable(expand("~/.dotfiles/vim/vimrc.local.common"))
 endif
 
 "" Setup Color Scheme
-colorscheme mustang
+"colorscheme mustang
 "colorscheme relaxedgreen
 "colorscheme rdark
 "colorscheme solarized
-"colorscheme corporation
+colorscheme corporation
 "colorscheme inkpot
 "colorscheme zenburn
 "colorscheme busybee
