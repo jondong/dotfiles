@@ -106,6 +106,8 @@ install_dotfiles () {
     files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.macsymlink")
   elif [ "$(uname)" = "Linux" ]; then
     files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.linuxsymlink")
+  elif [ "$(uname -o)" = "Cygwin" ]; then
+    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.winsymlink")
   fi
 
   for src in $files_to_link
