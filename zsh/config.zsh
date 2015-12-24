@@ -1,4 +1,4 @@
-if [ "$(uname -o)" != "Cygwin" ]: then
+if [ "$(uname -o)" != "Cygwin" ]; then
   # Use antigen to manage zsh resource.
   # `cd ~ && git clone https://github.com/zsh-users/antigen.git .antigen`
   # for more information refers to: https://github.com/zsh-users/antigen
