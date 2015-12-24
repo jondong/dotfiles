@@ -159,6 +159,14 @@ else
     update_vim_config
 fi
 
+if [ "$(uname)" = "Darwin" ]; then
+    source $DOTFILES_ROOT/mac/install.sh
+elif [ "$(uname)" = "Linux" ]; then
+    source $DOTFILES_ROOT/linux/install.sh
+elif [ "$(uname -o)" = "Cygwin" ]; then
+    source $DOTFILES_ROOT/win/install.sh
+fi
+
 if [ ! -d "$TMUX_PLUGIN_MANAGER_ROOT" ]; then
     install_tmux_plugin_manager
 else
