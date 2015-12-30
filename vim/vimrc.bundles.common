@@ -18,8 +18,10 @@ Plugin 'jez/vim-superman'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 " Source Browsing
-Plugin 'https://github.com/vim-scripts/taglist.vim.git'
-Plugin 'gtags.vim'
+if !WINDOWS()
+  Plugin 'https://github.com/vim-scripts/taglist.vim.git'
+  Plugin 'gtags.vim'
+endif
 
 " Syntax checking
 Plugin 'JavaScript-syntax'

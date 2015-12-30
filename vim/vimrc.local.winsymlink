@@ -4,7 +4,7 @@ endif
 
 "" Setup Color Scheme
 "colorscheme mustang
-"colorscheme relaxedgreen
+colorscheme relaxedgreen
 "colorscheme rdark
 "colorscheme solarized
 "colorscheme corporation
@@ -15,7 +15,7 @@ endif
 "colorscheme badwolf
 "colorscheme distinguished
 "colorscheme jellybeans
-colorscheme ir_black
+"colorscheme ir_black
 
 set background=dark
 

@@ -1,5 +1,9 @@
 " Bundle groups
-let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming', 'php', 'ruby', 'python', 'go', 'javascript', 'html', 'misc',]
+if WINDOWS()
+  let g:spf13_bundle_groups=['general', 'writing', 'programming', 'php', 'ruby', 'python', 'go', 'javascript', 'html', 'misc',]
+else
+  let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming', 'php', 'ruby', 'python', 'go', 'javascript', 'html', 'misc',]
+endif
 
 let g:spf13_no_views = 1
 
