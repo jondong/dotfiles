@@ -12,7 +12,5 @@ source "$DOTFILES_ROOT/bin/chromium-env-common"
 export XWALK_ROOT="$PROJECT_ROOT/crosswalk/realsense"
 
 export DEPOT_TOOLS_WIN_TOOLCHAIN=0
-set DEPOT_TOOLS_WIN_TOOLCHAIN=0
-export SYSTEMROOT=/c/Windows
 
-export PS1="[REALSENSE-WIN]$PS1"
+export PS1="%B%F{yellow}[REALSENSE-WIN]$PS1"
