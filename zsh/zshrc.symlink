@@ -2,6 +2,8 @@
 export ZSH=$HOME/.oh-my-zsh
 
 if [ "$(uname -o)" = "Cygwin" ]; then
+  ZSH_THEME="babun"
+
   plugins=(git)
 
   # User configuration
