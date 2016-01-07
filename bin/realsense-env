@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Make sure we're being sourced (possibly by another script). Check for bash
+# since zsh sets $0 when sourcing.
+if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
+  echo "ERROR: $0 must be sourced."
+  exit 1
+fi
+
+if [ -z "$1" ]; then
+  echo "usage: $(basename "$0") {android|win}"
+  return 1;
+fi
+
+unset CHROMIUM
+unset GYP_DEFINES
+unset XWALK
+unset XWALK_OS_ANDROID
+unset TIZEN_ROOT
+unset TIZEN_TEMP_BUILD_DIR
+
+case $1 in
+  "android")
+    export XWALK="$PROJECTS/crosswalk/realsense"
+    export XWALK_OS_ANDROID=1
+    if [ ! -f "$XWALK/chromium.gyp_env" ]; then
+      echo "{ 'GYP_DEFINES': 'OS=android target_arch=ia32',  }" > $XWALK/chromium.gyp_env
+    fi
+    if [ ! -d "$HOME/bin/crosswalk" ]; then
+      echo "Download latest crosswalk into $HOME/bin/crosswalk, make the path of 'make_apk.py' available in PATH."
+    fi
+    export PATH=$PROJECT/realsense/xwalk_app_template:$PATH
+    ;;
+  "win")
+    export XWALK="$PROJECTS/crosswalk/realsense"
+    export DEPOT_TOOLS_WIN_TOOLCHAIN=0
+    ;;
+  *)
+    echo "Platform $1 is not supported. Only {android|win} are supported."
+    return 1
+esac
+
+source "$DOTFILES/bin/chromium-env-common" || return 1
+export PS1="%B%F{green}[RealSense-$1]$PS1"

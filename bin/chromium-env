@@ -14,6 +14,10 @@ fi
 
 unset CHROMIUM
 unset GYP_DEFINES
+unset XWALK
+unset XWALK_OS_ANDROID
+unset TIZEN_ROOT
+unset TIZEN_TEMP_BUILD_DIR
 
 case $1 in
   "android")
@@ -30,7 +34,7 @@ case $1 in
     export PATH=$CHROMIUM/src/third_party/llvm-build/Release+Asserts/bin:$PATH
     ;;
   *)
-    echo "Platform $1 is not supported."
+    echo "Platform $1 is not supported. Only {android|linux|mac} are supported."
     return 1
 esac
 

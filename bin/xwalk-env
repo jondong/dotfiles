@@ -7,15 +7,15 @@ if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
   exit 1
 fi
 
-supportedPlatforms="{android|linux|mac|tizen}"
 if [ -z "$1" ]; then
-  echo "usage: $(basename "$0") $supportedPlatforms"
+  echo "usage: $(basename "$0") {android|linux|mac|tizen}"
   return 1;
 fi
 
+unset CHROMIUM
+unset GYP_DEFINES
 unset XWALK
 unset XWALK_OS_ANDROID
-unset GYP_DEFINES
 unset TIZEN_ROOT
 unset TIZEN_TEMP_BUILD_DIR
 
@@ -41,7 +41,7 @@ case $1 in
     export TIZEN_TEMP_BUILD_DIR="/var/tmp/xwalk-build"
     ;;
   *)
-    echo "Platform $1 is not supported. Only $supportedPlatforms are supported."
+    echo "Platform $1 is not supported. Only {android|linux|mac|tizen} are supported."
     return 1
 esac
 
