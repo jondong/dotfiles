@@ -62,6 +62,16 @@ if [ -n "$BASH_VERSION" ]; then
   fi
 fi
 
+# platform
+if [ -z $PLATFORM ]; then
+  platformName=$(uname)
+  export PLATFORM=${platformName:0:6}
+  if [ $PLATFORM = 'CYGWIN' ]; then
+    export PLATFORM='Cygwin'
+  fi
+  unset platformName
+fi
+
 #Add ssh key for sync playbook repos.
 if [ -d "$HOME/resource/backup-keys" ] ; then
   ssh-add "$HOME/resource/backup-keys/id_rsa" > /dev/null 2>&1
@@ -122,7 +132,7 @@ if [ -f "$HOME/bin/local-conf" ]; then
   source "$HOME/bin/local-conf"
 fi
 
-if [ "$(uname)" = 'Linux' ]; then
+if [ $PLATFORM = 'Linux' ]; then
   ## For gitup setup.
   ## gitup is a tool to sync multiple git repos in a single shot.
   ## For more information please refer to: https://github.com/earwig/git-repo-updater
@@ -152,7 +162,7 @@ if [ "$(uname)" = 'Linux' ]; then
     prepend_path_if_exists "$JDK_BIN_PATH"
   fi
 
-elif [ "$(uname)" = 'Darwin' ]; then
+elif [ $PLATFORM = 'Darwin' ]; then
   # Path for python binaries
   append_path_if_exists "$HOME/Library/Python/2.7/bin"
 

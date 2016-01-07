@@ -30,10 +30,10 @@ bind C-a send-prefix
 setw -g mode-keys vi
 
 # Load configurations for Mac.
-if-shell 'test "$(uname)" = "Darwin"' 'source ~/.tmux-osx.conf'
+if-shell 'test $PLATFORM = "Darwin"' 'source ~/.tmux-osx.conf'
 
 # Load configurations for Linux.
-if-shell 'test "$(uname)" = "Linux"' 'source ~/.tmux-linux.conf'
+if-shell 'test $PLATFORM = "Linux"' 'source ~/.tmux-linux.conf'
 
 # TMUX plugins
 set -g @plugin 'tmux-plugins/tpm'

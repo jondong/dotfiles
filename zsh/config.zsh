@@ -1,4 +1,4 @@
-if [ "$(uname -o)" != "Cygwin" ]; then
+if [ $PLATFORM != "Cygwin" ]; then
   # Use antigen to manage zsh resource.
   # `cd ~ && git clone https://github.com/zsh-users/antigen.git .antigen`
   # for more information refers to: https://github.com/zsh-users/antigen
@@ -31,7 +31,7 @@ if [ "$(uname -o)" != "Cygwin" ]; then
   }
 fi
 
-if [ "$(uname)" = 'Darwin' ]; then
+if [ $PLATFORM = 'Darwin' ]; then
   # autojump configuration.
   [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 fi

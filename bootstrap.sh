@@ -3,6 +3,16 @@
 #DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE}")" && pwd)"
 DOTFILES_ROOT="$HOME/.dotfiles"
 
+if [ -z $PLATFORM ]; then
+  platformName=$(uname)
+  PLATFORM=${platformName:0:6}
+  if [ $PLATFORM = 'CYGWIN' ]; then
+    PLATFORM='Cygwin'
+  fi
+  unset platformName
+fi
+
+
 info () {
   printf "  [ \033[00;34m..\033[0m ] $1"
 }
@@ -102,11 +112,11 @@ install_dotfiles () {
   local overwrite_all=false backup_all=false skip_all=false
 
   local files_to_link=""
-  if [ "$(uname)" = "Darwin" ]; then
+  if [ $PLATFORM = "Darwin" ]; then
     files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.macsymlink")
-  elif [ "$(uname)" = "Linux" ]; then
+  elif [ $PLATFORM = "Linux" ]; then
     files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.linuxsymlink")
-  elif [ "$(uname -o)" = "Cygwin" ]; then
+  elif [ $PLATFORM = "Cygwin" ]; then
     files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.winsymlink")
   fi
 
@@ -159,11 +169,11 @@ else
     update_vim_config
 fi
 
-if [ "$(uname)" = "Darwin" ]; then
+if [ $PLATFORM = "Darwin" ]; then
     source $DOTFILES_ROOT/mac/install.sh
-elif [ "$(uname)" = "Linux" ]; then
+elif [ $PLATFORM = "Linux" ]; then
     source $DOTFILES_ROOT/linux/install.sh
-elif [ "$(uname -o)" = "Cygwin" ]; then
+elif [ $PLATFORM = "Cygwin" ]; then
     source $DOTFILES_ROOT/win/install.sh
 fi
 
