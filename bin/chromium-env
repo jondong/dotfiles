@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Make sure we're being sourced (possibly by another script). Check for bash
+# since zsh sets $0 when sourcing.
+if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
+  echo "ERROR: $0 must be sourced."
+  exit 1
+fi
+
+if [ -z "$1" ]; then
+  echo "usage: $(basename "$0") {android|linux|mac}"
+  return 1;
+fi
+
+unset CHROMIUM
+unset GYP_DEFINES
+
+case $1 in
+  "android")
+    export CHROMIUM=$PROJECTS/chromium/chromium-android
+    source "$CHROMIUM/src/build/android/envsetup.sh"
+    export GYP_DEFINES='OS=android target_arch=ia32'
+    echo "Run 'build/gyp_chromium' in $CHROMIUM/src to generate projects."
+    ;;
+  "linux")
+    export CHROMIUM=$PROJECTS/chromium/chromium-linux
+    ;;
+  "mac")
+    export CHROMIUM=$PROJECTS/chromium/chromium-mac
+    export PATH=$CHROMIUM/src/third_party/llvm-build/Release+Asserts/bin:$PATH
+    ;;
+  *)
+    echo "Platform $1 is not supported."
+    return 1
+esac
+
+source "$DOTFILES/bin/chromium-env-common" || return 1
+export PS1="%B%F{yellow}[Chromium-$1]$PS1"

@@ -9,28 +9,29 @@ fi
 
 if [ ! -f ~/.boto ]; then
   echo "ERROR: ~/.boto should exist."
-  exit 1
+  return 1
 fi
+
+case $PLATFORM in
+  "Linux")
+    # Sandbox setup
+    export CHROME_DEVEL_SANDBOX=/usr/local/sbin/chrome-devel-sandbox
+    ;;
+  "Darwin")
+    export CC="ccache clang -Qunused-arguments"
+    export CXX="ccache clang++ -Qunused-arguments"
+    export CCACHE_CPP2=yes
+    export CCACHE_SLOPPINESS=time_macros
+    export PATH=/usr/local/opt/ccache/libexec:$PATH
+    ;;
+  *)
+    ;;
+esac
 
 # Workaround for gclient sync issue
 export NO_AUTH_BOTO_CONFIG=~/.boto
 
-if [ "$(uname)" = 'Linux' ]; then
-  # Sandbox setup
-  export CHROME_DEVEL_SANDBOX=/usr/local/sbin/chrome-devel-sandbox
-fi
-
-if [ "$(uname)" = 'Darwin' ]; then
-  export CC="ccache clang -Qunused-arguments"
-  export CXX="ccache clang++ -Qunused-arguments"
-
-  export CCACHE_CPP2=yes
-  export CCACHE_SLOPPINESS=time_macros
-
-  export PATH=/usr/local/opt/ccache/libexec:$PATH
-fi
-
-# Crosswalk setup
+# Generator setup
 export GYP_GENERATORS='ninja'
 
 # Disable zsh theme
@@ -38,4 +39,3 @@ type antigen > /dev/null 2>&1
 if [ $? -eq 0 ]; then
   antigen theme
 fi
-
