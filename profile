@@ -62,16 +62,6 @@ if [ -n "$BASH_VERSION" ]; then
   fi
 fi
 
-# platform
-if [ -z $PLATFORM ]; then
-  platformName=$(uname)
-  export PLATFORM=${platformName:0:6}
-  if [ $PLATFORM = 'CYGWIN' ]; then
-    export PLATFORM='Cygwin'
-  fi
-  unset platformName
-fi
-
 #Add ssh key for sync playbook repos.
 if [ -d "$HOME/resource/backup-keys" ] ; then
   ssh-add "$HOME/resource/backup-keys/id_rsa" > /dev/null 2>&1

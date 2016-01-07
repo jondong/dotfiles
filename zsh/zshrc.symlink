@@ -1,6 +1,16 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
+# platform
+if [ -z $PLATFORM ]; then
+  platformName=$(uname)
+  export PLATFORM=${platformName:0:6}
+  if [ $PLATFORM = 'CYGWIN' ]; then
+    export PLATFORM='Cygwin'
+  fi
+  unset platformName
+fi
+
 if [ $PLATFORM = "Cygwin" ]; then
   ZSH_THEME="babun"
 
@@ -9,7 +19,6 @@ if [ $PLATFORM = "Cygwin" ]; then
   # User configuration
 
   export PATH=$HOME/bin:/usr/local/bin:$PATH
-  # export MANPATH="/usr/local/man:$MANPATH"
 
   source $ZSH/oh-my-zsh.sh
 fi
