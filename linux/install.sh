@@ -13,3 +13,4 @@ sudo apt-get install aptitude
 sodo apt-get install mosh
 sudo apt-get install xclip # or xsel. this is for tmux-yank plugin.
 sudo aptitude install autojump
+sudo aptitude install source-highlight
