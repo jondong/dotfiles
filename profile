@@ -98,7 +98,11 @@ fi
 
 # Add depot_tools
 DEPOT_TOOLS_HOME=$HOME/bin/depot_tools
-prepend_path_if_exists "$DEPOT_TOOLS_HOME"
+if [ $PLATFORM = 'Cygwin' ]; then
+  append_path_if_exists "$DEPOT_TOOLS_HOME"
+else
+  prepend_path_if_exists "$DEPOT_TOOLS_HOME"
+fi
 
 # Android SDK setup
 ANDROID_SDK_ROOT=$HOME/bin/android-sdk
