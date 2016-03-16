@@ -20,3 +20,9 @@ if [ $node_module_path = '/usr/local' ]; then
 fi
 
 npm install -g coffee-script
+
+# Setup gnome keyring for git
+pushd /usr/share/doc/git/contrib/credential/gnome-keyring
+sudo make
+popd
+git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
