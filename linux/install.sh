@@ -26,3 +26,9 @@ pushd /usr/share/doc/git/contrib/credential/gnome-keyring
 sudo make
 popd
 git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+
+# Avoid zsh-compinit-insecure-directories issues.
+# refers to: http://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories for more details.
+pushd /usr/local/share/zsh
+sudo chmod -R 755 ./site-functions
+popd
