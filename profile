@@ -9,6 +9,16 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# platform
+if [ -z $PLATFORM ]; then
+  platformName=$(uname)
+  export PLATFORM=${platformName:0:6}
+  if [ $PLATFORM = 'CYGWIN' ]; then
+    export PLATFORM='Cygwin'
+  fi
+  unset platformName
+fi
+
 prepend_path_if_exists() {
   if [ -d "$1" ]; then
     export PATH="$1":$PATH
@@ -54,6 +64,14 @@ explain() {
   fi
 }
 
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
   # include .bashrc if it exists
@@ -70,7 +88,8 @@ fi
 # set PATH so it includes user's private bin if it exists
 prepend_path_if_exists "$HOME/bin"
 
-export PROJECT_ROOT=$HOME/projects
+# your project folder that we can `c [tab]` to
+export PROJECTS=$HOME/projects
 
 export EDITOR=vim
 
@@ -91,8 +110,8 @@ elif [ -d "$HOME/cloud/kuaipan" ]; then
 fi
 
 # Go path
-if [ -d "$PROJECT_ROOT/go" ]; then
-  export GOPATH=$PROJECT_ROOT/go
+if [ -d "$PROJECTS/go" ]; then
+  export GOPATH=$PROJECTS/go
   export PATH=$PATH:$GOPATH/bin
 fi
 
@@ -121,10 +140,16 @@ fi
 export COVERITY_UNSUPPORTED=1
 prepend_path_if_exists "$HOME/bin/cov-analysis/bin"
 
-# Local configuration
-if [ -f "$HOME/bin/local-conf" ]; then
-  source "$HOME/bin/local-conf"
+alias npm-exec='PATH=$(npm bin):$PATH'
+
+if [ $PLATFORM = 'Darwin' ]; then
+  # autojump configuration.
+  [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 fi
+
+# A quick calculator written by awk.
+# http://lifehacker.com/5396183/create-an-awesome-command-line-calculator
+calc() { awk "BEGIN{ print $*  }" ; }
 
 if [ $PLATFORM = 'Linux' ]; then
   ## For gitup setup.

@@ -15,7 +15,7 @@ tmux has-session -t _default || tmux new-session -s _default -d
 
 # present menu for user to choose which workspace to open
 PS3="Please choose your session: "
-options=($(tmux list-sessions -F "#S") "NEW SESSION" "ZSH")
+options=($(tmux list-sessions -F "#S") "NEW SESSION" "BASH" "ZSH")
 echo "Available sessions"
 echo "------------------"
 echo " "
@@ -27,6 +27,9 @@ do
             tmux new -s "$SESSION_NAME"
             break
             ;;
+        "BASH")
+            bash --login
+            break;;
         "ZSH")
             zsh --login
             break;;

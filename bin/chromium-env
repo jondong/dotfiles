@@ -38,5 +38,5 @@ case $1 in
     return 1
 esac
 
-source "$DOTFILES/bin/chromium-env-common" || return 1
+source "$DOTFILES_ROOT/bin/chromium-env-common" || return 1
 export PS1="%B%F{yellow}[Chromium-$1]$PS1"

@@ -43,5 +43,5 @@ else
   append_path_if_exists "$crosswalk_binary"
 fi
 
-source "$DOTFILES/bin/chromium-env-common" || return 1
+source "$DOTFILES_ROOT/bin/chromium-env-common" || return 1
 export PS1="%B%F{green}[RealSense-$1]$PS1"

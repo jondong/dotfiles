@@ -63,9 +63,9 @@ nnoremap <leader>s <Plug>(wildfire-quick-select)
 " Setup for Chromium
 let chromiumPath=''
 if os=='mac'
-  let chromiumPath=$PROJECT_ROOT . '/chromium/chromium-mac/'
+  let chromiumPath=$PROJECTS . '/chromium/chromium-mac/'
 elseif os=='linux'
-  let chromiumPath=$PROJECT_ROOT . '/chromium/chromium-linux/'
+  let chromiumPath=$PROJECTS . '/chromium/chromium-linux/'
 endif
 if isdirectory(chromiumPath)
   execute 'so ' . chromiumPath . 'src/tools/vim/filetypes.vim'

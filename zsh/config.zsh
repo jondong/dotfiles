@@ -31,11 +31,6 @@ if [ $PLATFORM != "Cygwin" ]; then
   }
 fi
 
-if [ $PLATFORM = 'Darwin' ]; then
-  # autojump configuration.
-  [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-fi
-
 # vim-superman to replace the man page editor with vim
 vman() {
   vim -c "SuperMan $*"
@@ -45,7 +40,3 @@ vman() {
   fi
 }
 compdef vman="man"
-
-# A quick calculator written by awk.
-# http://lifehacker.com/5396183/create-an-awesome-command-line-calculator
-calc() { awk "BEGIN{ print $*  }" ; }

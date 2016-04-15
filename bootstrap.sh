@@ -155,6 +155,9 @@ if [ ! -d "$DOTFILES_ROOT" ]; then
   pushd "$DOTFILES_ROOT" > /dev/null
 
   install_dotfiles
+
+  link_file "$DOTFILES_ROOT/profile" "$HOME/.profile"
+  link_file "$DOTFILES_ROOT/profile" "$HOME/.zshenv"
 else
   info "already installed dotfiles, updating..."
   pushd "$DOTFILES_ROOT" > /dev/null

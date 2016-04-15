@@ -45,6 +45,6 @@ case $1 in
     return 1
 esac
 
-source "$DOTFILES/bin/chromium-env-common" || return 1
+source "$DOTFILES_ROOT/bin/chromium-env-common" || return 1
 export PS1="%B%F{blue}[XWalk-$1]$PS1"
 echo "Run 'python xwalk/gyp_xwalk' in $XWALK/src to generate projects."
