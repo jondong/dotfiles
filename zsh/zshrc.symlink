@@ -3,6 +3,10 @@
 
 export ZSH=$HOME/.oh-my-zsh
 
+if [ -z $PLATFORM ]; then
+  source $HOME/.profile
+fi
+
 if [ $PLATFORM = "Cygwin" ]; then
   ZSH_THEME="babun"
 
