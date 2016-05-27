@@ -1,8 +1,8 @@
 #!/bin/bash
 # Install necessary softwares for Linux here.
-sudo apt-get install aptitude
+sudo apt-get -y install aptitude
 
-sudo aptitude install vim git git-extras git-completion ruby-dev rubygems tmux terminator source-highlight mosh autojump xclip nodejs npm privoxy ssh tree expect cgdb gvim valgrind clang shellcheck tmux openssl gnutils gnutls-bin global cscope exuberant-ctags libgnome-keyring-dev unzip curl tar python-setuptools python-pip
+sudo aptitude -y install vim git git-extras git-completion ruby-dev rubygems tmux terminator source-highlight mosh autojump xclip nodejs npm privoxy ssh tree expect cgdb gvim valgrind clang shellcheck tmux openssl gnutils gnutls-bin global cscope exuberant-ctags libgnome-keyring-dev unzip curl tar python-setuptools python-pip zsh
 
 sudo gem install ghi
 
@@ -15,7 +15,7 @@ popd
 
 node_module_path=$(npm config get prefix)
 if [ $node_module_path = '/usr/local' ]; then
-  sudo mkdir $node_module_path/node_modules
+  sudo mkdir $node_module_path/lib/node_modules
   sudo chown -R $(whoami) $node_module_path/{lib/node_modules,bin,share}
 fi
 
