@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Make sure we're being sourced (possibly by another script). Check for bash
+# since zsh sets $0 when sourcing.
+if [[ -n "$BASH_VERSION" && "${BASH_SOURCE:-$0}" == "$0" ]]; then
+  echo "ERROR: $0 must be sourced."
+  exit 1
+fi
+
+#set_ros_package_path_if_needed() {
+  #if [ ! $ROS_PACKAGE_PATH ]; then
+    #export ROS_PACKAGE_PATH=/opt/ros/kinetic/share:/opt/ros/kinetic/stacks
+  #fi
+
+  #if [ ! -f '.catkin_workspace' ]; then
+    #return
+  #fi
+
+  #export ROS_PACKAGE_PATH="$(pwd)/src":$ROS_PACKAGE_PATH
+  #if [ -d "$(pwd)/devel/share/common-lisp" ]; then
+    #export ROSLISP_PACKAGE_DIRECTORIES="$(pwd)/devel/share/common-lisp"
+  #fi
+#}
+
+source /opt/ros/kinetic/setup.bash || return 1
+
+export PS1="[ROS]$PS1"
