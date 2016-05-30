@@ -64,6 +64,8 @@ explain() {
   fi
 }
 
+export EDITOR=vim
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
@@ -90,8 +92,6 @@ prepend_path_if_exists "$HOME/bin"
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=$HOME/projects
-
-export EDITOR=vim
 
 # Add dotfiles scripts path
 export DOTFILES_ROOT="$HOME/.dotfiles"
@@ -139,6 +139,9 @@ fi
 # Coverity config
 export COVERITY_UNSUPPORTED=1
 prepend_path_if_exists "$HOME/bin/cov-analysis/bin"
+
+# nw.js path
+append_path_if_exists "$HOME/bin/nwjs"
 
 alias npm-exec='PATH=$(npm bin):$PATH'
 
