@@ -19,6 +19,11 @@ if [ -z $PLATFORM ]; then
   unset platformName
 fi
 
+# current shell
+function current_shell() {
+  ps -p $$ -ocomm=
+}
+
 prepend_path_if_exists() {
   if [ -d "$1" ]; then
     export PATH="$1":$PATH
@@ -65,6 +70,8 @@ explain() {
 }
 
 export EDITOR=vim
+export PROJECTS=$HOME/projects
+export DOTFILES_ROOT="$HOME/.dotfiles"
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
@@ -90,11 +97,7 @@ fi
 # set PATH so it includes user's private bin if it exists
 prepend_path_if_exists "$HOME/bin"
 
-# your project folder that we can `c [tab]` to
-export PROJECTS=$HOME/projects
-
 # Add dotfiles scripts path
-export DOTFILES_ROOT="$HOME/.dotfiles"
 prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
 # Scripts in dropbox
