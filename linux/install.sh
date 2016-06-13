@@ -6,7 +6,7 @@ sudo apt-get -y install aptitude
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-sudo aptitude -y install vim git git-extras git-completion ruby-dev rubygems tmux terminator source-highlight mosh autojump xclip npm privoxy ssh tree expect cgdb gvim valgrind clang shellcheck tmux openssl gnutils gnutls-bin global cscope exuberant-ctags libgnome-keyring-dev unzip curl tar python-setuptools python-pip zsh
+sudo aptitude -y install vim git git-extras git-completion ruby-dev rubygems tmux terminator source-highlight mosh autojump xclip npm privoxy ssh tree expect cgdb gvim valgrind clang shellcheck openssl gnutils gnutls-bin global cscope exuberant-ctags libgnome-keyring-dev unzip curl tar python-setuptools python-pip zsh
 
 sudo gem install ghi
 
