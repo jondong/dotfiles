@@ -1,6 +1,6 @@
 #set data-directory /usr/share/gdb
 
-source /home/jonathan/configure/gdb/stl_views
+source /home/jonathan/.dotfiles/gdb/stl_views
 
 # Print a C++ string.
 #define ps

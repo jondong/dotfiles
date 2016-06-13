@@ -2,7 +2,7 @@
 
 echo "**** Child $$ starting: y to debug"
 read input
-if [ "$input" == "y" ] ; then
+if [ "$input" = "y" ] ; then
     gdb --args "$*"
 else
     "$*"
