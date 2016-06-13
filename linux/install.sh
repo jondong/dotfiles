@@ -36,3 +36,8 @@ git config --global credential.helper /usr/share/doc/git/contrib/credential/gnom
 pushd /usr/local/share/zsh
 sudo chmod -R 755 ./site-functions
 popd
+
+# setup crontab
+if [ -f "$HOME/.crontab" ]; then
+  crontab -u $(whoami) "$HOME/.crontab"
+fi
