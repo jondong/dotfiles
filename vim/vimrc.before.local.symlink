@@ -1,5 +1,5 @@
 " Bundle groups
-if WINDOWS()
+if (has('win32') || has('win64'))
   let g:spf13_bundle_groups=['general', 'writing', 'programming', 'php', 'ruby', 'python', 'go', 'javascript', 'html', 'misc',]
 else
   let g:spf13_bundle_groups=['general', 'writing', 'youcompleteme', 'programming', 'php', 'ruby', 'python', 'go', 'javascript', 'html', 'misc',]

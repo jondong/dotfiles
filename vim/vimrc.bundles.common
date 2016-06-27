@@ -18,7 +18,7 @@ Plugin 'jez/vim-superman'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 " Source Browsing
-if !WINDOWS()
+if !(has('win32') || has('win64'))
   Plugin 'https://github.com/vim-scripts/taglist.vim.git'
   Plugin 'gtags.vim'
 endif

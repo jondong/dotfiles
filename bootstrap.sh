@@ -166,18 +166,18 @@ fi
 
 popd > /dev/null
 
-if [ ! -d "$HOME/.spf13-vim-3" ]; then
-    install_vim_config
-else
-    update_vim_config
-fi
-
 if [ $PLATFORM = "Darwin" ]; then
     source $DOTFILES_ROOT/mac/install.sh
 elif [ $PLATFORM = "Linux" ]; then
     source $DOTFILES_ROOT/linux/install.sh
 elif [ $PLATFORM = "Cygwin" ]; then
     source $DOTFILES_ROOT/win/install.sh
+fi
+
+if [ ! -d "$HOME/.spf13-vim-3" ]; then
+    install_vim_config
+else
+    update_vim_config
 fi
 
 if [ ! -d "$TMUX_PLUGIN_MANAGER_ROOT" ]; then
