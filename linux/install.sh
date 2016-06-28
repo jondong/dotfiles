@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Perserve those enviroment variables from current user.
+sudo echo 'Defaults\tenv_keep = "http_proxy https_proxy ftp_proxy socks_proxy"' >> /etc/sudoers
+
 # Install necessary softwares for Linux here.
 sudo apt-get -y install aptitude
 
