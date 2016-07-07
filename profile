@@ -101,16 +101,7 @@ prepend_path_if_exists "$HOME/bin"
 prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
 # Scripts in dropbox
-prepend_path_if_exists "$HOME/Dropbox/bin"
-
-# Kuaipan (replacement for Dropbox)
-if [ -d "$HOME/cloud/快盘" ]; then
-  export KUAIPAN_ROOT="$HOME/cloud/快盘"
-  export PATH="$KUAIPAN_ROOT/bin":$PATH
-elif [ -d "$HOME/cloud/kuaipan" ]; then
-  export KUAIPAN_ROOT="$HOME/cloud/kuaipan"
-  export PATH="$KUAIPAN_ROOT/bin":$PATH
-fi
+prepend_path_if_exists "$HOME/cloud/Dropbox/bin"
 
 # Go path
 if [ -d "$PROJECTS/go" ]; then
