@@ -24,6 +24,10 @@ function current_shell() {
   ps -p $$ -ocomm=
 }
 
+check_existence() {
+  command -v $1 2>/dev/null || return 1
+}
+
 prepend_path_if_exists() {
   if [ -d "$1" ]; then
     export PATH="$1":$PATH
@@ -157,8 +161,7 @@ if [ $PLATFORM = 'Linux' ]; then
   ## Dropbox setup
   ## You need to download dropboxy.py and put it into ~/bin/.
   ## For more information please refer to: https://www.dropbox.com/install?os=lnx
-  which dropbox.py > /dev/null 2>&1
-  if [ $? -eq 0 ]; then
+  if [ $(check_existence dropbox.py) ]; then
     dropbox.py running
     if [ $? -eq 0 ]; then
       echo "Dropbox is not running, start it."
