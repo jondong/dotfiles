@@ -25,7 +25,7 @@ function current_shell() {
 }
 
 check_existence() {
-  command -v $1 2>/dev/null || return 1
+  command -v $1 2>/dev/null
 }
 
 prepend_path_if_exists() {
