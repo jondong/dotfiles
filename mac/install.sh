@@ -2,7 +2,7 @@
 #Install necessary softwares for Mac here.
 
 # Check if homebrew get installed.
-if [ ! $(check_existence brew) ]; then
+if [ ! $(command_exists brew) ]; then
   echo "  Installing homebrew for you..."
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi

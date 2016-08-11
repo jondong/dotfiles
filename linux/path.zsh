@@ -3,7 +3,7 @@
 if [ $PLATFORM = 'Linux' ]; then
   source /usr/share/autojump/autojump.zsh
 
-  if [ $(check_existence source-highlight) ]; then
+  if [ $(command_exists source-highlight) ]; then
     export LESSOPEN="/usr/share/source-highlight/src-hilite-lesspipe.sh %s"
     export LESS=' -R '
 
