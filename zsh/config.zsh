@@ -19,7 +19,7 @@ if [ $PLATFORM != "Cygwin" ]; then
   antigen bundle zsh-users/zsh-completions
 
   # Load the theme.
-  antigen theme arrow
+  antigen theme daveverwer
 
   # Tell antigen that you're done.
   antigen apply

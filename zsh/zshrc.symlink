@@ -54,3 +54,6 @@ bindkey -e
 
 # added by travis gem
 [ -f /home/jonathan/.travis/travis.sh ] && source /home/jonathan/.travis/travis.sh
+
+# Load local zshrc if it exists
+[ -f ~/.local.zshrc ] && source ~/.local.zshrc

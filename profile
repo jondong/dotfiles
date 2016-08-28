@@ -105,7 +105,8 @@ prepend_path_if_exists "$HOME/bin"
 prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
 # Scripts in dropbox
-prepend_path_if_exists "$HOME/cloud/Dropbox/bin"
+DROPBOX_PATH="$HOME/cloud/Dropbox"
+prepend_path_if_exists "$DROPBOX_PATH/bin"
 
 # Go path
 if [ -d "$PROJECTS/go" ]; then
@@ -161,7 +162,7 @@ if [ $PLATFORM = 'Linux' ]; then
   ## Dropbox setup
   ## You need to download dropboxy.py and put it into ~/bin/.
   ## For more information please refer to: https://www.dropbox.com/install?os=lnx
-  if [ $(command_exists dropbox.py) ]; then
+  if [[ $(command_exists dropbox.py) && -d $DROPBOX_PATH ]]; then
     dropbox.py running
     if [ $? -eq 0 ]; then
       echo "Dropbox is not running, start it."
