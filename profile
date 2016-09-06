@@ -162,7 +162,7 @@ if [ $PLATFORM = 'Linux' ]; then
   ## Dropbox setup
   ## You need to download dropboxy.py and put it into ~/bin/.
   ## For more information please refer to: https://www.dropbox.com/install?os=lnx
-  if [[ $(command_exists dropbox.py) && -d $DROPBOX_PATH ]]; then
+  if [[ $(command_exists dropbox.py) && $(command_exists ~/.dropbox-dist/dropboxd) && -d $DROPBOX_PATH ]]; then
     dropbox.py running
     if [ $? -eq 0 ]; then
       echo "Dropbox is not running, start it."
