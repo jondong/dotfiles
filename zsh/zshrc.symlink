@@ -53,7 +53,9 @@ unset config_files
 bindkey -e
 
 # added by travis gem
-[ -f /home/jonathan/.travis/travis.sh ] && source /home/jonathan/.travis/travis.sh
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
 # Load local zshrc if it exists
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
+
+[ -f $HOME/.rvm/bin ] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
