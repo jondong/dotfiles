@@ -40,6 +40,7 @@ set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'nhdaly/tmux-better-mouse-mode'
 #set -g @plugin 'tmux-plugins/tmux-copycat'
 #set -g @plugin 'tmux-plugins/tmux-yank'
 #set -g @plugin 'tmux-plugins/tmux-open'
@@ -49,6 +50,10 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @continuum-boot 'on'
 set -g @continuum-boot-options 'iterm,fullscreen'
 set -g @continuum-restore 'on'
+
+# Mouse mode
+# This is for tmux v2.1 and higher. please refer to: https://github.com/NHDaly/tmux-better-mouse-mod://github.com/NHDaly/tmux-better-mouse-mode for more details.
+set-option -g mouse on
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
