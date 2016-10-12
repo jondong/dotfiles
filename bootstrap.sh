@@ -113,11 +113,11 @@ install_dotfiles () {
 
   local files_to_link=""
   if [ $PLATFORM = "Darwin" ]; then
-    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.macsymlink")
+    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 3 -name "*.symlink" -o -name "*.macsymlink")
   elif [ $PLATFORM = "Linux" ]; then
-    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.linuxsymlink")
+    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 3 -name "*.symlink" -o -name "*.linuxsymlink")
   elif [ $PLATFORM = "Cygwin" ]; then
-    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 2 -name "*.symlink" -o -name "*.winsymlink")
+    files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 3 -name "*.symlink" -o -name "*.winsymlink")
   fi
 
   for src in $files_to_link
@@ -134,8 +134,8 @@ if [ ! -d "$DOTFILES_ROOT" ]; then
 
   install_dotfiles
 
-  link_file "$DOTFILES_ROOT/profile" "$HOME/.profile"
-  link_file "$DOTFILES_ROOT/profile" "$HOME/.zshenv"
+  link_file "$DOTFILES_ROOT/platforms/profile" "$HOME/.profile"
+  link_file "$DOTFILES_ROOT/platforms/profile" "$HOME/.zshenv"
 else
   info "already installed dotfiles, updating..."
   pushd "$DOTFILES_ROOT" > /dev/null
@@ -145,11 +145,11 @@ fi
 popd > /dev/null
 
 if [ $PLATFORM = "Darwin" ]; then
-    source $DOTFILES_ROOT/mac/install.sh
+    source $DOTFILES_ROOT/platforms/mac/install.sh
 elif [ $PLATFORM = "Linux" ]; then
-    source $DOTFILES_ROOT/linux/install.sh
+    source $DOTFILES_ROOT/platforms/linux/install.sh
 elif [ $PLATFORM = "Cygwin" ]; then
-    source $DOTFILES_ROOT/win/install.sh
+    source $DOTFILES_ROOT/platforms/win/install.sh
 fi
 
 # Create logs directory.
