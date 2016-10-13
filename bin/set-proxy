@@ -1,5 +1,14 @@
 #!/bin/bash
 
+if [ -z $PLATFORM ]; then
+    platformName=$(uname)
+    PLATFORM=${platformName:0:6}
+    if [ $PLATFORM = 'CYGWIN' ]; then
+        PLATFORM='Cygwin'
+    fi
+    unset platformName
+fi
+
 urlencode() {
     # urlencode <string>
     old_lc_collate=$LC_COLLATE
@@ -83,6 +92,18 @@ update_proxy_settings () {
     echo "#!/bin/bash" > ${git_proxy_file}
     echo -e "nc -X 5 -x ${socks_host}:${socks_port} $*" >> ${git_proxy_file}
     chmod +x ${git_proxy_file}
+
+    if [ $PLATFORM = "Linux" ]; then
+        apt_conf_file="/tmp/apt.conf"
+        echo "Acquire::http::proxy \"${http}\";" > ${apt_conf_file}
+        echo "Acquire::https::proxy \"${http}\";" >> ${apt_conf_file}
+        echo "Acquire::ftp::proxy \"${http}\";" >> ${apt_conf_file}
+        echo "Acquire::socks::proxy \"${socks}\";" >> ${apt_conf_file}
+
+        echo "Replace /etc/apt/apt.conf"
+        sudo cp ${apt_conf_file} /etc/apt
+        rm ${apt_conf_file}
+    fi
 }
 
 update_proxy_settings
