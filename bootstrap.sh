@@ -156,3 +156,37 @@ fi
 if [ ! -d "$HOME/logs" ]; then
     mkdir -p $HOME/logs
 fi
+
+read -e -p "Setup Vim? [Y/n] " -n 1
+setup_vim=${REPLY:=y}
+if [ ${setup_vim,,} = 'y' ]; then
+    if [ ! -d "$HOME/.spf13-vim-3" ]; then
+        info 'installing vim configurations...'
+        sh <(curl https://j.mp/spf13-vim3 -L)
+    else
+        info 'updating vim configurations...'
+        sh <(curl https://j.mp/spf13-vim3 -L -o -)
+    fi
+    success "Vim configuration has been set."
+else
+    info "Skip Vim settings."
+fi
+
+read -e -p "Setup Tmux? [Y/n] " -n 1
+setup_tmux=${REPLY:=y}
+if [ ${setup_tmux,,} = 'y' ]; then
+    TMUX_PLUGIN_MANAGER_ROOT="$HOME/.tmux/plugins/tpm"
+    if [ ! -d "$TMUX_PLUGIN_MANAGER_ROOT" ]; then
+        mkdir -p "$TMUX_PLUGIN_MANAGER_ROOT"
+        git clone https://github.com/tmux-plugins/tpm "$TMUX_PLUGIN_MANAGER_ROOT"
+    else
+        pushd "$TMUX_PLUGIN_MANAGER_ROOT" > /dev/null
+        git pull --rebase origin master
+        popd > /dev/null
+    fi
+    tmux source $HOME/.tmux.conf
+    success "Tmux configuration has been set."
+else
+    info "Skip Tmux settings."
+fi
+
