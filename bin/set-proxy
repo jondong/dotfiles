@@ -49,10 +49,10 @@ update_proxy_settings () {
         read -p "HTTP proxy password (if any): " -r -s http_passwd
         echo ""
     fi
-    read -p "Socks proxy host (Press Enter if same with HTTP proxy host): " -r
+    read -p "Socks proxy host (Press <Enter> if same with HTTP proxy host): " -r
     socks_host=${REPLY:=$http_host}
     read -p "Socks proxy port: " -r socks_port
-    read -p "No proxy domains(separated by comma. Press Enter to use default settings): " -r
+    read -p "No proxy domains(separated by comma. Press <Enter> to use default settings): " -r
     no=${REPLY:=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,127.0.0.0/8,134.134.0.0/16}
 
     if [ ${http_user} ]; then
@@ -103,6 +103,13 @@ update_proxy_settings () {
         echo "Replace /etc/apt/apt.conf"
         sudo cp ${apt_conf_file} /etc/apt
         rm ${apt_conf_file}
+
+
+        echo -e "\nNOTICE: visudo will be start and you need to add the following lines to your /etc/sudoer:"
+        echo -e '\nDefaults\tenv_keep="http_proxy https_proxy ftp_proxy socks_proxy"\n'
+        read -e -p 'Press <Enter> to continue...' -n 0
+        export EDITOR=vi
+        sudo visudo
     fi
 }
 
