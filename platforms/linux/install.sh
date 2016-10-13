@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Perserve those enviroment variables from current user.
-#sudo echo 'Defaults\tenv_keep = "http_proxy https_proxy ftp_proxy socks_proxy"' >> /etc/sudoers
-
 # Install necessary softwares for Linux here.
 sudo apt-get -y install aptitude
 
@@ -19,12 +16,6 @@ git clone https://github.com/earwig/git-repo-updater.git /tmp/git-repo-updater
 pushd /tmp/git-repo-updater
 python setup.py install --user
 popd
-
-#node_module_path=$(npm config get prefix)
-#if [ $node_module_path = '/usr/local' ]; then
-  #sudo mkdir $node_module_path/lib/node_modules
-  #sudo chown -R $(whoami) $node_module_path/{lib/node_modules,bin,share}
-#fi
 
 sudo npm install -g coffee-script
 
