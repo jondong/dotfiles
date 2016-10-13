@@ -1,16 +1,15 @@
 #!/bin/bash
 
 # Perserve those enviroment variables from current user.
-sudo echo 'Defaults\tenv_keep = "http_proxy https_proxy ftp_proxy socks_proxy"' >> /etc/sudoers
+#sudo echo 'Defaults\tenv_keep = "http_proxy https_proxy ftp_proxy socks_proxy"' >> /etc/sudoers
 
 # Install necessary softwares for Linux here.
 sudo apt-get -y install aptitude
 
 # Install nodejs v6
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install -y nodejs
 
-sudo aptitude -y install vim git git-extras git-completion ruby-dev rubygems tmux terminator source-highlight mosh autojump xclip npm privoxy ssh tree expect cgdb gvim valgrind clang shellcheck openssl gnutils gnutls-bin global cscope exuberant-ctags libgnome-keyring-dev unzip curl tar python-setuptools python-pip zsh
+sudo aptitude -y install nodejs vim git git-extras git-completion ruby-dev rubygems tmux terminator source-highlight mosh autojump xclip npm privoxy ssh tree expect cgdb gvim valgrind clang shellcheck openssl gnutils gnutls-bin global cscope exuberant-ctags libgnome-keyring-dev unzip curl tar python-setuptools python-pip zsh
 
 sudo gem install ghi
 
@@ -21,13 +20,13 @@ pushd /tmp/git-repo-updater
 python setup.py install --user
 popd
 
-node_module_path=$(npm config get prefix)
-if [ $node_module_path = '/usr/local' ]; then
-  sudo mkdir $node_module_path/lib/node_modules
-  sudo chown -R $(whoami) $node_module_path/{lib/node_modules,bin,share}
-fi
+#node_module_path=$(npm config get prefix)
+#if [ $node_module_path = '/usr/local' ]; then
+  #sudo mkdir $node_module_path/lib/node_modules
+  #sudo chown -R $(whoami) $node_module_path/{lib/node_modules,bin,share}
+#fi
 
-npm install -g coffee-script
+sudo npm install -g coffee-script
 
 # Setup gnome keyring for git
 pushd /usr/share/doc/git/contrib/credential/gnome-keyring

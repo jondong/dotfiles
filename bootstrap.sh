@@ -157,7 +157,7 @@ if [ ! -d "$HOME/logs" ]; then
     mkdir -p $HOME/logs
 fi
 
-read -e -p "Setup Vim? [Y/n] " -n 1
+read -e -p "Setup Vim? [Y/n]: " -n 1
 setup_vim=${REPLY:=y}
 if [ ${setup_vim,,} = 'y' ]; then
     if [ ! -d "$HOME/.spf13-vim-3" ]; then
@@ -169,10 +169,10 @@ if [ ${setup_vim,,} = 'y' ]; then
     fi
     success "Vim configuration has been set."
 else
-    info "Skip Vim settings."
+    success "Skip Vim settings."
 fi
 
-read -e -p "Setup Tmux? [Y/n] " -n 1
+read -e -p "Setup Tmux? [Y/n]: " -n 1
 setup_tmux=${REPLY:=y}
 if [ ${setup_tmux,,} = 'y' ]; then
     TMUX_PLUGIN_MANAGER_ROOT="$HOME/.tmux/plugins/tpm"
@@ -187,6 +187,6 @@ if [ ${setup_tmux,,} = 'y' ]; then
     tmux source $HOME/.tmux.conf
     success "Tmux configuration has been set."
 else
-    info "Skip Tmux settings."
+    success "Skip Tmux settings."
 fi
 
