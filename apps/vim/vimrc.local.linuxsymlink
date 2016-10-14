@@ -1,5 +1,5 @@
-if filereadable(expand("~/.dotfiles/vim/vimrc.local.common"))
-  source ~/.dotfiles/vim/vimrc.local.common
+if filereadable(expand("~/.dotfiles/apps/vim/vimrc.local.common"))
+  source ~/.dotfiles/apps/vim/vimrc.local.common
 endif
 
 "" Setup Color Scheme
