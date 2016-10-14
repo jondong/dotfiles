@@ -33,7 +33,6 @@ elif [ $PLATFORM = "Cygwin" ]; then
 fi
 config_files=(${shells_zsh[@]} ${platform_zsh[@]})
 
-echo "config files: ${config_files}"
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
 do
