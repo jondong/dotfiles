@@ -127,6 +127,14 @@ install_dotfiles () {
   done
 }
 
+if [ $PLATFORM = "Darwin" ]; then
+    brew install git vim
+elif [ $PLATFORM = "Linux" ]; then
+    sudo apt install git vim
+elif [ $PLATFORM = "Cygwin" ]; then
+    pact install git vim
+fi
+
 if [ ! -d "$DOTFILES_ROOT" ]; then
   info "installing dotfiles for the first time."
   git clone https://github.com/jondong/dotfiles.git "$DOTFILES_ROOT"
