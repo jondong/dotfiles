@@ -1,11 +1,6 @@
 # Path to your oh-my-zsh installation.
-#source $HOME/.dotfiles/profile
 
 export ZSH=$HOME/.oh-my-zsh
-
-if [ -z $PLATFORM ]; then
-  source $HOME/.profile
-fi
 
 if [ $PLATFORM = "Cygwin" ]; then
   ZSH_THEME="babun"
@@ -20,7 +15,6 @@ if [ $PLATFORM = "Cygwin" ]; then
 fi
 
 # all of our zsh files
-typeset -U config_files
 shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh)
 platform_zsh=
 
@@ -31,6 +25,7 @@ elif [ $PLATFORM = "Linux" ]; then
 elif [ $PLATFORM = "Cygwin" ]; then
     platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh)
 fi
+typeset -U config_files
 config_files=(${shells_zsh[@]} ${platform_zsh[@]})
 
 # load the path files
@@ -62,10 +57,6 @@ unset config_files
 # bindkey with Emacs style. This is for tmux-yank plugin.
 bindkey -e
 
-# added by travis gem
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
-
-# Load local zshrc if it exists
+# Load local zshrc if it exists. This should stay at the end of .zshrc
+# to give user a chance to rewrite the default settings.
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
-
-[ -f $HOME/.rvm/bin ] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

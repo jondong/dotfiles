@@ -29,15 +29,11 @@ command_exists() {
 }
 
 prepend_path_if_exists() {
-  if [ -d "$1" ]; then
-    export PATH="$1":$PATH
-  fi
+  [ -d "$1" ] && export PATH="$1":$PATH
 }
 
 append_path_if_exists() {
-  if [ -d "$1" ]; then
-    export PATH=$PATH:"$1"
-  fi
+  [ -d "$1" ] && export PATH=$PATH:"$1"
 }
 
 prepend_pwd_to_path() {
@@ -77,15 +73,8 @@ export EDITOR=vim
 export PROJECTS=$HOME/projects
 export DOTFILES_ROOT="$HOME/.dotfiles"
 
+# Load proxy setting firstly.
 [ -f ~/.proxyrc ] && source ~/.proxyrc
-
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-  # include .bashrc if it exists
-  if [ -f "$HOME/.bashrc" ]; then
-    . "$HOME/.bashrc"
-  fi
-fi
 
 #Add ssh key for sync playbook repos.
 if [ -d "$HOME/resource/backup-keys" ] ; then
@@ -209,11 +198,9 @@ elif [ $PLATFORM = 'Darwin' ]; then
   fi
 fi
 
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+[ -f $HOME/.rvm/bin ] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
