@@ -1,8 +1,6 @@
 # Append necessary path to PATH for Mac.
 
-if [ $PLATFORM = 'Darwin' ]; then
-  # nvm configuration.
-  export NVM_DIR=~/.nvm
-  source $(brew --prefix nvm)/nvm.sh
-  alias cat='ccat'
-fi
+# nvm configuration.
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+alias cat='ccat'

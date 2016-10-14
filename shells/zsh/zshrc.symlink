@@ -21,8 +21,19 @@ fi
 
 # all of our zsh files
 typeset -U config_files
-config_files=($DOTFILES_ROOT/**/*.zsh)
+shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh)
+platform_zsh=
 
+if [ $PLATFORM = "Darwin" ]; then
+    platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh)
+elif [ $PLATFORM = "Linux" ]; then
+    platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh)
+elif [ $PLATFORM = "Cygwin" ]; then
+    platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh)
+fi
+config_files=(${shells_zsh[@]} ${platform_zsh[@]})
+
+echo "config files: ${config_files}"
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
 do
