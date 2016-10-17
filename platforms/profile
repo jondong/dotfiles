@@ -28,12 +28,24 @@ command_exists() {
   command -v "$1" 2>/dev/null
 }
 
+directory_already_in_path() {
+  paths=($(sed 's/:/\n/g' <<< "$PATH"))
+  for i in $paths; do
+    [ "$1" = "$i" ] && return 0
+  done
+  return 1
+}
+
 prepend_path_if_exists() {
-  [ -d "$1" ] && export PATH="$1":$PATH
+  if [ -d "$1" ] && ! directory_already_in_path "$1" ; then
+    export PATH="$1":$PATH
+  fi
 }
 
 append_path_if_exists() {
-  [ -d "$1" ] && export PATH=$PATH:"$1"
+  if [ -d "$1" ] && ! directory_already_in_path "$1" ; then
+    export PATH=$PATH:"$1"
+  fi
 }
 
 prepend_pwd_to_path() {
