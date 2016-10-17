@@ -139,64 +139,9 @@ append_path_if_exists "$HOME/bin/nwjs"
 
 alias npm-exec='PATH=$(npm bin):$PATH'
 
-if [ $PLATFORM = 'Darwin' ]; then
-  # autojump configuration.
-  [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-fi
-
 # A quick calculator written by awk.
 # http://lifehacker.com/5396183/create-an-awesome-command-line-calculator
 calc() { awk "BEGIN{ print $*  }" ; }
-
-if [ $PLATFORM = 'Linux' ]; then
-  ## For gitup setup.
-  ## gitup is a tool to sync multiple git repos in a single shot.
-  ## For more information please refer to: https://github.com/earwig/git-repo-updater
-  append_path_if_exists "$HOME/.local/bin"
-
-  ## Ant setup
-  ANT_BIN_PATH=$HOME/bin/apache-ant/bin
-  prepend_path_if_exists "$ANT_BIN_PATH"
-
-  ## JDK setup
-  if [ -d "$HOME/bin/jdk" ]; then
-    export JAVA_HOME=$HOME/bin/jdk
-    JDK_BIN_PATH=$JAVA_HOME/bin
-    prepend_path_if_exists "$JDK_BIN_PATH"
-  fi
-
-elif [ $PLATFORM = 'Darwin' ]; then
-  # Path for python binaries
-  append_path_if_exists "$HOME/Library/Python/2.7/bin"
-
-  # Home for BaiduPan
-  export BAIDU_YUNPAN_ROOT="$HOME/cloud/百度云同步盘"
-
-  if [ -d /opt/local ]; then
-    # using Macports
-    EXTRA_LIB_PREFIX=/opt/local
-  elif [ -d /usr/local ]; then
-    # using Homebrew
-    EXTRA_LIB_PREFIX=/usr/local
-  fi
-
-  if [ -z $EXTRA_LIB_PREFIX ]; then
-    exit
-  fi
-  export PATH=$EXTRA_LIB_PREFIX/bin:$EXTRA_LIB_PREFIX/sbin:$PATH
-  export LD_LIBRARY_PATH=$EXTRA_LIB_PREFIX/lib:$LD_LIBRARY_PATH
-
-  # MacPorts Bash shell command completion
-  if [ -f $EXTRA_LIB_PREFIX/etc/bash_completion ]; then
-      . $EXTRA_LIB_PREFIX/etc/bash_completion
-      source $EXTRA_LIB_PREFIX/share/git/git-prompt.sh
-  fi
-
-  # Homebrew bash shell command completion
-  if [ -d $EXTRA_LIB_PREFIX/etc/bash_completion.d ]; then
-      source $EXTRA_LIB_PREFIX/etc/bash_completion.d/git-extras
-  fi
-fi
 
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 [ -f $HOME/.rvm/bin ] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
