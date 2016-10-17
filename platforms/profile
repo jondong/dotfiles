@@ -154,18 +154,6 @@ if [ $PLATFORM = 'Linux' ]; then
   ## For more information please refer to: https://github.com/earwig/git-repo-updater
   append_path_if_exists "$HOME/.local/bin"
 
-  ## Dropbox setup
-  ## You need to download dropboxy.py and put it into ~/bin/.
-  ## For more information please refer to: https://www.dropbox.com/install?os=lnx
-  if [[ $(command_exists dropbox.py) && $(command_exists ~/.dropbox-dist/dropboxd) && -d $DROPBOX_PATH ]]; then
-    dropbox.py running
-    if [ $? -eq 0 ]; then
-      echo "Dropbox is not running, start it."
-      dropbox.py start
-      dropbox.py autostart y
-    fi
-  fi
-
   ## Ant setup
   ANT_BIN_PATH=$HOME/bin/apache-ant/bin
   prepend_path_if_exists "$ANT_BIN_PATH"
