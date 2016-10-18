@@ -40,3 +40,8 @@ vman() {
   fi
 }
 compdef vman="man"
+
+# Completion settings for teamocil
+if [ $(command_exists teamocil) ]; then
+  compctl -g '~/.teamocil/*(:t:r)' teamocil
+fi

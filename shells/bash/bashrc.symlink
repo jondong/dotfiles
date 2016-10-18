@@ -1,8 +1,15 @@
 #!/bin/bash
 
+source ~/.profile
+
 export TERM=xterm-color
 export GREP_COLOR='1;32'
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33'
 export PS1='\e[33;1m\u@\h: \e[31m\W\e[0m\$ '
+
+# Completion settings for teamocil
+if [ $(command_exists teamocil) ]; then
+  complete -W "$(teamocil --list)" teamocil
+fi

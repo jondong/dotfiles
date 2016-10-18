@@ -32,7 +32,8 @@ sudo chmod -R 755 ./site-functions
 popd
 
 if [ ${is_production,,} = 'n' ]; then
-  sudo gem install ghi
+  sudo gem install ghi teamocil
+  mkdir -p ~/.teamocil
 
   # Install gitup from git-repo-updater.
   echo "Installing gitup..."
