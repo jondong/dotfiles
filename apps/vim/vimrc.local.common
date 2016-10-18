@@ -65,7 +65,7 @@ let chromiumPath=''
 if os=='mac'
   let chromiumPath=$PROJECTS . '/chromium/chromium-mac/'
 elseif os=='linux'
-  let chromiumPath=$PROJECTS . '/chromium/chromium-linux/'
+  let chromiumPath=$PROJECTS . '/chromium/'
 endif
 if isdirectory(chromiumPath)
   execute 'so ' . chromiumPath . 'src/tools/vim/filetypes.vim'

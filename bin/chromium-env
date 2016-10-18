@@ -21,13 +21,13 @@ unset TIZEN_TEMP_BUILD_DIR
 
 case $1 in
   "android")
-    export CHROMIUM=$PROJECTS/chromium/chromium-android
+    export CHROMIUM=$PROJECTS/chromium-android
     source "$CHROMIUM/src/build/android/envsetup.sh"
     export GYP_DEFINES='OS=android target_arch=ia32'
     echo "Run 'build/gyp_chromium' in $CHROMIUM/src to generate projects."
     ;;
   "linux")
-    export CHROMIUM=$PROJECTS/chromium/chromium-linux
+    export CHROMIUM=$PROJECTS/chromium
     ;;
   "mac")
     export CHROMIUM=$PROJECTS/chromium/chromium-mac
