@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 pushd ~/resource
 wget http://ipv6-hosts.googlecode.com/hg/hosts

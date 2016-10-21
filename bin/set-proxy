@@ -73,7 +73,7 @@ update_proxy_settings () {
     proxy_file="${HOME}/.proxyrc"
     echo "Update ${proxy_file}."
 
-    echo "#!/bin/bash" > ${proxy_file}
+    echo "#!/usr/bin/env bash" > ${proxy_file}
     echo "export http_proxy='${http}'" >> ${proxy_file}
     echo -e "export https_proxy='${http}'\nexport ftp_proxy='${http}'" >> ${proxy_file}
     echo -e "export npm_config_proxy='${http}'\nexport npm_config_https_proxy='${http}'" >> ${proxy_file}
@@ -89,7 +89,7 @@ update_proxy_settings () {
     git_proxy_file="${bin_dir}/git-proxy"
     echo "Regenerate ${git_proxy_file}."
 
-    echo "#!/bin/bash" > ${git_proxy_file}
+    echo "#!/usr/bin/env bash" > ${git_proxy_file}
     echo -e "nc -X 5 -x ${socks_host}:${socks_port} $*" >> ${git_proxy_file}
     chmod +x ${git_proxy_file}
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 echo 'Enter user.name:'; read -r username
 echo 'Enter user.email:'; read -r email
 echo 'Enter github.user:'; read -r githubUser

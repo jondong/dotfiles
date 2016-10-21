@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #Install necessary softwares for Mac here.
 
 # Check if homebrew get installed.

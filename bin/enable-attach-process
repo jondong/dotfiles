@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ptrace_scope_file="/proc/sys/kernel/yama/ptrace_scope"
 if [ -e  $ptrace_scope_file ]; then

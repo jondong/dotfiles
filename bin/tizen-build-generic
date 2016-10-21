@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$TIZEN_ROOT" ]; then
   echo "variable TIZEN_ROOT hasn't been set, run source <path_to>/xwalk-env-tizen first."

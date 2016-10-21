@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Make sure we're being sourced (possibly by another script). Check for bash
 # since zsh sets $0 when sourcing.

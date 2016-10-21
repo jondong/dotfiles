@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 BUSYBOX_EXEC=busybox-i686
 TMP_DIR=/tmp/busybox-tmp

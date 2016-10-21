@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$XWALK_ROOT" ]; then
   echo "source xwalk-env-linux scripts first."

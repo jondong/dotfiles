@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This script is used to rm .swp files recursively if the vim exited abnormally.
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$XWALK_ROOT" ]; then
   echo "variable XWALK_ROOT hasn't been set, run 'source <path_to>/xwalk-env-android' first."

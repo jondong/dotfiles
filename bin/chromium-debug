@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z "$CHROMIUM_ROOT" ]; then
     echo "CHROMIUM_ROOT has not been set. run chromium-setup-env first."
