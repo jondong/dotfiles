@@ -51,7 +51,8 @@ update_proxy_settings () {
     fi
     read -p "Socks proxy host (Press <Enter> if same with HTTP proxy host): " -r
     socks_host=${REPLY:=$http_host}
-    read -p "Socks proxy port: " -r socks_port
+    read -p "Socks proxy port: (default 1080)"
+    socks_port=${REPLY:=1080}
     read -p "No proxy domains(separated by comma. Press <Enter> to use default settings): " -r
     no=${REPLY:=intel.com,.intel.com,10.0.0.0/8,192.168.0.0/16,localhost,127.0.0.0/8,134.134.0.0/16}
 
@@ -90,7 +91,7 @@ update_proxy_settings () {
     echo "Regenerate ${git_proxy_file}."
 
     echo "#!/usr/bin/env bash" > ${git_proxy_file}
-    echo -e "nc -X 5 -x ${socks_host}:${socks_port} $*" >> ${git_proxy_file}
+    echo -e "nc -X 5 -x ${socks_host}:${socks_port} \$*" >> ${git_proxy_file}
     chmod +x ${git_proxy_file}
 
     if [ $PLATFORM = "Linux" ]; then
