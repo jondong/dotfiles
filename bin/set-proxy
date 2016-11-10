@@ -33,6 +33,13 @@ urldecode() {
     printf '%b' "${url_encoded//%/\\x}"
 }
 
+update_ssh_config() {
+  local ssh_config_file="${HOME}/.ssh/config"
+  if [ -f $ssh_config_file ]; then
+    sed -i -- 's/ProxyCommand.*/ProxyCommand nc -X5 -x '"$1"' %h %p/g' $ssh_config_file
+  fi
+}
+
 update_proxy_settings () {
     read -e -p "Use proxy? [y/N] " -n 1
     has_proxy=${REPLY:=n}
@@ -93,6 +100,8 @@ update_proxy_settings () {
     echo "#!/usr/bin/env bash" > ${git_proxy_file}
     echo -e "nc -X 5 -x ${socks_host}:${socks_port} \$*" >> ${git_proxy_file}
     chmod +x ${git_proxy_file}
+
+    update_ssh_config "${socks_host}:${socks_port}"
 
     if [ $PLATFORM = "Linux" ]; then
         apt_conf_file="/tmp/apt.conf"
