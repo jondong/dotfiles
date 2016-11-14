@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# This is to reset the DNS cache for OS X v10.10.4 or later,
+# synergy relies on it to get connect with linux.
+sudo killall -HUP mDNSResponder
