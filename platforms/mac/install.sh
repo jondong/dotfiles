@@ -14,7 +14,7 @@ brew update
 brew upgrade --all
 
 # Install homebrew packages
-brew install coreutils
+brew install coreutils git git-lfs git-extras
 sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
 
 # Install some other useful utilities like `sponge`.
@@ -31,11 +31,13 @@ brew install wget --with-iri
 brew install homebrew/dupes/grep homebrew/dupes/openssh
 brew install caskroom/cask/brew-cask
 
-brew install bash zsh tmux bash-completion2 git git-lfs git-extras bash-git-prompt macvim cmake neovim shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat ghi mobile-shell mackup global ctags
+brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags nvm
 
-brew install nvm
 mkdir ~/.nvm
 cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+
+gem install teamocil
+mkdir -p ~/.teamocil
 
 # Installations using cask
 brew cask install easysimbl oclint

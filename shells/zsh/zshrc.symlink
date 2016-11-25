@@ -60,3 +60,5 @@ bindkey -e
 # Load local zshrc if it exists. This should stay at the end of .zshrc
 # to give user a chance to rewrite the default settings.
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
