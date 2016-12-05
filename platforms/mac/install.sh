@@ -31,10 +31,7 @@ brew install wget --with-iri
 brew install homebrew/dupes/grep homebrew/dupes/openssh
 brew install caskroom/cask/brew-cask
 
-brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags nvm
-
-mkdir ~/.nvm
-cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
+brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags
 
 gem install teamocil
 mkdir -p ~/.teamocil

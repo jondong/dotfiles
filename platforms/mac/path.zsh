@@ -1,8 +1,5 @@
 # Append necessary path to PATH for Mac.
 
-# nvm configuration.
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
 alias cat='ccat'
 
 # autojump configuration.
@@ -20,18 +17,7 @@ elif [ -d /usr/local ]; then
 fi
 
 if [ -z $EXTRA_LIB_PREFIX ]; then
-  exit
+  return
 fi
 export PATH=$EXTRA_LIB_PREFIX/bin:$EXTRA_LIB_PREFIX/sbin:$PATH
 export LD_LIBRARY_PATH=$EXTRA_LIB_PREFIX/lib:$LD_LIBRARY_PATH
-
-# MacPorts Bash shell command completion
-if [ -f $EXTRA_LIB_PREFIX/etc/bash_completion ]; then
-    . $EXTRA_LIB_PREFIX/etc/bash_completion
-    source $EXTRA_LIB_PREFIX/share/git/git-prompt.sh
-fi
-
-# Homebrew bash shell command completion
-if [ -d $EXTRA_LIB_PREFIX/etc/bash_completion.d ]; then
-    source $EXTRA_LIB_PREFIX/etc/bash_completion.d/git-extras
-fi
