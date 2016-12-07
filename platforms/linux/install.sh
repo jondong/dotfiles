@@ -14,7 +14,8 @@ fi
 # Setup nodejs v6 deb source
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 
-# Install necessary softwares for Linux here.
+# Install necessary softwares for Linux here. Also removed unnecessary apps.
+sudo apt -y remove libreoffice-core libreoffice-base-core libreoffice-common
 sudo apt -y autoremove
 sudo apt -y upgrade
 sudo apt -y install "${packages[@]}"
