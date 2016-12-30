@@ -16,21 +16,17 @@ unset CHROMIUM
 unset GYP_DEFINES
 unset XWALK
 unset XWALK_OS_ANDROID
-unset TIZEN_ROOT
-unset TIZEN_TEMP_BUILD_DIR
 
+export CHROMIUM=$PROJECTS/chromium
 case $1 in
   "android")
-    export CHROMIUM=$PROJECTS/chromium-android
     source "$CHROMIUM/src/build/android/envsetup.sh"
     export GYP_DEFINES='OS=android target_arch=ia32'
     echo "Run 'build/gyp_chromium' in $CHROMIUM/src to generate projects."
     ;;
   "linux")
-    export CHROMIUM=$PROJECTS/chromium
     ;;
   "mac")
-    export CHROMIUM=$PROJECTS/chromium/chromium-mac
     export PATH=$CHROMIUM/src/third_party/llvm-build/Release+Asserts/bin:$PATH
     ;;
   *)

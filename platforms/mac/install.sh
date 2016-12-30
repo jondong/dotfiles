@@ -26,12 +26,12 @@ brew install gnu-sed --with-default-names
 # Note: don’t forget to add `/usr/local/bin/bash` and `/usr/local/bin/zsh`
 # to `/etc/shells` before running `chsh`.
 brew tap homebrew/versions
-brew install vim --override-system-vi
+brew install vim --with-client-server --override-system-vi
 brew install wget --with-iri
 brew install homebrew/dupes/grep homebrew/dupes/openssh
 brew install caskroom/cask/brew-cask
 
-brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi
+brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi yarn
 
 gem install teamocil
 mkdir -p ~/.teamocil
