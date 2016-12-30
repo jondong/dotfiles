@@ -137,6 +137,11 @@ prepend_path_if_exists "$HOME/bin/cov-analysis/bin"
 # nw.js path
 append_path_if_exists "$HOME/bin/nwjs"
 
+# yarn path
+if [ $(command_exists yarn) ]; then
+  export PATH=$PATH:"$(yarn global bin)"
+fi
+
 alias npm-exec='PATH=$(npm bin):$PATH'
 
 # A quick calculator written by awk.

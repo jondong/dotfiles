@@ -3,7 +3,7 @@
 read -e -p "Install Linux for production? [y/N] " -n 1
 is_production=${REPLY:=n}
 
-packages=(nodejs vim git tmux autojump xclip privoxy ssh tree vim-gtk3-py2 shellcheck openssl libgnome-keyring-dev unzip curl tar zsh exfat-utils exfat-fuse)
+packages=(vim git tmux autojump xclip privoxy ssh tree vim-gtk3-py2 shellcheck openssl libgnome-keyring-dev unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn)
 if [ ${is_production,,} = 'n' ]; then
   echo "Install packages for development machine."
   packages=("${packages[@]}" aptitude git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip icecc icecc-monitor)
@@ -11,8 +11,12 @@ else
   echo "Install packages for production machine."
 fi
 
-# Setup nodejs v6 deb source
+# Setup nodejs v7 deb source
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+
+# Setup yarn deb source
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
 # Install necessary softwares for Linux here. Also removed unnecessary apps.
 sudo apt -y remove libreoffice-core libreoffice-base-core libreoffice-common

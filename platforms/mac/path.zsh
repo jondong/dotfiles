@@ -8,10 +8,6 @@ alias cat='ccat'
 # Path for python binaries
 append_path_if_exists "$HOME/Library/Python/2.7/bin"
 
-if [ $(command_exists yarn) ]; then
-  export PATH=$PATH:"$(yarn global bin)"
-fi
-
 if [ -d /opt/local ]; then
   # using Macports
   EXTRA_LIB_PREFIX=/opt/local
