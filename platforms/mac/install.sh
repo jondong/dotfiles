@@ -37,13 +37,13 @@ gem install teamocil gollum
 mkdir -p ~/.teamocil
 
 # Install hexo for personal blog
-npm install -g hexo-cli
+npm install -g hexo hexo-cli
 
 # Installations using cask
 brew cask install easysimbl oclint
 
 # Install simiki. for more information please refer to: http://simiki.org
-pip install simiki
+pip install simiki fabric
 
 # Remove outdated versions from the cellar.
 brew cleanup
