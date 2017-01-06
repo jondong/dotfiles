@@ -31,13 +31,16 @@ brew install wget --with-iri
 brew install homebrew/dupes/grep homebrew/dupes/openssh
 brew install caskroom/cask/brew-cask
 
-brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi yarn
+brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi yarn icu4c
 
-gem install teamocil
+gem install teamocil gollum
 mkdir -p ~/.teamocil
 
 # Installations using cask
 brew cask install easysimbl oclint
+
+# Install simiki. for more information please refer to: http://simiki.org
+pip install simiki
 
 # Remove outdated versions from the cellar.
 brew cleanup
