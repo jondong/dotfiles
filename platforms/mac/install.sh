@@ -36,6 +36,9 @@ brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellch
 gem install teamocil gollum
 mkdir -p ~/.teamocil
 
+# Install hexo for personal blog
+npm install -g hexo-cli
+
 # Installations using cask
 brew cask install easysimbl oclint
 
