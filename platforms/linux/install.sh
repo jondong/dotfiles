@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-read -e -p "Install Linux for production? [y/N] " -n 1
+read -e -p "Install Linux for production deployment? [y/N] " -n 1
 is_production=${REPLY:=n}
 
 packages=(vim git tmux autojump xclip privoxy ssh tree vim-gtk3-py2 shellcheck openssl libgnome-keyring-dev unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn)
@@ -21,6 +21,7 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 # Install necessary softwares for Linux here. Also removed unnecessary apps.
 sudo apt -y remove libreoffice-core libreoffice-base-core libreoffice-common
 sudo apt -y autoremove
+sudo apt -y update
 sudo apt -y upgrade
 sudo apt -y install "${packages[@]}"
 
