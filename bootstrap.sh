@@ -130,7 +130,7 @@ install_dotfiles () {
 if [ $PLATFORM = "Darwin" ]; then
     brew install git vim
 elif [ $PLATFORM = "Linux" ]; then
-    sudo apt install git vim
+    sudo apt update; sudo apt install git vim
 elif [ $PLATFORM = "Cygwin" ]; then
     pact install git vim
 fi
@@ -142,6 +142,9 @@ if [ ! -d "$DOTFILES_ROOT" ]; then
 
   install_dotfiles
 
+  if [ -f "$HOME/.profile" ]; then
+    mv "$HOME/.profile" "$HOME/.profile.bak"
+  fi
   link_file "$DOTFILES_ROOT/platforms/profile" "$HOME/.profile"
   link_file "$DOTFILES_ROOT/platforms/profile" "$HOME/.zshenv"
 else
