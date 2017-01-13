@@ -8,6 +8,7 @@ clang-format
 colorblind-wombat-dark-syntax
 gloom
 language-mojom
+language-weex
 lint
 linter
 linter-cpplint
