@@ -33,7 +33,7 @@ brew install caskroom/cask/brew-cask
 
 brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi yarn icu4c
 
-gem install teamocil gollum
+gem install teamocil gollum cocoapods
 mkdir -p ~/.teamocil
 
 # Install hexo for personal blog
