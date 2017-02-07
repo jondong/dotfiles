@@ -93,54 +93,58 @@ if [ -d "$HOME/resource/backup-keys" ] ; then
   ssh-add "$HOME/resource/backup-keys/id_rsa" > /dev/null 2>&1
 fi
 
-# set PATH so it includes user's private bin if it exists
-prepend_path_if_exists "$HOME/bin"
+function setup_paths() {
+  # set PATH so it includes user's private bin if it exists
+  prepend_path_if_exists "$HOME/bin"
 
-# Add dotfiles scripts path
-prepend_path_if_exists "$DOTFILES_ROOT/bin"
+  # Add dotfiles scripts path
+  prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
-# Scripts in dropbox
-DROPBOX_PATH="$HOME/cloud/Dropbox"
-prepend_path_if_exists "$DROPBOX_PATH/bin"
+  # Scripts in dropbox
+  local DROPBOX_PATH="$HOME/cloud/Dropbox"
+  prepend_path_if_exists "$DROPBOX_PATH/bin"
 
-# Go path
-if [ -d "$PROJECTS/go" ]; then
-  export GOPATH=$PROJECTS/go
-  export PATH=$PATH:$GOPATH/bin
-fi
+  # Go path
+  if [ -d "$PROJECTS/go" ]; then
+    export GOPATH=$PROJECTS/go
+    export PATH=$PATH:$GOPATH/bin
+  fi
 
-# Add depot_tools
-DEPOT_TOOLS_HOME=$HOME/bin/depot_tools
-if [ $PLATFORM = 'Cygwin' ]; then
-  append_path_if_exists "$DEPOT_TOOLS_HOME"
-else
-  prepend_path_if_exists "$DEPOT_TOOLS_HOME"
-fi
+  # Add depot_tools
+  local DEPOT_TOOLS_HOME=$HOME/bin/depot_tools
+  if [ $PLATFORM = 'Cygwin' ]; then
+    append_path_if_exists "$DEPOT_TOOLS_HOME"
+  else
+    prepend_path_if_exists "$DEPOT_TOOLS_HOME"
+  fi
 
-# Android SDK setup
-ANDROID_SDK_ROOT=$HOME/bin/android-sdk
-ANDROID_NDK_ROOT=$HOME/bin/android-ndk
-if [ -d "$ANDROID_SDK_ROOT" ]; then
-  export ANDROID_HOME=$ANDROID_SDK_ROOT
-  append_path_if_exists "$ANDROID_SDK_ROOT/tools"
-  append_path_if_exists "$ANDROID_SDK_ROOT/platform-tools"
-fi
-if [ -d "$ANDROID_NDK_ROOT" ]; then
-  export ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
-  append_path_if_exists "$ANDROID_NDK_HOME"
-fi
+  # Android SDK setup
+  local ANDROID_SDK_ROOT=$HOME/bin/android-sdk
+  local ANDROID_NDK_ROOT=$HOME/bin/android-ndk
+  if [ -d "$ANDROID_SDK_ROOT" ]; then
+    export ANDROID_HOME=$ANDROID_SDK_ROOT
+    append_path_if_exists "$ANDROID_SDK_ROOT/tools"
+    append_path_if_exists "$ANDROID_SDK_ROOT/platform-tools"
+  fi
+  if [ -d "$ANDROID_NDK_ROOT" ]; then
+    export ANDROID_NDK_HOME=$ANDROID_NDK_ROOT
+    append_path_if_exists "$ANDROID_NDK_HOME"
+  fi
 
-# Coverity config
-export COVERITY_UNSUPPORTED=1
-prepend_path_if_exists "$HOME/bin/cov-analysis/bin"
+  # Coverity config
+  export COVERITY_UNSUPPORTED=1
+  prepend_path_if_exists "$HOME/bin/cov-analysis/bin"
 
-# nw.js path
-append_path_if_exists "$HOME/bin/nwjs"
+  # nw.js path
+  append_path_if_exists "$HOME/bin/nwjs"
 
-# yarn path
-if [ $(command_exists yarn) ]; then
-  export PATH=$PATH:"$(yarn global bin)"
-fi
+  # yarn path
+  if [ $(command_exists yarn) ]; then
+    export PATH=$PATH:"$(yarn global bin)"
+  fi
+}
+
+setup_paths
 
 alias npm-exec='PATH=$(npm bin):$PATH'
 
