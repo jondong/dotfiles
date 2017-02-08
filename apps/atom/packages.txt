@@ -8,6 +8,7 @@ clang-format
 colorblind-wombat-dark-syntax
 gloom
 language-mojom
+language-vue-component
 language-weex
 lint
 linter
@@ -19,4 +20,5 @@ ramda-syntax
 switch-header-source
 trailing-spaces
 vim-mode-plus
+weex-format
 you-complete-me
