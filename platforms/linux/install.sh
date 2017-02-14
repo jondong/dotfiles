@@ -3,7 +3,7 @@
 read -e -p "Install Linux for production deployment? [y/N] " -n 1
 is_production=${REPLY:=n}
 
-packages=(vim git tmux autojump xclip privoxy ssh tree vim-gtk3-py2 shellcheck openssl libgnome-keyring-dev unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn)
+packages=(vim git tmux autojump xclip privoxy ssh tree vim-gtk3-py2 shellcheck openssl libsecret-1-0 libsecret-1-dev unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn)
 if [ ${is_production,,} = 'n' ]; then
   echo "Install packages for development machine."
   packages=("${packages[@]}" aptitude git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip icecc icecc-monitor)
@@ -25,11 +25,11 @@ sudo apt -y update
 sudo apt -y upgrade
 sudo apt -y install "${packages[@]}"
 
-# Setup gnome keyring for git
-pushd /usr/share/doc/git/contrib/credential/gnome-keyring
+# Setup libsecret for git
+pushd /usr/share/doc/git/contrib/credential/libsecret
 sudo make
 popd
-git config --global credential.helper /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring
+git config --global credential.helper /usr/share/doc/git/contrib/credential/libsecret/git-credential-libsecret
 
 # Avoid zsh-compinit-insecure-directories issues.
 # refers to: http://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories for more details.
