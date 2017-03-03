@@ -104,6 +104,10 @@ setup_paths() {
   local DROPBOX_PATH="$HOME/cloud/Dropbox"
   prepend_path_if_exists "$DROPBOX_PATH/bin"
 
+  # Scripts in OneDrive
+  local ONEDRIVE_PATH="$HOME/cloud/OneDrive"
+  prepend_path_if_exists "$ONEDRIVE_PATH/bin"
+
   # Go path
   if [ -d "$PROJECTS/go" ]; then
     export GOPATH=$PROJECTS/go
