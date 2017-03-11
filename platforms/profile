@@ -101,11 +101,11 @@ setup_paths() {
   prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
   # Scripts in dropbox
-  local DROPBOX_PATH="$HOME/cloud/Dropbox"
+  export DROPBOX_PATH="$HOME/cloud/Dropbox"
   prepend_path_if_exists "$DROPBOX_PATH/bin"
 
   # Scripts in OneDrive
-  local ONEDRIVE_PATH="$HOME/cloud/OneDrive"
+  export ONEDRIVE_PATH="$HOME/cloud/OneDrive"
   prepend_path_if_exists "$ONEDRIVE_PATH/bin"
 
   # Go path
