@@ -2,10 +2,12 @@
 UnBundle 'osyo-manga/vim-over'
 UnBundle 'tpope/vim-commentary'
 UnBundle 'altercation/vim-colors-solarized'
+UnBundle 'amirh/HTML-AutoCloseTag'
 
 " Navigation tools
 Plugin 'bufexplorer.zip'
 Plugin 'https://github.com/tpope/vim-unimpaired.git'
+"Plugin 'vim-scripts/HTML-AutoCloseTag'
 
 " Editing tools
 Plugin 'trailing-whitespace'
