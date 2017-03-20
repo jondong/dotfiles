@@ -3,10 +3,10 @@
 read -e -p "Install Linux for production deployment? [y/N] " -n 1
 is_production=${REPLY:=n}
 
-packages=(vim git tmux autojump xclip privoxy ssh tree vim-gtk3-py2 shellcheck openssl libsecret-1-0 libsecret-1-dev unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn)
+packages=(vim git tmux autojump xclip ssh tree vim-gtk3-py2 shellcheck openssl libsecret-1-0 libsecret-1-dev unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn cmake)
 if [ ${is_production,,} = 'n' ]; then
   echo "Install packages for development machine."
-  packages=("${packages[@]}" aptitude git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip icecc icecc-monitor)
+  packages=("${packages[@]}" git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip)
 else
   echo "Install packages for production machine."
 fi

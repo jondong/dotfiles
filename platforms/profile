@@ -129,8 +129,8 @@ setup_paths() {
     ANDROID_SDK_ROOT=$HOME/Library/Android/sdk
     ANDROID_NDK_ROOT=$HOME/Library/Android/sdk/ndk-bundle
   elif [ $PLATFORM = 'Linux' ]; then
-    ANDROID_SDK_ROOT=$HOME/bin/android-sdk
-    ANDROID_NDK_ROOT=$HOME/bin/android-ndk
+    ANDROID_SDK_ROOT=$HOME/Android/Sdk
+    ANDROID_NDK_ROOT=$HOME/Android/Sdk/ndk-bundle
   fi
   if [ -d "$ANDROID_SDK_ROOT" ]; then
     export ANDROID_HOME=$ANDROID_SDK_ROOT
