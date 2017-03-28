@@ -1,10 +1,10 @@
 # dotfiles
-dotfiles, including my personal favorite system settings across Linux and Mac OS X.
+dotfiles, including my personal system settings across Linux, Mac OS X and Windows.
 
 ## Installation
 
 Open a terminal window, and run:
 
 ```
-bash <(curl http://bit.ly/1IEfkKl -L)
+bash <(curl https://raw.githubusercontent.com/jondong/dotfiles/master/bootstrap.sh -L)
 ```
