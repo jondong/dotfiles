@@ -62,3 +62,4 @@ bindkey -e
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+[ -f ~/.tbenv/bundler-exec.sh ] && source ~/.tbenv/bundler-exec.sh
