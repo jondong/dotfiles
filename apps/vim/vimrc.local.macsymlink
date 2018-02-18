@@ -5,7 +5,7 @@ endif
 "" Setup Color Scheme
 "colorscheme mustang
 "colorscheme relaxedgreen
-colorscheme rdark
+"colorscheme rdark
 "colorscheme solarized
 "colorscheme corporation
 "colorscheme inkpot
@@ -15,8 +15,10 @@ colorscheme rdark
 "colorscheme badwolf
 "colorscheme distinguished
 "colorscheme jellybeans
+colorscheme ego
 
 set background=dark
+set guifont=SourceCodePro+Powerline+Awesome\ Regular:h16
 
 " gist-vim settings
 let g:gist_clip_command = 'pbcopy'
