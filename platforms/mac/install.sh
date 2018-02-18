@@ -33,7 +33,7 @@ brew install homebrew/dupes/grep homebrew/dupes/openssh
 brew cask install xquartz
 brew install vim --with-client-server --override-system-vi
 
-brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi yarn
+brew install bash zsh tmux bash-completion2 bash-git-prompt macvim cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi yarn aria2
 
 # Upgrade any already-installed formulae.
 brew upgrade --all
