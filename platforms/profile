@@ -154,6 +154,9 @@ setup_paths() {
   if [ $(command_exists yarn) ]; then
     export PATH=$PATH:"$(yarn global bin)"
   fi
+
+  # rustup path
+  prepend_path_if_exists "$HOME/.cargo/bin"
 }
 
 setup_paths
