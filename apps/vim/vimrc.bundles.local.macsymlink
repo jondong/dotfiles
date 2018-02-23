@@ -10,3 +10,7 @@ Plugin 'rizzatti/dash.vim'
 Plugin 'posva/vim-vue'
 
 Plugin 'tpope/vim-projectionist'
+
+" TypeScript
+Plugin 'leafgarland/typescript-vim'
+Plugin 'HerringtonDarkholme/yats.vim'

@@ -42,7 +42,7 @@ brew upgrade --all
 brew cleanup
 
 # Install necessary npm packages
-npm install -g hexo hexo-cli gulp-cli
+npm install -g hexo hexo-cli
 
 # Install simiki. for more information please refer to: http://simiki.org
 pip install simiki fabric
