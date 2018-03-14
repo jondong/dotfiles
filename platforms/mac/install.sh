@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #Install necessary softwares for Mac here.
 
-gem install teamocil cocoapods pygments.rb
+gem install teamocil pygments.rb
 mkdir -p ~/.teamocil
 
 # Check if homebrew get installed.
@@ -14,7 +14,7 @@ fi
 brew update
 
 # Install homebrew packages
-brew install coreutils git git-lfs git-extras
+brew install coreutils git git-lfs git-extras cocoapods
 sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
 
 # Install some other useful utilities like `sponge`.

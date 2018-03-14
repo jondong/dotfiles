@@ -14,3 +14,6 @@ Plugin 'tpope/vim-projectionist'
 " TypeScript
 Plugin 'leafgarland/typescript-vim'
 Plugin 'HerringtonDarkholme/yats.vim'
+
+" Dart
+Plugin 'dart-lang/dart-vim-plugin'

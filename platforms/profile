@@ -157,6 +157,9 @@ setup_paths() {
 
   # rustup path
   prepend_path_if_exists "$HOME/.cargo/bin"
+
+  # flutter path
+  append_path_if_exists "$PROJECTS/flutter/flutter/bin"
 }
 
 setup_paths
