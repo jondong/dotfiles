@@ -93,6 +93,15 @@ if [ -d "$HOME/resource/backup-keys" ] ; then
   ssh-add "$HOME/resource/backup-keys/id_rsa" > /dev/null 2>&1
 fi
 
+setup_proxy() {
+  # Setup proxy for Mac commandline, when using Surge.
+  if [ $PLATFORM = 'Darwin' ]; then
+    export https_proxy=http://127.0.0.1:8888
+    export http_proxy=http://127.0.0.1:8888
+    export all_proxy=socks5://127.0.0.1:8889
+  fi
+}
+
 setup_paths() {
   # set PATH so it includes user's private bin if it exists
   prepend_path_if_exists "$HOME/bin"
@@ -163,6 +172,7 @@ setup_paths() {
 }
 
 setup_paths
+setup_proxy
 
 alias npm-exec='PATH=$(npm bin):$PATH'
 
