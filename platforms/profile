@@ -169,6 +169,12 @@ setup_paths() {
 
   # flutter path
   append_path_if_exists "$PROJECTS/flutter/flutter/bin"
+
+  # emscripten settings
+  local EMSCRIPTEN_SDK_ROOT="$HOME/bin/emsdk"
+  if [ -d $EMSCRIPTEN_SDK_ROOT ]; then
+    source $EMSCRIPTEN_SDK_ROOT/emsdk_env.sh
+  fi
 }
 
 setup_paths
