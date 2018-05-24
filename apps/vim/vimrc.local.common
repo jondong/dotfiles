@@ -67,13 +67,13 @@ if os=='mac'
 elseif os=='linux'
   let chromiumPath=$PROJECTS . '/chromium/'
 endif
-if isdirectory(chromiumPath)
-  execute 'so ' . chromiumPath . 'src/tools/vim/filetypes.vim'
-  execute 'so ' . chromiumPath . 'src/tools/vim/ninja-build.vim'
-  execute 'so ' . chromiumPath . 'src/tools/vim/clang-format.vim'
+"if isdirectory(chromiumPath)
+  "execute 'so ' . chromiumPath . 'src/tools/vim/filetypes.vim'
+  "execute 'so ' . chromiumPath . 'src/tools/vim/ninja-build.vim'
+  "execute 'so ' . chromiumPath . 'src/tools/vim/clang-format.vim'
   " Setup for YouCompleteMe on Chromium
-  let g:ycm_global_ycm_extra_conf = chromiumPath . 'src/tools/vim/chromium.ycm_extra_conf.py'
-endif
+  "let g:ycm_global_ycm_extra_conf = chromiumPath . 'src/tools/vim/chromium.ycm_extra_conf.py'
+"endif
 
 " Gtags setup
 let Gtags_Auto_Map = 1
