@@ -14,7 +14,7 @@ fi
 brew update
 
 # Install homebrew packages
-brew install coreutils git git-lfs git-extras cocoapods
+brew install coreutils git git-lfs git-extras cocoapods tig
 sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
 
 # Install some other useful utilities like `sponge`.
