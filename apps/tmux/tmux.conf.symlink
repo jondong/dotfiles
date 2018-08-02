@@ -55,7 +55,7 @@ set -g @continuum-boot-options 'iterm,fullscreen'
 set -g @continuum-restore 'on'
 
 # Mouse mode
-# This is for tmux v2.1 and higher. please refer to: https://github.com/NHDaly/tmux-better-mouse-mod://github.com/NHDaly/tmux-better-mouse-mode for more details.
+# This is for tmux v2.1 and higher. please refer to: https://github.com/NHDaly/tmux-better-mouse-mod https://github.com/NHDaly/tmux-better-mouse-mode for more details.
 set-option -g mouse on
 
 # Fix vim empty register issue
