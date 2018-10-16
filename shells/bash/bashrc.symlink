@@ -14,3 +14,5 @@ if [ $(command_exists teamocil) ]; then
   complete -W "$(teamocil --list)" teamocil
 fi
 [ -f ~/.tbenv/bundler-exec.sh ] && source ~/.tbenv/bundler-exec.sh
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
