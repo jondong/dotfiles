@@ -54,6 +54,9 @@ done
 
 unset config_files
 
+# z configuration
+. /usr/local/etc/profile.d/z.sh
+
 # bindkey with Emacs style. This is for tmux-yank plugin.
 bindkey -e
 
