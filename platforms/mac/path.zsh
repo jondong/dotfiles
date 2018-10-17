@@ -1,10 +1,5 @@
 # Append necessary path to PATH for Mac.
 
-alias cat='ccat'
-alias la="exa -abghl --git --color=automatic"
-alias ll="exa -bghl --git --color=automatic"
-alias c='pygmentize -O style=rainbow_dash -f console256 -g'
-
 # autojump configuration.
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 

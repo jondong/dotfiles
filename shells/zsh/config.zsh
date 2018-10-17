@@ -45,3 +45,8 @@ compdef vman="man"
 if [ $(command_exists teamocil) ]; then
   compctl -g '~/.teamocil/*(:t:r)' teamocil
 fi
+
+alias cat='ccat'
+alias la="exa -abghl --git --color=automatic"
+alias ll="exa -bghl --git --color=automatic"
+alias c='pygmentize -O style=rainbow_dash -f console256 -g'

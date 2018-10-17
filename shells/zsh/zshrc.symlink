@@ -18,13 +18,6 @@ fi
 shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh)
 platform_zsh=
 
-if [ $PLATFORM = "Darwin" ]; then
-    platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh)
-elif [ $PLATFORM = "Linux" ]; then
-    platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh)
-elif [ $PLATFORM = "Cygwin" ]; then
-    platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh)
-fi
 typeset -U config_files
 config_files=(${shells_zsh[@]} ${platform_zsh[@]})
 
@@ -40,17 +33,22 @@ do
   source $file
 done
 
-if [ $PLATFORM != "Cygwin" ]; then
-  # initialize autocomplete here, otherwise functions won't be loaded
-  autoload -U compinit
-  compinit
-fi
-
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}
 do
   source $file
 done
+
+if [ $PLATFORM = "Darwin" ]; then
+  platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh)
+elif [ $PLATFORM = "Linux" ]; then
+  platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh)
+elif [ $PLATFORM = "Cygwin" ]; then
+  platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh)
+  # initialize autocomplete here, otherwise functions won't be loaded
+  autoload -U compinit
+  compinit
+fi
 
 unset config_files
 
