@@ -19,6 +19,7 @@ colorscheme ego
 
 set background=dark
 set guifont=SourceCodePro+Powerline+Awesome\ Regular:h16
+set encoding=utf-8
 
 " gist-vim settings
 let g:gist_clip_command = 'pbcopy'
