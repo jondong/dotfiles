@@ -16,6 +16,9 @@ git config --global core.whitespace trailing-space,space-before-tab
 git config --global color.ui true
 # color.branch, color.diff, color.interactive, color.status
 
+git config --global pager.diff = "diff-so-fancy | less --tabs=1,5 -RFX"
+git config --global pager.show = "diff-so-fancy | less --tabs=1,5 -RFX"
+
 if [ "$(uname)" = 'Darwin' ]; then
   if [ -f /usr/local/bin/kdiff3 ]; then
     git config --global merge.tool kdiff3
