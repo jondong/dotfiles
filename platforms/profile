@@ -172,6 +172,11 @@ setup_paths
 
 alias npm-exec='PATH=$(npm bin):$PATH'
 
+# tmux setup
+if [ -z "$TMUX"  ]; then
+  tmux attach -t default || tmux new -s default
+fi
+
 # A quick calculator written by awk.
 # http://lifehacker.com/5396183/create-an-awesome-command-line-calculator
 calc() { awk "BEGIN{ print $*  }" ; }

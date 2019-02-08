@@ -27,13 +27,12 @@ brew install gnu-sed --with-default-names
 # to `/etc/shells` before running `chsh`.
 brew tap homebrew/versions
 #brew tap oclint/formulae
-brew install caskroom/cask/brew-cask
+brew tap caskroom/cask
+brew tap buo/cask-upgrade
 brew install wget --with-iri
-brew install homebrew/dupes/grep homebrew/dupes/openssh
-brew cask install xquartz
 brew install vim --with-client-server
 
-brew install bash zsh tmux bash-completion2 bash-git-prompt cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi yarn aria2 mas gradle z exa fd fzf ag ack
+brew install bash zsh tmux bash-completion2 bash-git-prompt cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop ccat mobile-shell global ctags ghi yarn aria2 mas gradle z exa fd fzf ag ack xquartz
 
 # Upgrade any already-installed formulae.
 brew upgrade --all
