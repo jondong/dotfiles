@@ -8,11 +8,11 @@ if [ $PLATFORM = "Cygwin" ]; then
   plugins=(git)
 
   # User configuration
-
-  export PATH=$HOME/bin:/usr/local/bin:$PATH
-
+  export PATH=$HOME/bin:$PATH
   source $ZSH/oh-my-zsh.sh
 fi
+
+export PATH="/usr/local/bin:$PATH"
 
 # all of our zsh files
 shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh)
