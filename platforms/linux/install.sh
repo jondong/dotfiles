@@ -6,7 +6,7 @@ is_production=${REPLY:=n}
 packages=(vim git tmux autojump xclip ssh tree shellcheck openssl unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn cmake)
 if [ ${is_production,,} = 'n' ]; then
   echo "Install packages for development machine."
-  packages=("${packages[@]}" git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip)
+  packages=("${packages[@]}" git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip cargo)
 else
   echo "Install packages for production machine."
 fi
@@ -32,6 +32,9 @@ sudo chmod -R 755 ./site-functions
 popd
 
 if [ ${is_production,,} = 'n' ]; then
+  # Install exa with cargo
+  cargo install exa
+
   # setup crontab
   if [ -f "$HOME/.crontab" ]; then
     crontab -u $(whoami) "$HOME/.crontab"

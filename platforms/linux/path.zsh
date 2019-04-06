@@ -6,6 +6,7 @@ source /usr/share/autojump/autojump.zsh
 ## gitup is a tool to sync multiple git repos in a single shot.
 ## For more information please refer to: https://github.com/earwig/git-repo-updater
 append_path_if_exists "$HOME/.local/bin"
+append_path_if_exists "$HOME/.cargo/bin"
 
 ## Ant setup
 ANT_BIN_PATH=$HOME/bin/apache-ant/bin
