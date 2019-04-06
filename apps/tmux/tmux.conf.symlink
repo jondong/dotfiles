@@ -58,8 +58,5 @@ set -g @continuum-restore 'on'
 # This is for tmux v2.1 and higher. please refer to: https://github.com/NHDaly/tmux-better-mouse-mod https://github.com/NHDaly/tmux-better-mouse-mode for more details.
 set-option -g mouse on
 
-# Fix vim empty register issue
-set -g default-command 'reattach-to-user-namespace $SHELL --login'
-
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
