@@ -6,7 +6,7 @@ is_production=${REPLY:=n}
 packages=(vim git tmux autojump xclip ssh tree shellcheck openssl unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn cmake)
 if [ ${is_production,,} = 'n' ]; then
   echo "Install packages for development machine."
-  packages=("${packages[@]}" git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip cargo net-tools ncdu)
+  packages=("${packages[@]}" git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip cargo net-tools ncdu silversearcher-ag)
 else
   echo "Install packages for production machine."
 fi
@@ -29,6 +29,10 @@ sudo apt -y install "${packages[@]}"
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
+# Install prettyping
+curl --create-dirs -o bin/prettyping https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
+chmod +x ~/bin/prettyping
+
 # Avoid zsh-compinit-insecure-directories issues.
 # refers to: http://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories for more details.
 pushd /usr/local/share/zsh
@@ -36,8 +40,8 @@ sudo chmod -R 755 ./site-functions
 popd
 
 if [ ${is_production,,} = 'n' ]; then
-  # Install exa with cargo
-  cargo install exa
+  # Install packages with cargo
+  cargo install exa bat fd-find
 
   # setup crontab
   if [ -f "$HOME/.crontab" ]; then
