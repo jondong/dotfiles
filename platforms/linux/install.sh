@@ -25,6 +25,10 @@ sudo apt -y update
 sudo apt -y upgrade
 sudo apt -y install "${packages[@]}"
 
+# Install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
 # Avoid zsh-compinit-insecure-directories issues.
 # refers to: http://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories for more details.
 pushd /usr/local/share/zsh
