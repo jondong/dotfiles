@@ -6,7 +6,7 @@ is_production=${REPLY:=n}
 packages=(vim git tmux autojump xclip ssh tree shellcheck openssl unzip curl tar zsh exfat-utils exfat-fuse nodejs yarn cmake)
 if [ ${is_production,,} = 'n' ]; then
   echo "Install packages for development machine."
-  packages=("${packages[@]}" git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip cargo net-tools ncdu silversearcher-ag)
+  packages=("${packages[@]}" git-extras terminator mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags python-setuptools python-pip cargo net-tools ncdu silversearcher-ag htop)
 else
   echo "Install packages for production machine."
 fi
@@ -32,6 +32,10 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 # Install prettyping
 curl --create-dirs -o bin/prettyping https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping
 chmod +x ~/bin/prettyping
+
+# Install tldr
+curl --create-dirs -o ~/bin/tldr https://raw.githubusercontent.com/raylee/tldr/master/tldr
+chmod +x ~/bin/tldr
 
 # Avoid zsh-compinit-insecure-directories issues.
 # refers to: http://stackoverflow.com/questions/13762280/zsh-compinit-insecure-directories for more details.

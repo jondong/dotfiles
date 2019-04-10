@@ -49,8 +49,7 @@ fi
 alias cat='bat'
 alias la="exa -abghl --git --color=automatic"
 alias ll="exa -bghl --git --color=automatic"
-alias c='pygmentize -O style=rainbow_dash -f console256 -g'
 alias ping='prettyping --nolegend'
 alias top='htop'
 alias du='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
-alias help-'tldr'
+alias help='tldr'
