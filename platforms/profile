@@ -109,10 +109,7 @@ setup_paths() {
   prepend_path_if_exists "$ONEDRIVE_PATH/bin"
 
   # Go path
-  if [ -d "$PROJECTS/go" ]; then
-    export GOPATH=$PROJECTS/go
-    export PATH=$PATH:$GOPATH/bin
-  fi
+  append_path_if_exists "$HOME/go/bin"
 
   # Add depot_tools
   local DEPOT_TOOLS_HOME=$HOME/bin/depot_tools
