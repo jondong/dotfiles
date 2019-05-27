@@ -183,4 +183,3 @@ calc() { awk "BEGIN{ print $*  }" ; }
 # This scrip is going to be load at the end of profile, give user chance to
 # override the existing settings.
 [ -f ~/.localrc ] && source ~/.localrc
-[ -f ~/.tbenv/bundler-exec.sh ] && source ~/.tbenv/bundler-exec.sh
