@@ -5,10 +5,10 @@
 # mkdir -p ~/.teamocil
 
 # Check if homebrew get installed.
-if [ ! $(command_exists brew) ]; then
-  echo "  Installing homebrew for you..."
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-fi
+#if [ ! $(command_exists brew) ]; then
+#  echo "  Installing homebrew for you..."
+#  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+#fi
 
 # Make sure we are using the lates homebrew.
 brew update
