@@ -32,7 +32,7 @@ brew update
 #brew install wget --with-iri
 #brew install vim --with-client-server
 
-brew install bash zsh tmux bash-completion2 bash-git-prompt cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop bat mobile-shell global ctags ghi yarn aria2 mas gradle z exa fd fzf ag ack xquartz prettyping diff-so-fancy ncdu tldr
+brew install bash zsh tmux bash-completion2 bash-git-prompt cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop bat mobile-shell global ctags ghi yarn aria2 mas z exa fd fzf ag ack prettyping diff-so-fancy ncdu tldr
 
 diff-so-fancy --set-defaults
 

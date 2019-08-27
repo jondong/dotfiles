@@ -23,12 +23,6 @@ if [ $PLATFORM != "Cygwin" ]; then
 
   # Tell antigen that you're done.
   antigen apply
-
-  function git_prompt_info() {
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    #echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$ZSH_THEME_GIT_PROMPT_SUFFIX"
-    echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}${ZSH_THEME_GIT_PROMPT_CLEAN}${ZSH_THEME_GIT_PROMPT_SUFFIX}"
-  }
 fi
 
 # vim-superman to replace the man page editor with vim

@@ -167,6 +167,9 @@ setup_paths() {
 
 setup_paths
 
+# Setup LC_ALL explicitly
+export LC_ALL=en_US.UTF-8
+
 alias npm-exec='PATH=$(npm bin):$PATH'
 
 # A quick calculator written by awk.
@@ -183,3 +186,7 @@ calc() { awk "BEGIN{ print $*  }" ; }
 # This scrip is going to be load at the end of profile, give user chance to
 # override the existing settings.
 [ -f ~/.localrc ] && source ~/.localrc
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+[ -f ~/.tbenv/bundler-exec.sh ] && source ~/.tbenv/bundler-exec.sh
