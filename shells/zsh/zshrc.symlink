@@ -60,7 +60,6 @@ bindkey -e
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-[ -f ~/.tbenv/bundler-exec.sh ] && source ~/.tbenv/bundler-exec.sh
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -92,8 +91,3 @@ which starship && eval "$(starship init zsh)"
 
 # ruby env settings
 [ -d ~/.rbenv ] && eval "$(rbenv init -)"
-
-# [ -f ~/.tbenv/bundler-exec.sh ] && source ~/.tbenv/bundler-exec.sh
-
-export WASMTIME_HOME="$HOME/.wasmtime"
-export PATH="$WASMTIME_HOME/bin:$PATH"

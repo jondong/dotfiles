@@ -100,6 +100,9 @@ setup_paths() {
   # Add dotfiles scripts path
   prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
+  # Path for homebrew sbin
+  append_path_if_exists "/usr/local/sbin"
+
   # Scripts in dropbox
   export DROPBOX_PATH="$HOME/cloud/Dropbox"
   prepend_path_if_exists "$DROPBOX_PATH/bin"
@@ -167,6 +170,10 @@ setup_paths() {
   if [ -d $EMSCRIPTEN_SDK_ROOT ]; then
     source $EMSCRIPTEN_SDK_ROOT/emsdk_env.sh
   fi
+
+  # wasmtime path
+  export WASMTIME_HOME="$HOME/.wasmtime"
+  prepend_path_if_exists "$WASMTIME_HOME/bin"
 }
 
 setup_paths
@@ -190,7 +197,3 @@ calc() { awk "BEGIN{ print $*  }" ; }
 # This scrip is going to be load at the end of profile, give user chance to
 # override the existing settings.
 [ -f ~/.localrc ] && source ~/.localrc
-
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# [ -f ~/.tbenv/bundler-exec.sh ] && source ~/.tbenv/bundler-exec.sh
