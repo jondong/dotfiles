@@ -174,9 +174,14 @@ setup_paths() {
   # wasmtime path
   export WASMTIME_HOME="$HOME/.wasmtime"
   prepend_path_if_exists "$WASMTIME_HOME/bin"
+
+  # Wasmer
+  export WASMER_DIR="$HOME/.wasmer"
 }
 
 setup_paths
+
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 
 # Setup LC_ALL explicitly
 export LC_ALL=en_US.UTF-8
