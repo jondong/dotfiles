@@ -3,12 +3,7 @@
 # run: `brew install reattach-to-user-namespace`
 
 # Fix vim empty register issue
-set -g default-command 'reattach-to-user-namespace $SHELL --login'
-set-option -g default-command 'reattach-to-user-namespace -l zsh'
-
-# Setup 'v' to begin selection as in Vim
-#bind-key -Tcopy-mode-vi v send -X begin-selection
-#bind-key -Tcopy-mode-vi y send -X copy-pipe "reattach-to-user-namespace pbcopy"
+#set -g default-command 'reattach-to-user-namespace -l $SHELL'
 
 # Update default binding of `Enter` to also use copy-pipe
 #unbind -Tcopy-mode-vi Enter
@@ -16,8 +11,3 @@ set-option -g default-command 'reattach-to-user-namespace -l zsh'
 
 # Bind ']' to use pbpaste
 #bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
-
-# Mouse settings
-# 1. Download .dmg of MouseTerm-plus from: https://github.com/saitoha/mouseterm-plus/releases
-# 2. Open the MouseTerm.dmg, install it.
-# 2. Reload tmux. That's all.

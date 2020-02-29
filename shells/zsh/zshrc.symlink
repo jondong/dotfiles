@@ -87,7 +87,5 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
-which starship && eval "$(starship init zsh)"
-
 # ruby env settings
 [ -d ~/.rbenv ] && eval "$(rbenv init -)"

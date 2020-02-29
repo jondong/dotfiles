@@ -1,40 +1,54 @@
 # Set a Ctrl-b shortcut for reloading your tmux config
-bind r source-file ~/.tmux.conf
-
-# Rename your terminals
-set -g set-titles on
-set -g set-titles-string '#(whoami) :: #h :: #(curl ipecho.net/plain;echo)'
-
-# Status bar customization
-set -g status-bg black
-set -g status-fg white
-set -g status-left-length 90
-set -g status-right-length 60
-set -g status-justify left
-set -g status-left "#[fg=Green]#(whoami)#[fg=white]::#[fg=blue] \
-(hostname - s)#[fg=white]::##[fg=yellow]#(curl ipecho.net/plain;echo)"
-set -g status-right '#[fg=Cyan]#S #[fg=white]%a %d %b %R'
-
-# setting from https://github.com/christoomey/vim-tmux-navigator
-is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-    | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-bind-key -n C-h if-shell "$is_vim" "send-keys C-h"  "select-pane -L"
-bind-key -n C-j if-shell "$is_vim" "send-keys C-j"  "select-pane -D"
-bind-key -n C-k if-shell "$is_vim" "send-keys C-k"  "select-pane -U"
-bind-key -n C-l if-shell "$is_vim" "send-keys C-l"  "select-pane -R"
-bind-key -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
+bind r source-file ~/.tmux.conf \; display-message "Config reloaded.."
 
 # remap prefix to Control + a
 set -g prefix C-a
 unbind C-b
 bind C-a send-prefix
 
-# Use vim keybindings in copy mode
-setw -g mode-keys vi
+# support mouse
+set-option -g mouse on
+
+# Rename your terminals
+set -g set-titles on
+set -g set-titles-string 'tmux :: #(whoami) :: #h :: #(curl ipecho.net/plain;echo)'
+setw -g automatic-rename off # 关闭默认重命名机制
+setw -g allow-rename off
+
+# Status bar customization
+set -g status-interval 1 # 状态栏刷新时间
+set -g status-bg black
+set -g status-fg yellow
+set -g status-left-length 90
+set -g status-right-length 60
+set -g status-justify left
+set -g status-left "#[fg=Green]#(whoami)::#[fg=blue]#(hostname -s) "
+set -g status-right '#[fg=Cyan]Continuum: #{continuum_status}'
+set -wg window-status-format "#I:#W" # 状态栏窗口名称格式
+set -wg window-status-current-format " #I:#W#F " # 状态栏当前窗口名称格式(#I：序号，#w：窗口名称，#F：间隔符)
+set -wg window-status-separator "|" # 状态栏窗口名称之间的间隔
+set -wg window-status-current-style "bg=red" # 状态栏当前窗口名称的样式
+set -wg window-status-last-style "fg=red" # 状态栏最后一个窗口名称的样式
+
+set -g message-style "bg=#202529, fg=#91A8BA" # 指定消息通知的前景、后景色
+set -g default-terminal "screen-256color"
+set -g base-index 1 # 设置窗口的起始下标为1
+set -g pane-base-index 1 # 设置面板的起始下标为1
+
+set -g monitor-activity on
+
+# 保持当前路径
+bind c new-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+bind '"' split-window -c "#{pane_current_path}"'"'
+
+# 复制模式
+setw -g mode-keys vi # 开启vi风格后，支持vi的C-d、C-u、hjkl等快捷键
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
 # Load configurations for Mac.
 if-shell 'test $PLATFORM = "Darwin"' 'source ~/.tmux-osx.conf'
-
 # Load configurations for Linux.
 if-shell 'test $PLATFORM = "Linux"' 'source ~/.tmux-linux.conf'
 
@@ -43,20 +57,20 @@ set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @plugin 'nhdaly/tmux-better-mouse-mode'
-#set -g @plugin 'tmux-plugins/tmux-copycat'
-#set -g @plugin 'tmux-plugins/tmux-yank'
-#set -g @plugin 'tmux-plugins/tmux-open'
+set -g @plugin 'tmux-plugins/tmux-copycat'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-open'
+set -g @plugin 'christoomey/vim-tmux-navigator'
 
-# Tmux Plugin Settins
+# Tmux Plugin Settings
+# Setting for resurrect.
+set -g @resurrect-strategy-vim 'session' # 恢复vim会话状态
+set -g @resurrect-strategy-nvim 'session' # 恢复neovim会话状态
 # Setting for continuum.
 set -g @continuum-boot 'on'
 set -g @continuum-boot-options 'iterm,fullscreen'
+set -g @continuum-save-interval '60'
 set -g @continuum-restore 'on'
-
-# Mouse mode
-# This is for tmux v2.1 and higher. please refer to: https://github.com/NHDaly/tmux-better-mouse-mod https://github.com/NHDaly/tmux-better-mouse-mode for more details.
-set-option -g mouse on
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
