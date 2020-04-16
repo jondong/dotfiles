@@ -7,7 +7,13 @@ brew_apps_file="brew_apps.conf"
 brew_cask_apps_file="brew_cask_apps.conf"
 
 # Backup app list.
-pushd "$sync_path"
+if [ -d "$sync_path" ]; then
+  pushd "$sync_path"
+else
+  echo "$sync_path does not exist, create it first."
+  exit 1
+fi
+
 ls /Applications | sed 's/\.app//g' > "$total_apps_file"
 /usr/local/bin/mas list > "$mas_apps_file"
 /usr/local/bin/brew list > "$brew_apps_file"

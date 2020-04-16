@@ -3,7 +3,7 @@
 # run: `brew install reattach-to-user-namespace`
 
 # Fix vim empty register issue
-#set -g default-command 'reattach-to-user-namespace -l $SHELL'
+set -g default-command 'reattach-to-user-namespace -l $SHELL'
 
 # Update default binding of `Enter` to also use copy-pipe
 #unbind -Tcopy-mode-vi Enter
