@@ -5,9 +5,7 @@ UnBundle 'altercation/vim-colors-solarized'
 UnBundle 'amirh/HTML-AutoCloseTag'
 
 " Navigation tools
-Plugin 'bufexplorer.zip'
 Plugin 'https://github.com/tpope/vim-unimpaired.git'
-"Plugin 'vim-scripts/HTML-AutoCloseTag'
 
 " Editing tools
 Plugin 'trailing-whitespace'
@@ -22,7 +20,6 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 " Source Browsing
 if !(has('win32') || has('win64'))
   Plugin 'https://github.com/vim-scripts/taglist.vim.git'
-  Plugin 'gtags.vim'
 endif
 
 " Syntax checking
