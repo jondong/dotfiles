@@ -3,9 +3,6 @@
 # autojump configuration.
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
 
-# Path for python binaries
-append_path_if_exists "$HOME/Library/Python/2.7/bin"
-
 if [ -d /opt/local ]; then
   # using Macports
   EXTRA_LIB_PREFIX=/opt/local

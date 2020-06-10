@@ -32,7 +32,15 @@ brew update
 #brew install wget --with-iri
 #brew install vim --with-client-server
 
-brew install bash zsh tmux bash-completion2 bash-git-prompt cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop bat mobile-shell global ctags ghi yarn aria2 mas z exa fd fzf ag ack prettyping diff-so-fancy ncdu tldr
+brew install bash zsh tmux bash-completion2 bash-git-prompt cmake shellcheck xctool ccache chisel appledoc dark-mode ssh-copy-id tree npm autojump reattach-to-user-namespace gitup ag htop bat mobile-shell global ctags ghi yarn aria2 mas z exa fd fzf ag ack prettyping diff-so-fancy ncdu tldr python pyenv mosh gibo
+
+# To install useful key bindings and fuzzy completion
+$(brew --prefix)/opt/fzf/install
+
+# setup pyenv
+local pyenv_versions="2.7.17 3.8.2"
+pyenv install $pyenv_versions
+pyenv global $pyenv_versions
 
 diff-so-fancy --set-defaults
 
