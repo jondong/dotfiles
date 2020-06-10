@@ -2,6 +2,11 @@ if filereadable(expand("~/.dotfiles/apps/vim/vimrc.bundles.common"))
   source ~/.dotfiles/apps/vim/vimrc.bundles.common
 endif
 
+" General
+Plugin 'inkarkat/vim-ingo-library'
+Plugin 'inkarkat/vim-mark'
+Plugin 'junegunn/fzf.vim'
+
 " Xcode
 Plugin 'clang-complete'
 Plugin 'cocoa.vim'

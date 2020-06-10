@@ -37,6 +37,3 @@ Plugin 'coffee-check.vim'
 " Syntax checkers for syntastic
 Plugin 'ynkdir/vim-vimlparser'
 Plugin 'syngan/vim-vimlint'
-
-" Weex
-Plugin 'yuezk/weex.vim'
