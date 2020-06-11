@@ -44,6 +44,9 @@ pyenv global $pyenv_versions
 
 diff-so-fancy --set-defaults
 
+# Install iTerm2 integrations
+curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
+
 # Upgrade any already-installed formulae.
 #brew upgrade --all
 
