@@ -8,7 +8,3 @@ Open a terminal window, and run:
 ```
 bash <(curl https://raw.githubusercontent.com/jondong/dotfiles/master/bootstrap.sh -L)
 ```
-
-Test case
-
-Test case
