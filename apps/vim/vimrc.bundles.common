@@ -3,6 +3,7 @@ UnBundle 'osyo-manga/vim-over'
 UnBundle 'tpope/vim-commentary'
 UnBundle 'altercation/vim-colors-solarized'
 UnBundle 'amirh/HTML-AutoCloseTag'
+UnBundle 'tpope/vim-fugitive'
 
 " General
 Plugin 'inkarkat/vim-ingo-library'
@@ -19,7 +20,6 @@ Plugin 'trailing-whitespace'
 Plugin 'https://github.com/christoomey/vim-tmux-navigator.git'
 Plugin 'wellle/tmux-complete.vim'
 Plugin 'benmills/vimux'
-Plugin 'jez/vim-superman'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 " Source Browsing
