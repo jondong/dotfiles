@@ -2,23 +2,14 @@ if filereadable(expand("~/.dotfiles/apps/vim/vimrc.bundles.common"))
   source ~/.dotfiles/apps/vim/vimrc.bundles.common
 endif
 
-" General
-Plugin 'inkarkat/vim-ingo-library'
-Plugin 'inkarkat/vim-mark'
-Plugin 'junegunn/fzf.vim'
-
 " Xcode
 Plugin 'clang-complete'
 Plugin 'cocoa.vim'
 Plugin 'https://github.com/eraserhd/vim-ios.git'
-Plugin 'rizzatti/dash.vim'
 Plugin 'posva/vim-vue'
 
-Plugin 'tpope/vim-projectionist'
+" Swift
+Plugin 'https://github.com/toyamarinyon/vim-swift.git'
 
-" TypeScript
-Plugin 'leafgarland/typescript-vim'
-Plugin 'HerringtonDarkholme/yats.vim'
-
-" Dart
-Plugin 'dart-lang/dart-vim-plugin'
+" Mac tools
+Plugin 'rizzatti/dash.vim'

@@ -4,6 +4,11 @@ UnBundle 'tpope/vim-commentary'
 UnBundle 'altercation/vim-colors-solarized'
 UnBundle 'amirh/HTML-AutoCloseTag'
 
+" General
+Plugin 'inkarkat/vim-ingo-library'
+Plugin 'inkarkat/vim-mark'
+Plugin 'junegunn/fzf.vim'
+
 " Navigation tools
 Plugin 'https://github.com/tpope/vim-unimpaired.git'
 
@@ -25,12 +30,13 @@ endif
 " Syntax checking
 Plugin 'JavaScript-syntax'
 
-" Swift
-Plugin 'https://github.com/toyamarinyon/vim-swift.git'
-
-" CoffeeScript
-Plugin 'coffee-check.vim'
-
 " Syntax checkers for syntastic
 Plugin 'ynkdir/vim-vimlparser'
 Plugin 'syngan/vim-vimlint'
+
+" TypeScript
+Plugin 'leafgarland/typescript-vim'
+Plugin 'HerringtonDarkholme/yats.vim'
+
+" Dart
+Plugin 'dart-lang/dart-vim-plugin'
