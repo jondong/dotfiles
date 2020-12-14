@@ -154,11 +154,10 @@ setup_paths() {
   prepend_path_if_exists "$HOME/.cargo/bin"
 
   # flutter path
-  append_path_if_exists "$PROJECTS/flutter/flutter/bin"
-  append_path_if_exists "$HOME/bin/flutter/bin"
+  append_path_if_exists "$PROJECTS/oryx/flutter/bin"
   # flutter settings for China
-  export PUB_HOSTED_URL=https://pub.flutter-io.cn
-  export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+  #export PUB_HOSTED_URL=https://pub.flutter-io.cn
+  #export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
 
   # emscripten settings
   local EMSCRIPTEN_SDK_ROOT="$HOME/bin/emsdk"
