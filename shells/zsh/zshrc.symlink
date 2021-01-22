@@ -1,10 +1,11 @@
 # Path to your oh-my-zsh installation.
 
+export DOTFILES_ROOT="$HOME/.dotfiles"
+[[ -s "$DOTFILES_ROOT/platforms/profile" ]] && source "$DOTFILES_ROOT/platforms/profile"
+
 export ZSH=$HOME/.oh-my-zsh
 
 if [ $PLATFORM = "Cygwin" ]; then
-  ZSH_THEME="babun"
-
   plugins=(git)
 
   # User configuration
@@ -12,11 +13,23 @@ if [ $PLATFORM = "Cygwin" ]; then
   source $ZSH/oh-my-zsh.sh
 fi
 
-export PATH="/usr/local/bin:$PATH"
+ZSH_THEME="random"
+#export PATH="/usr/local/bin:$PATH"
 
 # all of our zsh files
 shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh)
 platform_zsh=
+
+if [ $PLATFORM = "Darwin" ]; then
+  platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh)
+elif [ $PLATFORM = "Linux" ]; then
+  platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh)
+elif [ $PLATFORM = "Cygwin" ]; then
+  platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh)
+  # initialize autocomplete here, otherwise functions won't be loaded
+  autoload -U compinit
+  compinit
+fi
 
 typeset -U config_files
 config_files=(${shells_zsh[@]} ${platform_zsh[@]})
@@ -39,17 +52,6 @@ do
   source $file
 done
 
-if [ $PLATFORM = "Darwin" ]; then
-  platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh)
-elif [ $PLATFORM = "Linux" ]; then
-  platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh)
-elif [ $PLATFORM = "Cygwin" ]; then
-  platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh)
-  # initialize autocomplete here, otherwise functions won't be loaded
-  autoload -U compinit
-  compinit
-fi
-
 unset config_files
 
 # bindkey with Emacs style. This is for tmux-yank plugin.
@@ -59,11 +61,11 @@ bindkey -e
 # to give user a chance to rewrite the default settings.
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+[[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && source "${HOME}/.iterm2_shell_integration.zsh"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && \. "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+[[ -s "/usr/local/opt/nvm/nvm.sh" ]] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[[ -s "/usr/local/opt/nvm/etc/bash_completion" ]] && \. "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 # fzf configurations
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -89,3 +91,11 @@ _fzf_compgen_dir() {
 
 # ruby env settings
 [ -d ~/.rbenv ] && eval "$(rbenv init -)"
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+# This scrip is going to be load at the end of profile, give user chance to
+# override the existing settings.
+[[ -s ~/.localrc ]] && source ~/.localrc
+

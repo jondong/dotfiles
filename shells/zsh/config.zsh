@@ -15,8 +15,10 @@ if [ $PLATFORM != "Cygwin" ]; then
   antigen bundle pip
 
   # Syntax highlighting bundle.
-  antigen bundle zsh-users/zsh-syntax-highlighting
+  antigen bundle zsh-users/zsh-autosuggestions
   antigen bundle zsh-users/zsh-completions
+  antigen bundle zsh-users/zsh-syntax-highlighting
+  antigen bundle paulirish/git-open
 
   # Load the theme.
   antigen theme daveverwer
@@ -24,6 +26,9 @@ if [ $PLATFORM != "Cygwin" ]; then
   # Tell antigen that you're done.
   antigen apply
 fi
+
+# bindkey for zsh-autosuggestion
+bindkey ',' autosuggest-accept
 
 # vim-superman to replace the man page editor with vim
 vman() {
@@ -47,3 +52,6 @@ alias ping='prettyping --nolegend'
 alias top='htop'
 alias du='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
 alias help='tldr'
+alias rm='trash'
+alias cp='cp -i'
+alias go='git open'

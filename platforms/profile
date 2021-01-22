@@ -153,17 +153,9 @@ setup_paths() {
   export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
   prepend_path_if_exists "$HOME/.cargo/bin"
 
-  # flutter path
-  append_path_if_exists "$PROJECTS/oryx/flutter/bin"
-  # flutter settings for China
-  #export PUB_HOSTED_URL=https://pub.flutter-io.cn
-  #export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
-
   # emscripten settings
   local EMSCRIPTEN_SDK_ROOT="$HOME/bin/emsdk"
-  if [ -d $EMSCRIPTEN_SDK_ROOT ]; then
-    source $EMSCRIPTEN_SDK_ROOT/emsdk_env.sh
-  fi
+  [[ -d $EMSCRIPTEN_SDK_ROOT ]] && source $EMSCRIPTEN_SDK_ROOT/emsdk_env.sh > /dev/null 2>&1
 
   # wasmtime path
   export WASMTIME_HOME="$HOME/.wasmtime"
@@ -171,31 +163,23 @@ setup_paths() {
 
   # Wasmer
   export WASMER_DIR="$HOME/.wasmer"
+  [[ -s "$WASMER_DIR/wasmer.sh" ]] && source "$WASMER_DIR/wasmer.sh"
 }
 
 setup_paths
-
-[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 
 # Setup LC_ALL explicitly
 export LC_ALL=en_US.UTF-8
 
 alias npm-exec='PATH=$(npm bin):$PATH'
 
-# A quick calculator written by awk.
 # http://lifehacker.com/5396183/create-an-awesome-command-line-calculator
 calc() { awk "BEGIN{ print $*  }" ; }
 
-[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
-[ -f $HOME/.rvm/bin ] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[[ -s $HOME/.travis/travis.sh ]] && source $HOME/.travis/travis.sh
+[[ -d $HOME/.rvm/bin ]] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-# Stash your environment variables in ~/.localrc. This means they'll stay out
-# of your main dotfiles repository (which may be public, like this one), but
-# you'll have access to them in your scripts.
-# This scrip is going to be load at the end of profile, give user chance to
-# override the existing settings.
-[ -f ~/.localrc ] && source ~/.localrc
-
 [[ -s "$HOME/.mboxrc" ]] && source "$HOME/.mboxrc"
+[[ -s "/Applications/MBox.app/Contents/Resources/Plugins/MBoxCore/mbox.sh" ]] && source "/Applications/MBox.app/Contents/Resources/Plugins/MBoxCore/mbox.sh" # MBox
 
