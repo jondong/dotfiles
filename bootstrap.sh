@@ -145,8 +145,8 @@ if [ ! -d "$DOTFILES_ROOT" ]; then
   if [ -f "$HOME/.profile" ]; then
     mv "$HOME/.profile" "$HOME/.profile.bak"
   fi
-  link_file "$DOTFILES_ROOT/platforms/profile" "$HOME/.profile"
-  link_file "$DOTFILES_ROOT/platforms/profile" "$HOME/.zshenv"
+  # No need to link profile as zshrc will source it internally
+  # link_file "$DOTFILES_ROOT/platforms/profile" "$HOME/.profile"
 else
   info "already installed dotfiles, updating..."
   pushd "$DOTFILES_ROOT" > /dev/null
@@ -155,13 +155,14 @@ fi
 
 popd > /dev/null
 
-if [ $PLATFORM = "Darwin" ]; then
-    source $DOTFILES_ROOT/platforms/mac/install.sh
-elif [ $PLATFORM = "Linux" ]; then
-    source $DOTFILES_ROOT/platforms/linux/install.sh
-elif [ $PLATFORM = "Cygwin" ]; then
-    source $DOTFILES_ROOT/platforms/win/install.sh
-fi
+# Do not install shell commands as it is not up to date. Use backup.
+#if [ $PLATFORM = "Darwin" ]; then
+    #source $DOTFILES_ROOT/platforms/mac/install.sh
+#elif [ $PLATFORM = "Linux" ]; then
+    #source $DOTFILES_ROOT/platforms/linux/install.sh
+#elif [ $PLATFORM = "Cygwin" ]; then
+    #source $DOTFILES_ROOT/platforms/win/install.sh
+#fi
 
 # Create logs directory.
 if [ ! -d "$HOME/logs" ]; then
