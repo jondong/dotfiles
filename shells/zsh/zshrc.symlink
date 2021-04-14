@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
 
+[[ -z "$DOTFILES_ROOT" ]] && export DOTFILES_ROOT="$HOME/.dotfiles"
 [[ -s "$DOTFILES_ROOT/platforms/profile" ]] && source "$DOTFILES_ROOT/platforms/profile"
 
 export "ZSH=$HOME/.oh-my-zsh"
@@ -53,10 +54,6 @@ bindkey -e
 
 [[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && source "${HOME}/.iterm2_shell_integration.zsh"
 
-export NVM_DIR="$HOME/.nvm"
-[[ -s "/usr/local/opt/nvm/nvm.sh" ]] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[[ -s "/usr/local/opt/nvm/etc/bash_completion" ]] && \. "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-
 # fzf configurations
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -88,4 +85,11 @@ _fzf_compgen_dir() {
 # This scrip is going to be load at the end of profile, give user chance to
 # override the existing settings.
 [[ -s ~/.localrc ]] && source ~/.localrc
+
+######################### Appended not by me ###############################
+export PATH=/Users/jondong/Library/Python/3.9/bin:$PATH
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 

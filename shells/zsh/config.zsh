@@ -27,9 +27,6 @@ if [ $PLATFORM != "Cygwin" ]; then
   antigen apply
 fi
 
-# bindkey for zsh-autosuggestion
-bindkey ',' autosuggest-accept
-
 # vim-superman to replace the man page editor with vim
 vman() {
   vim -c "SuperMan $*"

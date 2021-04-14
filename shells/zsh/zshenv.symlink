@@ -1,3 +1,0 @@
-
-[[ -z "$DOTFILES_ROOT" ]] && export DOTFILES_ROOT="$HOME/.dotfiles"
-
