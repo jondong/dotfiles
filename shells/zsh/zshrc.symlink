@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Path to your oh-my-zsh installation.
 
 [[ -z "$DOTFILES_ROOT" ]] && export DOTFILES_ROOT="$HOME/.dotfiles"
@@ -5,7 +12,10 @@
 
 export "ZSH=$HOME/.oh-my-zsh"
 
-ZSH_THEME="random"
+export HISTIGNORE='pwd:exit:fg:bg:top:clear:history:ls:uptime:df:ll:la:gst'
+export HISTCONTROL=ignoredups
+export HISTSIZE=10000
+
 
 # all of our zsh files
 shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh)
@@ -79,6 +89,10 @@ _fzf_compgen_dir() {
 # ruby env settings
 [ -d ~/.rbenv ] && eval "$(rbenv init -)"
 
+# jenv settings
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
@@ -93,3 +107,5 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
