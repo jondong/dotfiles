@@ -109,3 +109,6 @@ set formatoptions=crqt
     " Setup for wordy
     "silent call wordy#init({})
 " }
+
+" Setup for snipmate
+let g:snipMate = { 'snippet_version' : 1 }
