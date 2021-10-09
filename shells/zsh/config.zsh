@@ -21,7 +21,6 @@ if [ $PLATFORM != "Cygwin" ]; then
   antigen bundle paulirish/git-open
 
   # Load the theme.
-  #antigen theme daveverwer
   antigen theme romkatv/powerlevel10k
   POWERLEVEL9K_MODE="awesome-patched"
 
