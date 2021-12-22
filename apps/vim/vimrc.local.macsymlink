@@ -33,5 +33,3 @@ let g:fzf_action = { 'ctrl-e': 'edit'  }
 " silver searcher: https://github.com/ggreer/the_silver_searcher
 let g:ackprg = 'ag --vimgrep'
 
-" unmap <leader>/ for mark.
-unmap <leader>/

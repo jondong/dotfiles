@@ -43,13 +43,17 @@ if [ $(command_exists teamocil) ]; then
   compctl -g '~/.teamocil/*(:t:r)' teamocil
 fi
 
-alias cat='bat'
+if [ $PLATFORM = "Darwin" ]; then
+  alias cat='bat'
+  alias rm='trash'
+elif [ $PLATFORM = "Linux" ]; then
+  alias cat='batcat'
+fi
 alias la="exa -abghl --git --color=automatic"
 alias ll="exa -bghl --git --color=automatic"
 alias ping='prettyping --nolegend'
 alias top='htop'
 alias du='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
 alias help='tldr'
-alias rm='trash'
 alias cp='cp -i'
 alias go='git open'

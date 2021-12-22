@@ -85,6 +85,9 @@ let Gtags_Auto_Map = 1
 
 set formatoptions=crqt
 
+" unmap <leader>/ for mark.
+unmap <leader>/
+
 " Setup for syntastic
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
