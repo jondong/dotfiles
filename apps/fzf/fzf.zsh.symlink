@@ -1,0 +1,19 @@
+# Setup fzf
+# ---------
+FZF_PREFIX=''
+if [ $PLATFORM = "Darwin" ]; then
+  if [[ ! "$PATH" == */usr/local/opt/fzf/bin* ]]; then
+    export PATH="${PATH:+${PATH}:}/usr/local/opt/fzf/bin"
+  fi
+  FZF_PREFIX="/usr/local/opt/fzf/shell"
+elif [ $PLATFORM = "Linux" ]; then
+  FZF_PREFIX="/usr/share/doc/fzf/examples"
+fi
+
+# Auto-completion
+# ---------------
+[[ $- == *i* ]] && source "$FZF_PREFIX/completion.zsh" 2> /dev/null
+
+# Key bindings
+# ------------
+source "$FZF_PREFIX/key-bindings.zsh"
