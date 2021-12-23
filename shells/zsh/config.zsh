@@ -48,6 +48,7 @@ if [ $PLATFORM = "Darwin" ]; then
   alias rm='trash'
 elif [ $PLATFORM = "Linux" ]; then
   alias cat='batcat'
+  alias fd='fdfind'
 fi
 alias la="exa -abghl --git --color=automatic"
 alias ll="exa -bghl --git --color=automatic"
