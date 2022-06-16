@@ -9,5 +9,5 @@ fi
 
 # git themes from https://github.com/arialdomartini/oh-my-git-themes
 #antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
-antigen theme arialdomartini/oh-my-git-themes arialdo-granzestyle
+#antigen theme arialdomartini/oh-my-git-themes arialdo-granzestyle
 #antigen theme arialdomartini/oh-my-git-themes arialdo-pathinline
