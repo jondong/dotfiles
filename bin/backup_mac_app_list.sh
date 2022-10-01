@@ -15,9 +15,9 @@ else
 fi
 
 ls /Applications | sed 's/\.app//g' > "$total_apps_file"
-/usr/local/bin/mas list > "$mas_apps_file"
-/usr/local/bin/brew list --formula> "$brew_apps_file"
-/usr/local/bin/brew list --cask> "$brew_cask_apps_file"
+$(brew --prefix)/bin/mas list > "$mas_apps_file"
+$(brew --prefix)/bin/brew list --formula> "$brew_apps_file"
+$(brew --prefix)/bin/brew list --cask> "$brew_cask_apps_file"
 
 # Generate app installation script.
 install_script="app_installer.sh"

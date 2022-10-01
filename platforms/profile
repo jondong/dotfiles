@@ -101,7 +101,7 @@ setup_paths() {
   prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
   # Path for homebrew sbin
-  append_path_if_exists "/usr/local/sbin"
+  append_path_if_exists "$(brew --prefix)/sbin"
 
   # Scripts in dropbox
   export DROPBOX_PATH="$HOME/cloud/Dropbox"

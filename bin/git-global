@@ -18,7 +18,7 @@ git config --global color.ui true
 # color.branch, color.diff, color.interactive, color.status
 
 if [ "$(uname)" = 'Darwin' ]; then
-  if [ -f /usr/local/bin/kdiff3 ]; then
+  if [ -f $(brew --prefix)/bin/kdiff3 ]; then
     git config --global merge.tool kdiff3
   else
     echo "Failed to find kdiff3, you need to install it through Homebrew."

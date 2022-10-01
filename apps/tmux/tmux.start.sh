@@ -5,7 +5,7 @@
 # http://www.huyng.com/posts/productivity-boost-with-tmux-iterm2-workspaces/
 #
 
-export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:$(brew --prefix)/bin
 
 # abort if we're already inside a TMUX session
 [ "$TMUX" == "" ] || exit 0

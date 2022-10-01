@@ -15,7 +15,7 @@ brew update
 
 # Install homebrew packages
 #brew install coreutils git git-lfs git-extras cocoapods tig
-#sudo ln -s /usr/local/bin/gsha256sum /usr/local/bin/sha256sum
+#sudo ln -s $(brew --prefix)/bin/gsha256sum $(brew --prefix)/bin/sha256sum
 
 # Install some other useful utilities like `sponge`.
 #brew install moreutils findutils
@@ -23,7 +23,7 @@ brew update
 #brew install gnu-sed --with-default-names
 
 # Install Bash 4.
-# Note: don’t forget to add `/usr/local/bin/bash` and `/usr/local/bin/zsh`
+# Note: don’t forget to add `$(brew --prefix)/bin/bash` and `$(brew --prefix)/bin/zsh`
 # to `/etc/shells` before running `chsh`.
 #brew tap homebrew/versions
 #brew tap oclint/formulae
