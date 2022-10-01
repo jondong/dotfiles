@@ -143,6 +143,9 @@ setup_paths() {
     unset ANDROID_NDK
   fi
 
+  # Flutter prebuild path
+  append_path_if_exists "$HOME/flutter/bin"
+
   # yarn path
   if [ $(command_exists yarn) ]; then
     export PATH=$PATH:"$(yarn global bin)"
