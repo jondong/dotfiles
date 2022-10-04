@@ -81,17 +81,17 @@ explain() {
   fi
 }
 
+
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+
 export EDITOR=vim
 export PROJECTS=$HOME/projects
 export DOTFILES_ROOT="$HOME/.dotfiles"
 
 # Load proxy setting firstly.
 [ -f ~/.proxyrc ] && source ~/.proxyrc
-
-#Add ssh key for sync playbook repos.
-if [ -d "$HOME/resource/backup-keys" ] ; then
-  ssh-add "$HOME/resource/backup-keys/id_rsa" > /dev/null 2>&1
-fi
 
 setup_paths() {
   # set PATH so it includes user's private bin if it exists
@@ -136,6 +136,7 @@ setup_paths() {
     append_path_if_exists "$ANDROID_SDK/platform-tools"
   else
     unset ANDROID_SDK
+    unset ANDROID_NDK
   fi
   if [ -d "$ANDROID_NDK" ]; then
     append_path_if_exists "$ANDROID_NDK"
@@ -179,10 +180,4 @@ alias npm-exec='PATH=$(npm bin):$PATH'
 # http://lifehacker.com/5396183/create-an-awesome-command-line-calculator
 calc() { awk "BEGIN{ print $*  }" ; }
 
-[[ -s $HOME/.travis/travis.sh ]] && source $HOME/.travis/travis.sh
-[[ -d $HOME/.rvm/bin ]] && export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-[[ -s "$HOME/.mboxrc" ]] && source "$HOME/.mboxrc"
-[[ -s "/Applications/MBox.app/Contents/Resources/Plugins/MBoxCore/mbox.sh" ]] && source "/Applications/MBox.app/Contents/Resources/Plugins/MBoxCore/mbox.sh" # MBox
 

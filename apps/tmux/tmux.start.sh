@@ -5,6 +5,9 @@
 # http://www.huyng.com/posts/productivity-boost-with-tmux-iterm2-workspaces/
 #
 
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 export PATH=$PATH:$(brew --prefix)/bin
 
 # abort if we're already inside a TMUX session
