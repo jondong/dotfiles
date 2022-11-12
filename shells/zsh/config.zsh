@@ -54,11 +54,11 @@ alias la="exa -abghl --git --color=automatic"
 alias ll="exa -bghl --git --color=automatic"
 alias ping='prettyping --nolegend'
 alias top='htop'
-alias du='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
+alias du='ncdu -rr -x --exclude .git --exclude node_modules'
 alias help='tldr'
 alias cp='cp -i'
 alias go='git open'
 alias ipe='curl ipinfo.io/ip'
 alias ipi='ipconfig getifaddr en0'
-alias www='python -m SimpleHTTPServer 8000'
+alias www='python -m http.server'
 alias wget='wget -c '
