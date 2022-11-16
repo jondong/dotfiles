@@ -122,6 +122,11 @@ setup_paths() {
     prepend_path_if_exists "$DEPOT_TOOLS_HOME"
   fi
 
+  # MacOSX SDK path
+  if [ $PLATFORM = 'Darwin' ]; then
+    export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+  fi
+
   # Android SDK setup
   if [ $PLATFORM = 'Darwin' ]; then
     export ANDROID_SDK=$HOME/Library/Android/sdk
