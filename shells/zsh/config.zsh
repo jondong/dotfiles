@@ -44,7 +44,7 @@ if [ $(command_exists teamocil) ]; then
 fi
 
 if [ $PLATFORM = "Darwin" ]; then
-  alias cat='bat'
+  alias cat='bat --theme zenburn'
   alias rm='trash'
 elif [ $PLATFORM = "Linux" ]; then
   alias cat='batcat'
