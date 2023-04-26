@@ -23,7 +23,7 @@ set -g status-left-length 90
 set -g status-right-length 60
 set -g status-justify left
 set -g status-left "#[fg=Green]#(whoami)::#[fg=blue]#(hostname -s) "
-set -g status-right '#[fg=Cyan]Continuum: #{continuum_status}'
+#set -g status-right '#[fg=Cyan]Continuum: #{continuum_status}'
 set -wg window-status-format "#I:#W" # 状态栏窗口名称格式
 set -wg window-status-current-format " #I:#W#F " # 状态栏当前窗口名称格式(#I：序号，#w：窗口名称，#F：间隔符)
 set -wg window-status-separator "|" # 状态栏窗口名称之间的间隔
@@ -56,7 +56,7 @@ if-shell 'test $PLATFORM = "Linux"' 'source ~/.tmux-linux.conf'
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
+#set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-open'
@@ -67,10 +67,10 @@ set -g @plugin 'christoomey/vim-tmux-navigator'
 set -g @resurrect-strategy-vim 'session' # 恢复vim会话状态
 set -g @resurrect-strategy-nvim 'session' # 恢复neovim会话状态
 # Setting for continuum.
-set -g @continuum-boot 'on'
-set -g @continuum-boot-options 'iterm,fullscreen'
-set -g @continuum-save-interval '60'
-set -g @continuum-restore 'on'
+#set -g @continuum-boot 'on'
+#set -g @continuum-boot-options 'iterm,fullscreen'
+#set -g @continuum-save-interval '60'
+#set -g @continuum-restore 'on'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
