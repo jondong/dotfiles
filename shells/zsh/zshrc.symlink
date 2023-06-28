@@ -83,9 +83,6 @@ _fzf_compgen_dir() {
   command fd --type d --hidden --follow --exclude .git --exclude node_modules . "$1"
 }
 
-# ruby env settings
-[ -d ~/.rbenv ] && eval "$(rbenv init -)"
-
 # jenv settings
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
@@ -123,3 +120,6 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
