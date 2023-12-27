@@ -6,3 +6,4 @@ fi
 # Set dotfile path and enable profile settings.
 [[ -z "$DOTFILES_ROOT" ]] && export DOTFILES_ROOT="$HOME/.dotfiles"
 [[ -s "$DOTFILES_ROOT/platforms/profile" ]] && source "$DOTFILES_ROOT/platforms/profile"
+[[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
