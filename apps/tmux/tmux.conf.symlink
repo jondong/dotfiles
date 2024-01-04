@@ -56,21 +56,16 @@ if-shell 'test $PLATFORM = "Linux"' 'source ~/.tmux-linux.conf'
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
-#set -g @plugin 'tmux-plugins/tmux-continuum'
 set -g @plugin 'tmux-plugins/tmux-copycat'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-open'
 set -g @plugin 'christoomey/vim-tmux-navigator'
+set -g @plugin 'aserowy/tmux.nvim'
 
 # Tmux Plugin Settings
 # Setting for resurrect.
 set -g @resurrect-strategy-vim 'session' # 恢复vim会话状态
 set -g @resurrect-strategy-nvim 'session' # 恢复neovim会话状态
-# Setting for continuum.
-#set -g @continuum-boot 'on'
-#set -g @continuum-boot-options 'iterm,fullscreen'
-#set -g @continuum-save-interval '60'
-#set -g @continuum-restore 'on'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
