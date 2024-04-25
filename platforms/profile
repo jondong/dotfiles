@@ -141,12 +141,18 @@ setup_paths() {
 		append_path_if_exists "$ANDROID_SDK/tools"
 		append_path_if_exists "$ANDROID_SDK/tools/bin"
 		append_path_if_exists "$ANDROID_SDK/platform-tools"
+
+		# Add alias for bazel
+		export ANDROID_HOME=$ANDROID_SDK
 	else
 		unset ANDROID_SDK
 		unset ANDROID_NDK
 	fi
 	if [ -d "$ANDROID_NDK" ]; then
 		append_path_if_exists "$ANDROID_NDK"
+
+		# Add alias for bazel
+		export ANDROID_NDK_HOME=$ANDROID_NDK
 	else
 		unset ANDROID_NDK
 	fi
@@ -161,8 +167,8 @@ setup_paths() {
 
 	# rustup path
 	# Use Tsinghua mirror site tuna.
-	export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
-	export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+	#export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
+	#export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 	prepend_path_if_exists "$HOME/.cargo/bin"
 
 	# emscripten settings
