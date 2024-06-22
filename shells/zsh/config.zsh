@@ -47,7 +47,7 @@ if [ $PLATFORM = "Darwin" ]; then
   alias cat='bat --theme zenburn'
   alias rm='trash'
 elif [ $PLATFORM = "Linux" ]; then
-  local dist=$(lsb-release -is)
+  local dist=$(lsb_release -is)
   if [[ "$dist" == "Ubuntu" ]]; then
     alias cat='batcat'
     alias fd='fdfind'
@@ -55,8 +55,8 @@ elif [ $PLATFORM = "Linux" ]; then
     alias cat='bat'
   fi
 fi
-alias la="exa -abghl --git --color=automatic"
-alias ll="exa -bghl --git --color=automatic"
+alias la="exa -abghl --color=automatic"
+alias ll="exa -bghl --color=automatic"
 alias ping='prettyping --nolegend'
 alias top='htop'
 alias du='ncdu -rr -x --exclude .git --exclude node_modules'
