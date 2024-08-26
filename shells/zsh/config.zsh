@@ -55,8 +55,6 @@ elif [ $PLATFORM = "Linux" ]; then
     alias cat='bat'
   fi
 fi
-alias la="exa -abghl --color=automatic"
-alias ll="exa -bghl --color=automatic"
 alias ping='prettyping --nolegend'
 alias top='htop'
 alias du='ncdu -rr -x --exclude .git --exclude node_modules'
