@@ -70,7 +70,7 @@ declare -A PACKAGES=(
 
     ["CLI"]="1password-cli"
 
-    ["CaskTools"]="cheatsheet dash eudic hyper muzzle the-unarchiver visual-studio-code warp docker android-studio lm-studio"
+    ["CaskTools"]="cheatsheet dash eudic hyper alacritty muzzle the-unarchiver visual-studio-code warp docker android-studio lm-studio"
 )
 
 #==============================================================================
