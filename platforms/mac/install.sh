@@ -3,7 +3,7 @@
 # macOS 软件安装脚本
 #==============================================================================
 
-set -e  # 遇到错误立即退出
+set -e # 遇到错误立即退出
 
 #==============================================================================
 # 工具函数
@@ -70,7 +70,7 @@ declare -A PACKAGES=(
 
     ["CLI工具"]="1password-cli"
 
-    ["Cask应用"]="cheatsheet dash eudic muzzle the-unarchiver visual-studio-code warp docker"
+    ["Cask应用"]="cheatsheet dash eudic muzzle the-unarchiver visual-studio-code warp docker android-studio lm-studio"
 )
 
 #==============================================================================
@@ -80,7 +80,7 @@ install_packages() {
     local category="$1"
     local -a packages
     # 使用 read -ra 更安全地将字符串拆分为数组
-    IFS=' ' read -ra packages <<< "$2"
+    IFS=' ' read -ra packages <<<"$2"
     local install_cmd="brew install"
 
     log_info "检查${category}..."
