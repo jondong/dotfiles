@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-if [ -z "$XWALK_ROOT" ]; then
-  echo "variable XWALK_ROOT hasn't been set, run 'source <path_to>/xwalk-env-android' first."
-  exit 1
-fi
-
-javac "$@" -classpath "$XWALK_ROOT/src/out/Debug/lib.java/xwalk_app_runtime_java.jar:$HOME/bin/adt-bundle/sdk/platforms/android-19/android.jar"
