@@ -48,26 +48,61 @@ install_prerequisites() {
     esac
 }
 
-# 配置文件链接函数
 link_file() {
-    local src=$1 dst=$2 action=""
-    
-    if [[ -e "$dst" ]]; then
-        log_user "文件已存在: $dst ($(basename "$src")), 请选择操作:\n\
-        [s]跳过 [o]覆盖 [b]备份"
-        read -r -n 1 action
-        case "$action" in
-            o) rm -rf "$dst"; log_success "已删除 $dst" ;;
-            b) mv "$dst" "${dst}.backup"; log_success "已备份到 ${dst}.backup" ;;
-            *) log_success "已跳过 $src"; return ;;
-        esac
+    local src=$1 dst=$2
+    local overwrite='' backup='' skip=''
+    local action=''
+
+    # 如果目标已存在
+    if [[ -f "$dst" || -d "$dst" || -L "$dst" ]]; then
+        # 如果已经是正确的软链接，跳过
+        if [[ "$(readlink "$dst")" == "$src" ]]; then
+            log_success "已存在正确的链接: $dst"
+            return
+        fi
+
+        if [[ "$overwrite_all" == "false" && "$backup_all" == "false" && "$skip_all" == "false" ]]; then
+            log_user "文件已存在: $dst ($(basename "$src")), 请选择操作:\n\
+            [s]跳过 [S]全部跳过 [o]覆盖 [O]全部覆盖 [b]备份 [B]全部备份"
+            read -r -n 1 action
+            echo
+
+            case "$action" in
+                o) overwrite=true ;;
+                O) overwrite_all=true ;;
+                b) backup=true ;;
+                B) backup_all=true ;;
+                s) skip=true ;;
+                S) skip_all=true ;;
+                *) skip=true ;;
+            esac
+        fi
+
+        overwrite=${overwrite:-$overwrite_all}
+        backup=${backup:-$backup_all}
+        skip=${skip:-$skip_all}
+
+        if [[ "$overwrite" == "true" ]]; then
+            rm -rf "$dst"
+            log_success "已删除: $dst"
+        fi
+
+        if [[ "$backup" == "true" ]]; then
+            mv "$dst" "${dst}.backup"
+            log_success "已备份: $dst -> ${dst}.backup"
+        fi
+
+        if [[ "$skip" == "true" ]]; then
+            log_success "已跳过: $src"
+            return
+        fi
     fi
-    
+
+    # 创建软链接
     ln -sf "$src" "$dst"
-    log_success "已链接 $src 到 $dst"
+    log_success "已创建链接: $src -> $dst"
 }
 
-# 安装 Vim 配置
 setup_vim() {
     if [[ ! -d "$VIM_CONFIG_DIR" ]]; then
         log_info "安装 vim 配置...\n"
@@ -89,6 +124,47 @@ setup_tmux() {
     fi
     tmux source "$HOME/.tmux.conf" 2>/dev/null || true
     log_success "Tmux 配置完成"
+}
+
+install_dotfiles() {
+    log_info "开始安装 dotfiles...\n"
+    
+    local overwrite_all backup_all skip_all
+    overwrite_all=false
+    backup_all=false
+    skip_all=false
+    
+    local platform=$1
+    
+    local files_to_link
+    files_to_link=""
+    
+    # 根据平台选择要链接的文件
+    case "$platform" in
+        Darwin) 
+            files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 3 -name "*.symlink" -o -name "*.macsymlink")
+            ;;
+        Linux)
+            files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 3 -name "*.symlink" -o -name "*.linuxsymlink")
+            ;;
+        Cygwin)
+            files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 3 -name "*.symlink" -o -name "*.winsymlink")
+            ;;
+    esac
+
+    # 如果没有找到文件，提前返回
+    if [[ -z "$files_to_link" ]]; then
+        log_info "没有找到需要链接的文件\n"
+        return
+    fi
+
+    # 处理每个找到的文件
+    for src in $files_to_link; do
+        # 移除扩展名作为目标文件名
+        local dst
+        dst="$HOME/.$(basename "${src%.*}")"
+        link_file "$src" "$dst"
+    done
 }
 
 # 主函数
@@ -120,6 +196,7 @@ main() {
         log_info "更新 dotfiles...\n"
         (cd "$DOTFILES_ROOT" && git pull --rebase origin master)
     fi
+    install_dotfiles "$platform"
     
     # 配置 Vim
     if ! $skip_vim; then
