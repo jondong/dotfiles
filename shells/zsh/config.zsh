@@ -16,7 +16,6 @@ if [ $PLATFORM != "Cygwin" ]; then
 
   # Syntax highlighting bundle.
   antigen bundle zsh-users/zsh-autosuggestions
-  antigen bundle zsh-users/zsh-completions
   antigen bundle zsh-users/zsh-syntax-highlighting
   antigen bundle paulirish/git-open
 
