@@ -10,50 +10,74 @@
 #umask 022
 
 # platform
-if [ -z $PLATFORM ]; then
-	platformName=$(uname)
-	export PLATFORM=${platformName:0:6}
-	if [ $PLATFORM = 'CYGWIN' ]; then
-		export PLATFORM='Cygwin'
-	fi
-	unset platformName
-fi
+setup_platform() {
+	# 如果 PLATFORM 已经设置，则跳过
+	[[ -n "${PLATFORM:-}" ]] && return
+
+	# 获取平台名称并规范化
+	local platform_name
+	platform_name="$(uname)"
+	case "${platform_name}" in
+		CYGWIN*)  export PLATFORM="Cygwin" ;;
+		Darwin*)  export PLATFORM="Darwin" ;;
+		Linux*)   export PLATFORM="Linux"  ;;
+		*)        export PLATFORM="${platform_name:0:6}" ;;
+	esac
+}
+
+setup_platform
 
 # current shell
 current_shell() {
-	ps -p $$ -ocomm=
+	ps -p "$$" -ocomm=
 }
 
+# 检查命令是否存在
 command_exists() {
-	command -v "$1" 2>/dev/null
+	command -v "$1" >/dev/null 2>&1
 }
 
+# 检查目录是否已在 PATH 中
 directory_already_in_path() {
-	paths=($(sed 's/:/\n/g' <<<"$PATH"))
-	for i in $paths; do
-		[ "$1" = "$i" ] && return 0
-	done
-	return 1
+	local dir="${1}"
+	[[ ":${PATH}:" == *":${dir}:"* ]]
 }
 
+# PATH 管理函数
+_modify_path() {
+	local dir="${1}"
+	local position="${2:-append}"  # 默认为追加
+
+	# 验证目录
+	[[ ! -d "${dir}" ]] && return 1
+	directory_already_in_path "${dir}" && return 0
+
+	# 根据位置添加路径
+	if [[ "${position}" == "prepend" ]]; then
+		export PATH="${dir}:${PATH}"
+	else
+		export PATH="${PATH}:${dir}"
+	fi
+}
+
+# 在 PATH 前添加目录
 prepend_path_if_exists() {
-	if [ -d "$1" ] && ! directory_already_in_path "$1"; then
-		export PATH="$1":$PATH
-	fi
+	_modify_path "${1}" "prepend"
 }
 
+# 在 PATH 后添加目录
 append_path_if_exists() {
-	if [ -d "$1" ] && ! directory_already_in_path "$1"; then
-		export PATH=$PATH:"$1"
-	fi
+	_modify_path "${1}" "append"
 }
 
+# 在 PATH 前添加当前目录
 prepend_pwd_to_path() {
-	prepend_path_if_exists $(pwd)
+	prepend_path_if_exists "$(pwd)"
 }
 
+# 在 PATH 后添加当前目录
 append_pwd_to_path() {
-	append_path_if_exists $(pwd)
+	append_path_if_exists "$(pwd)"
 }
 
 set_proxy() {
