@@ -4,6 +4,25 @@
 # 平台特定的 Antigen 配置
 if [ $PLATFORM = "Darwin" ]; then
   source $(brew --prefix)/share/antigen/antigen.zsh
+  # Load the oh-my-zsh's library.
+  antigen use oh-my-zsh
+
+  # Bundles from the default repo (robbyrussell's oh-my-zsh).
+  antigen bundle git
+  antigen bundle pip
+  antigen bundle command-not-found
+
+  # Syntax highlighting bundle.
+  antigen bundle zsh-users/zsh-autosuggestions
+  antigen bundle zsh-users/zsh-syntax-highlighting
+  antigen bundle paulirish/git-open
+
+  # Load the theme.
+  antigen theme romkatv/powerlevel10k
+  POWERLEVEL9K_MODE="awesome-patched"
+
+  # Tell antigen that you're done.
+  antigen apply
 fi
 
 # Powerlevel10k 即时提示配置
