@@ -194,7 +194,10 @@ main() {
         git clone https://github.com/jondong/dotfiles.git "$DOTFILES_ROOT"
     else
         log_info "更新 dotfiles...\n"
-        (cd "$DOTFILES_ROOT" && git pull --rebase origin master)
+        (cd "$DOTFILES_ROOT" && \
+            git stash && \
+            git pull --rebase origin master && \
+            git stash pop || true)
     fi
     install_dotfiles "$platform"
     
