@@ -13,10 +13,3 @@ if [ -z $EXTRA_LIB_PREFIX ]; then
 fi
 export PATH=$EXTRA_LIB_PREFIX/bin:$EXTRA_LIB_PREFIX/sbin:$PATH
 export LD_LIBRARY_PATH=$EXTRA_LIB_PREFIX/lib:$LD_LIBRARY_PATH
-
-
-# autojump configuration.
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
-# z configuration
-. $(brew --prefix)/etc/profile.d/z.sh
