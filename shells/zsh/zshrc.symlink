@@ -44,10 +44,11 @@ export HISTSIZE=10000
 # 插件和补全配置
 #==============================================================================
 # 加载 zsh 文件
+setopt null_glob
 shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh)
-platform_zsh=''
 
 # 平台特定配置
+platform_zsh=''
 if [ $PLATFORM = "Darwin" ]; then
   platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh)
 elif [ $PLATFORM = "Linux" ]; then
@@ -55,10 +56,6 @@ elif [ $PLATFORM = "Linux" ]; then
 elif [ $PLATFORM = "Cygwin" ]; then
   platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh)
 fi
-
-# 初始化自动补全
-autoload -Uz compinit
-compinit
 
 #==============================================================================
 # 配置文件加载
@@ -71,6 +68,7 @@ for file in ${(M)config_files:#*/path.zsh}; do source $file; done
 for file in ${config_files:#*/path.zsh}; do source $file; done
 
 unset config_files
+unsetopt null_glob
 
 #==============================================================================
 # FZF 配置
