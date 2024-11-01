@@ -38,8 +38,10 @@ check_brew_cask() {
 # 获取所有已安装的包（包括 cask）
 get_installed_packages() {
     # 获取所有已安装的包（包括 cask）
-    local installed_formulae=$(brew list --formula)
-    local installed_casks=$(brew list --cask)
+    local installed_formulae
+    local installed_casks
+    installed_formulae=$(brew list --formula)
+    installed_casks=$(brew list --cask)
     echo "$installed_formulae $installed_casks"
 }
 
@@ -62,7 +64,7 @@ declare -A PACKAGES=(
 
     ["字体"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font"
 
-    ["开发工具"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup mobile-shell ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite"
+    ["开发工具"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite"
 
     ["QuickLook插件"]="provisionql qlimagesize qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook fliqlo"
 
@@ -84,12 +86,12 @@ install_packages() {
     log_info "检查${category}..."
 
     # 获取所有已安装的包
-    local installed_packages=$(get_installed_packages)
+    local installed_packages
+    installed_packages=$(get_installed_packages)
 
     # 检查哪些包需要安装
     for package in "${packages[@]}"; do
         if [[ "$package" == "--cask" ]]; then
-            install_cmd="brew install --cask"
             is_cask=true
             continue
         fi
@@ -105,13 +107,43 @@ install_packages() {
     if [ ${#missing_packages[@]} -gt 0 ]; then
         log_warn "安装缺失的包: ${missing_packages[*]}"
         if $is_cask; then
-            brew install --cask "${missing_packages[@]}"
+            $install_cmd "${missing_packages[@]}"
         else
-            brew install "${missing_packages[@]}"
+            $install_cmd "${missing_packages[@]}"
         fi
     else
         log_success "所有 ${category} 已安装"
     fi
+}
+
+setup_fzf() {
+    if [[ ! -f ~/.fzf.zsh ]]; then
+        log_info "配置 FZF..."
+        "$(brew --prefix)/opt/fzf/install" --all
+    else
+        log_success "FZF 已配置"
+    fi
+}
+
+setup_pyenv() {
+    log_info "检查 Python 环境..."
+    local versions=("2.7.18" "3.10.15")
+
+    for version in "${versions[@]}"; do
+        if ! pyenv versions | grep -q "$version"; then
+            log_warn "安装 Python $version..."
+            pyenv install "$version"
+        else
+            log_success "Python $version 已安装"
+        fi
+    done
+
+    pyenv global "${versions[@]}"
+}
+
+setup_git() {
+    log_info "配置 Git..."
+    diff-so-fancy --set-defaults
 }
 
 #==============================================================================
