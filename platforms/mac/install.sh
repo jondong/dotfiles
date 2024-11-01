@@ -58,19 +58,19 @@ update_homebrew() {
 # 包配置
 #==============================================================================
 declare -A PACKAGES=(
-    ["基础工具"]="bash zsh zsh-completions reattach-to-user-namespace antigen findutils"
+    ["Basic"]="bash zsh zsh-completions reattach-to-user-namespace antigen findutils"
 
-    ["实用工具"]="neovim tmux zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
+    ["Utilities"]="neovim tmux zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
 
-    ["字体"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font"
+    ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font"
 
-    ["开发工具"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker docker-compose"
+    ["DevTools"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker docker-compose"
 
-    ["QuickLook插件"]="provisionql qlimagesize qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
+    ["QuickLookPlugins"]="provisionql qlimagesize qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
 
-    ["CLI工具"]="1password-cli"
+    ["CLI"]="1password-cli"
 
-    ["Cask应用"]="cheatsheet dash eudic muzzle the-unarchiver visual-studio-code warp docker android-studio lm-studio"
+    ["CaskTools"]="cheatsheet dash eudic muzzle the-unarchiver visual-studio-code warp docker android-studio lm-studio"
 )
 
 #==============================================================================
@@ -86,7 +86,7 @@ install_packages() {
     log_info "检查${category}..."
 
     # 检查是否为 cask 包类别
-    if [[ "${category}" == "Cask应用" ]]; then
+    if [[ "${category}" == "CaskTools" ]]; then
         install_cmd="${install_cmd} --cask"
     fi
 
