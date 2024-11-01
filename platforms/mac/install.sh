@@ -64,38 +64,39 @@ declare -A PACKAGES=(
 
     ["字体"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font"
 
-    ["开发工具"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite"
+    ["开发工具"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker docker-compose"
 
     ["QuickLook插件"]="provisionql qlimagesize qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
 
     ["CLI工具"]="1password-cli"
 
-    ["Cask应用"]="--cask cheatsheet dash eudic muzzle the-unarchiver visual-studio-code warp"
+    ["Cask应用"]="cheatsheet dash eudic muzzle the-unarchiver visual-studio-code warp docker"
 )
 
 #==============================================================================
 # 安装函数
 #==============================================================================
 install_packages() {
-    local category=$1
-    local packages=($2)  # 将字符串转换为数组
+    local category="$1"
+    local -a packages
+    # 使用 read -ra 更安全地将字符串拆分为数组
+    IFS=' ' read -ra packages <<< "$2"
     local install_cmd="brew install"
-    local is_cask=false
-    local missing_packages=()
 
     log_info "检查${category}..."
+
+    # 检查是否为 cask 包类别
+    if [[ "${category}" == "Cask应用" ]]; then
+        install_cmd="${install_cmd} --cask"
+    fi
 
     # 获取所有已安装的包
     local installed_packages
     installed_packages=$(get_installed_packages)
+    local missing_packages=()
 
     # 检查哪些包需要安装
     for package in "${packages[@]}"; do
-        if [[ "$package" == "--cask" ]]; then
-            is_cask=true
-            continue
-        fi
-
         if ! echo "$installed_packages" | grep -q "\b${package}\b"; then
             missing_packages+=("$package")
         else
@@ -106,10 +107,8 @@ install_packages() {
     # 批量安装缺失的包
     if [ ${#missing_packages[@]} -gt 0 ]; then
         log_warn "安装缺失的包: ${missing_packages[*]}"
-        if $is_cask; then
-            $install_cmd "${missing_packages[@]}"
-        else
-            $install_cmd "${missing_packages[@]}"
+        if ! $install_cmd "${missing_packages[@]}"; then
+            log_warn "部分包安装失败，请检查错误信息"
         fi
     else
         log_success "所有 ${category} 已安装"

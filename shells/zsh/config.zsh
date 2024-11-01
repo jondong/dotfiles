@@ -38,11 +38,6 @@ vman() {
 }
 compdef vman="man"
 
-# Completion settings for teamocil
-if [ $(command_exists teamocil) ]; then
-  compctl -g '~/.teamocil/*(:t:r)' teamocil
-fi
-
 if [ $PLATFORM = "Darwin" ]; then
   alias cat='bat --theme zenburn'
   alias rm='trash'
@@ -56,7 +51,7 @@ elif [ $PLATFORM = "Linux" ]; then
   fi
 fi
 alias ping='prettyping --nolegend'
-alias top='htop'
+alias top='btop'
 alias du='ncdu -rr -x --exclude .git --exclude node_modules'
 alias help='tldr'
 alias cp='cp -i'
@@ -65,6 +60,5 @@ alias ipi='ipconfig getifaddr en0'
 alias vim='nvim'
 alias www='python -m http.server'
 alias wget='wget -c '
-alias mux='tmuxinator'
 alias lzd='lazydocker'
 alias bazel='bazelisk'
