@@ -115,6 +115,9 @@ install_packages() {
     fi
 }
 
+#==============================================================================
+# 配置函数
+#==============================================================================
 setup_fzf() {
     if [[ ! -f ~/.fzf.zsh ]]; then
         log_info "配置 FZF..."
@@ -145,6 +148,31 @@ setup_git() {
     diff-so-fancy --set-defaults
 }
 
+setup_alacritty() {
+    local config_dir="$HOME/.config/alacritty"
+    local theme_dir="$config_dir/themes"
+    local theme_repo="https://github.com/alacritty/alacritty-theme.git"
+
+    log_info "配置 Alacritty..."
+
+    # 检查配置目录是否存在
+    if [ ! -d "$config_dir" ]; then
+        log_info "创建 Alacritty 配置目录..."
+        mkdir -p "$config_dir"
+    fi
+
+    # 检查主题目录是否存在
+    if [ ! -d "$theme_dir" ]; then
+        log_info "克隆 Alacritty 主题..."
+        git clone "$theme_repo" "$theme_dir"
+    else
+        log_info "更新 Alacritty 主题..."
+        git -C "$theme_dir" pull
+    fi
+
+    log_success "Alacritty 配置完成"
+}
+
 #==============================================================================
 # 主函数
 #==============================================================================
@@ -169,6 +197,7 @@ main() {
     setup_fzf
     setup_pyenv
     setup_git
+    setup_alacritty
 
     # 清理
     log_info "清理旧版本..."
