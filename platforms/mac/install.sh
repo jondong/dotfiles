@@ -35,6 +35,14 @@ check_brew_cask() {
     brew list --cask "$1" >/dev/null 2>&1
 }
 
+# 获取所有已安装的包（包括 cask）
+get_installed_packages() {
+    # 获取所有已安装的包（包括 cask）
+    local installed_formulae=$(brew list --formula)
+    local installed_casks=$(brew list --cask)
+    echo "$installed_formulae $installed_casks"
+}
+
 #==============================================================================
 # Homebrew 更新
 #==============================================================================
@@ -48,9 +56,9 @@ update_homebrew() {
 # 包配置
 #==============================================================================
 declare -A PACKAGES=(
-    ["基础工具"]="bash zsh bash-completion2 bash-git-prompt zsh-completions reattach-to-user-namespace antigen findutils"
+    ["基础工具"]="bash zsh bash-completion bash-git-prompt zsh-completions reattach-to-user-namespace antigen findutils"
 
-    ["实用工具"]="nvim tmux zellij ssh-copy-id wget tree autojump ag btop bat mas z fd fzf ack prettyping mosh ncdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher"
+    ["实用工具"]="neovim tmux zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher"
 
     ["字体"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font"
 
@@ -70,22 +78,40 @@ install_packages() {
     local category=$1
     local packages=($2)  # 将字符串转换为数组
     local install_cmd="brew install"
+    local is_cask=false
+    local missing_packages=()
 
     log_info "检查${category}..."
 
+    # 获取所有已安装的包
+    local installed_packages=$(get_installed_packages)
+
+    # 检查哪些包需要安装
     for package in "${packages[@]}"; do
         if [[ "$package" == "--cask" ]]; then
             install_cmd="brew install --cask"
+            is_cask=true
             continue
         fi
 
-        if ! check_brew_package "$package"; then
-            log_warn "安装 $package..."
-            $install_cmd "$package"
+        if ! echo "$installed_packages" | grep -q "\b${package}\b"; then
+            missing_packages+=("$package")
         else
             log_success "$package 已安装"
         fi
     done
+
+    # 批量安装缺失的包
+    if [ ${#missing_packages[@]} -gt 0 ]; then
+        log_warn "安装缺失的包: ${missing_packages[*]}"
+        if $is_cask; then
+            brew install --cask "${missing_packages[@]}"
+        else
+            brew install "${missing_packages[@]}"
+        fi
+    else
+        log_success "所有 ${category} 已安装"
+    fi
 }
 
 #==============================================================================
