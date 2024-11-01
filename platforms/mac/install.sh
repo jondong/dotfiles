@@ -58,7 +58,7 @@ update_homebrew() {
 # 包配置
 #==============================================================================
 declare -A PACKAGES=(
-    ["基础工具"]="bash zsh bash-completion bash-git-prompt zsh-completions reattach-to-user-namespace antigen findutils"
+    ["基础工具"]="bash zsh zsh-completions reattach-to-user-namespace antigen findutils"
 
     ["实用工具"]="neovim tmux zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
 
