@@ -55,11 +55,34 @@ append_pwd_to_path() {
 	append_path_if_exists "$(pwd)"
 }
 
-setup_paths() {
-    # Set PATH, MANPATH, etc., for Homebrew.
-    if [ "$PLATFORM" = 'Darwin' ]; then
-        eval "$(/opt/homebrew/bin/brew shellenv)"
+setup_platform_paths() {
+    local platform_path=""
+
+    # 根据平台确定路径
+    case "$PLATFORM" in
+        "Darwin")
+            platform_path="$DOTFILES_ROOT/platforms/mac"
+            ;;
+        "Linux")
+            platform_path="$DOTFILES_ROOT/platforms/linux"
+            ;;
+        "Cygwin")
+            platform_path="$DOTFILES_ROOT/platforms/win"
+            ;;
+    esac
+
+    # 如果平台路径存在且包含 path.zsh，则加载它
+    if [[ -n "$platform_path" ]]; then
+        local path_file="$platform_path/path.zsh"
+        if [[ -f "$path_file" ]]; then
+            source "$path_file"
+        fi
     fi
+}
+
+setup_paths() {
+    # 加载平台特定的路径配置
+    setup_platform_paths
 
 	# set PATH so it includes user's private bin if it exists
 	prepend_path_if_exists "$HOME/.local/bin"

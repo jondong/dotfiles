@@ -1,5 +1,8 @@
 # Append necessary path to PATH for Mac.
 
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 if [ -d $(brew --prefix) ]; then
   # using Homebrew
   EXTRA_LIB_PREFIX=$(brew --prefix)
