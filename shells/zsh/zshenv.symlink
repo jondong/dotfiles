@@ -11,15 +11,3 @@ export HISTSIZE=10000
 # 开发环境变量配置
 #==============================================================================
 export PROJECTS=$HOME/projects
-
-# Android 相关环境变量（根据平台设置）
-if [ $PLATFORM = 'Darwin' ]; then
-    export ANDROID_SDK=$HOME/Library/Android/sdk
-    export ANDROID_NDK=$HOME/Library/Android/sdk/ndk/current
-elif [ $PLATFORM = 'Linux' ]; then
-    export ANDROID_SDK=$HOME/Android/Sdk
-    export ANDROID_NDK=$HOME/Android/Sdk/ndk/current
-fi
-
-# Set dotfile path and enable profile settings.
-[[ -s "$DOTFILES_ROOT/platforms/profile" ]] && source "$DOTFILES_ROOT/platforms/profile"

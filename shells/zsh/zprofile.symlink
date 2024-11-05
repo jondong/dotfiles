@@ -56,7 +56,13 @@ append_pwd_to_path() {
 }
 
 setup_paths() {
+    # Set PATH, MANPATH, etc., for Homebrew.
+    if [ "$PLATFORM" = 'Darwin' ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+
 	# set PATH so it includes user's private bin if it exists
+	prepend_path_if_exists "$HOME/.local/bin"
 	prepend_path_if_exists "$HOME/bin"
 
 	# Add dotfiles scripts path
@@ -67,24 +73,12 @@ setup_paths() {
 		append_path_if_exists "$(brew --prefix)/sbin"
 	fi
 
-	# Scripts in dropbox
-	export DROPBOX_PATH="$HOME/cloud/Dropbox"
-	prepend_path_if_exists "$DROPBOX_PATH/bin"
-
 	# Scripts in OneDrive
-	export ONEDRIVE_PATH="$HOME/cloud/OneDrive"
+	export ONEDRIVE_PATH="$HOME/OneDrive"
 	prepend_path_if_exists "$ONEDRIVE_PATH/bin"
 
 	# Go path
 	append_path_if_exists "$HOME/go/bin"
-
-	# Add depot_tools
-	local DEPOT_TOOLS_HOME=$HOME/bin/depot_tools
-	if [ $PLATFORM = 'Cygwin' ]; then
-		append_path_if_exists "$DEPOT_TOOLS_HOME"
-	else
-		prepend_path_if_exists "$DEPOT_TOOLS_HOME"
-	fi
 
 	# MacOSX SDK path
 	if [ $PLATFORM = 'Darwin' ]; then
@@ -119,9 +113,6 @@ setup_paths() {
 		unset ANDROID_NDK
 	fi
 
-	# Flutter prebuild path
-	append_path_if_exists "$HOME/flutter/bin"
-
 	# yarn path
 	if [ $(command_exists yarn) ]; then
 		export PATH=$PATH:"$(yarn global bin)"
@@ -133,12 +124,32 @@ setup_paths() {
 	#export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 	prepend_path_if_exists "$HOME/.cargo/bin"
     [[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
-}
 
-# Set PATH, MANPATH, etc., for Homebrew.
-if [ "$PLATFORM" = 'Darwin' ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
+    # pyenv 配置
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+
+    # nvm 配置
+    export NVM_DIR="$HOME/.nvm"
+    if [[ "$PLATFORM" == 'Darwin' ]]; then
+        [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"
+    elif [[ "$PLATFORM" == 'Linux' ]]; then
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    fi
+
+    # pnpm 配置
+    export PNPM_HOME="$HOME/Library/pnpm"
+    case ":$PATH:" in
+        *":$PNPM_HOME:"*) ;;
+        *) export PATH="$PNPM_HOME:$PATH" ;;
+    esac
+
+    # RVM
+    append_path_if_exists "$HOME/.rvm/bin"
+    [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+}
 
 setup_paths
 
