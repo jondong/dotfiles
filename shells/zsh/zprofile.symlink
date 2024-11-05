@@ -132,7 +132,13 @@ setup_paths() {
 	#export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
 	#export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 	prepend_path_if_exists "$HOME/.cargo/bin"
+    [[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 }
+
+# Set PATH, MANPATH, etc., for Homebrew.
+if [ "$PLATFORM" = 'Darwin' ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
 setup_paths
 
