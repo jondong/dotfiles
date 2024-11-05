@@ -14,9 +14,9 @@ show_help() {
 用法: $(basename "$0") [选项]
 
 选项:
-    -h, --help     显示帮助信息
-    --skip-vim     跳过vim配置
-    --skip-tmux    跳过tmux配置
+    -h, --help      显示帮助信息
+    --with-vim      包含 vim 配置（默认跳过）
+    --with-tmux     包含 tmux 配置（默认跳过）
 EOF
 }
 
@@ -128,20 +128,20 @@ setup_tmux() {
 
 install_dotfiles() {
     log_info "开始安装 dotfiles...\n"
-    
+
     local overwrite_all backup_all skip_all
     overwrite_all=false
     backup_all=false
     skip_all=false
-    
+
     local platform=$1
-    
+
     local files_to_link
     files_to_link=""
-    
+
     # 根据平台选择要链接的文件
     case "$platform" in
-        Darwin) 
+        Darwin)
             files_to_link=$(find -H "$DOTFILES_ROOT" -maxdepth 3 -name "*.symlink" -o -name "*.macsymlink")
             ;;
         Linux)
@@ -169,25 +169,25 @@ install_dotfiles() {
 
 # 主函数
 main() {
-    local platform skip_vim=false skip_tmux=false
-    
+    local platform skip_vim=true skip_tmux=true  # 默认跳过 vim 和 tmux
+
     # 参数解析
     while [[ $# -gt 0 ]]; do
         case "$1" in
             -h|--help) show_help; exit 0 ;;
-            --skip-vim) skip_vim=true ;;
-            --skip-tmux) skip_tmux=true ;;
+            --with-vim) skip_vim=false ;;    # 新增：使用 --with-vim 启用 vim 安装
+            --with-tmux) skip_tmux=false ;;  # 新增：使用 --with-tmux 启用 tmux 安装
             *) log_error "未知选项: $1"; exit 1 ;;
         esac
         shift
     done
-    
+
     platform=$(detect_platform)
     install_prerequisites "$platform"
-    
+
     # 创建日志目录
     mkdir -p "$LOGS_DIR"
-    
+
     # 安装/更新 dotfiles
     if [[ ! -d "$DOTFILES_ROOT" ]]; then
         log_info "首次安装 dotfiles...\n"
@@ -200,21 +200,18 @@ main() {
             git stash pop || true)
     fi
     install_dotfiles "$platform"
-    
-    # 配置 Vim
+
+    # 配置 Vim（仅当明确指定时）
     if ! $skip_vim; then
-        read -rp "配置 Vim? [Y/n]: " -n 1 reply
-        [[ ${reply:-y} =~ ^[Yy]$ ]] && setup_vim
+        setup_vim
     fi
-    
-    # 配置 Tmux
+
+    # 配置 Tmux（仅当明确指定时）
     if ! $skip_tmux; then
-        read -rp "配置 Tmux? [Y/n]: " -n 1 reply
-        [[ ${reply:-y} =~ ^[Yy]$ ]] && setup_tmux
+        setup_tmux
     fi
-    
+
     log_success "配置完成!"
 }
 
 main "$@"
-
