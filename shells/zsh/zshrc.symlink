@@ -35,22 +35,6 @@ fi
 #==============================================================================
 # 工具函数配置
 #==============================================================================
-# current shell
-current_shell() {
-	ps -p "$$" -ocomm=
-}
-
-# 检查命令是否存在
-command_exists() {
-	command -v "$1" >/dev/null 2>&1
-}
-
-# 检查目录是否已在 PATH 中
-directory_already_in_path() {
-	local dir="${1}"
-	[[ ":${PATH}:" == *":${dir}:"* ]]
-}
-
 explain() {
 	if [ "$#" -eq 0 ]; then
 		while read -p "Command: " cmd; do

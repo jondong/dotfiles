@@ -18,6 +18,17 @@ setup_platform() {
 
 setup_platform
 
+# 检查命令是否存在
+command_exists() {
+	command -v "$1" >/dev/null 2>&1
+}
+
+# 检查目录是否已在 PATH 中
+directory_already_in_path() {
+	local dir="${1}"
+	[[ ":${PATH}:" == *":${dir}:"* ]]
+}
+
 # PATH 管理函数
 _modify_path() {
 	local dir="${1}"
