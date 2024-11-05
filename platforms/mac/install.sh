@@ -62,7 +62,7 @@ declare -A PACKAGES=(
 
     ["Utilities"]="neovim tmux zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
 
-    ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font"
+    ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
 
     ["DevTools"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker docker-compose"
 
