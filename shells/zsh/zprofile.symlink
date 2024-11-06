@@ -102,22 +102,12 @@ setup_paths() {
 	# Add dotfiles scripts path
 	prepend_path_if_exists "$DOTFILES_ROOT/bin"
 
-	if [[ "$PLATFORM" == "Darwin" ]]; then
-		# Path for homebrew sbin
-		append_path_if_exists "$(brew --prefix)/sbin"
-	fi
-
 	# Scripts in OneDrive
 	export ONEDRIVE_PATH="$HOME/OneDrive"
 	prepend_path_if_exists "$ONEDRIVE_PATH/bin"
 
 	# Go path
 	append_path_if_exists "$HOME/go/bin"
-
-	# MacOSX SDK path
-	if [ $PLATFORM = 'Darwin' ]; then
-		export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
-	fi
 
 	# Android SDK setup
 	if [ $PLATFORM = 'Darwin' ]; then

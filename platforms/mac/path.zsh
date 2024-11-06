@@ -16,3 +16,9 @@ if [ -z $EXTRA_LIB_PREFIX ]; then
 fi
 export PATH=$EXTRA_LIB_PREFIX/bin:$EXTRA_LIB_PREFIX/sbin:$PATH
 export LD_LIBRARY_PATH=$EXTRA_LIB_PREFIX/lib:$LD_LIBRARY_PATH
+
+# Homebrew
+append_path_if_exists "$(brew --prefix)/sbin"
+
+# MacOS SDK
+export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
