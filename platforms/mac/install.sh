@@ -60,17 +60,17 @@ update_homebrew() {
 declare -A PACKAGES=(
     ["Basic"]="bash zsh zsh-completions reattach-to-user-namespace antigen findutils"
 
-    ["Utilities"]="neovim tmux zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
+    ["Utilities"]="neovim tmux zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu gdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
 
     ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
 
-    ["DevTools"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker docker-compose"
+    ["DevTools"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker lazygit docker-compose"
 
     ["QuickLookPlugins"]="provisionql qlimagesize qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
 
     ["CLI"]="1password-cli"
 
-    ["CaskTools"]="cheatsheet dash eudic hyper alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio"
+    ["CaskTools"]="cheatsheet dash eudic hyper alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio obsidian"
 )
 
 #==============================================================================
