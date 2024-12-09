@@ -66,11 +66,11 @@ declare -A PACKAGES=(
 
     ["DevTools"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker lazygit docker-compose"
 
-    ["QuickLookPlugins"]="provisionql qlimagesize qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
+    ["QuickLookPlugins"]="provisionql qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
 
     ["CLI"]="1password-cli"
 
-    ["CaskTools"]="cheatsheet dash eudic hyper alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio obsidian"
+    ["CaskTools"]="dash eudic hyper alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio obsidian"
 )
 
 #==============================================================================
