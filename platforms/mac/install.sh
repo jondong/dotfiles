@@ -60,7 +60,7 @@ update_homebrew() {
 declare -A PACKAGES=(
     ["Basic"]="bash zsh zsh-completions reattach-to-user-namespace antigen findutils"
 
-    ["Utilities"]="neovim tmux zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu gdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
+    ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu gdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
 
     ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
 
@@ -70,7 +70,7 @@ declare -A PACKAGES=(
 
     ["CLI"]="1password-cli"
 
-    ["CaskTools"]="dash eudic hyper alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio obsidian"
+    ["CaskTools"]="moom dash eudic alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio"
 )
 
 #==============================================================================

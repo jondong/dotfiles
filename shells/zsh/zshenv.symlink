@@ -11,3 +11,4 @@ export HISTSIZE=10000
 # 开发环境变量配置
 #==============================================================================
 export PROJECTS=$HOME/projects
+[[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
