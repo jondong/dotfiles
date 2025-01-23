@@ -22,3 +22,6 @@ append_path_if_exists "$(brew --prefix)/sbin"
 
 # MacOS SDK
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/jondong/.lmstudio/bin"
