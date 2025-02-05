@@ -57,19 +57,26 @@ update_homebrew() {
 #==============================================================================
 # 包配置
 #==============================================================================
-declare -A PACKAGES=(
+# 确保 bash 版本至少为 4.0
+if ((BASH_VERSINFO[0] < 4)); then
+    echo "需要 bash 4.0 或更高版本"
+    echo "当前 bash 版本: $BASH_VERSION"
+    echo "请使用 Homebrew 安装最新版本的 bash："
+    echo "brew install bash"
+    exit 1
+fi
+
+# 显式声明关联数组
+declare -A PACKAGES
+
+# 初始化关联数组
+PACKAGES=(
     ["Basic"]="bash zsh zsh-completions reattach-to-user-namespace antigen findutils"
-
     ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu gdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
-
     ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
-
     ["DevTools"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker lazygit docker-compose"
-
     ["QuickLookPlugins"]="provisionql qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
-
     ["CLI"]="1password-cli"
-
     ["CaskTools"]="squirrel moom dash eudic alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio anythingllm"
 )
 
