@@ -2,7 +2,6 @@
 export LC_ALL=en_US.UTF-8
 export EDITOR=nvim
 export DOTFILES_ROOT="$HOME/.dotfiles"
-export ZSH="$HOME/.oh-my-zsh"
 export HISTIGNORE='pwd:exit:fg:bg:top:clear:history:ls:uptime:df:ll:la:gst'
 export HISTCONTROL=ignoredups
 export HISTSIZE=10000

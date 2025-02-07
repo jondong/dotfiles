@@ -71,7 +71,7 @@ declare -A PACKAGES
 
 # 初始化关联数组
 PACKAGES=(
-    ["Basic"]="bash zsh zsh-completions reattach-to-user-namespace antigen findutils"
+    ["Basic"]="bash zsh reattach-to-user-namespace antigen findutils"
     ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu gdu tldr trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
     ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
     ["DevTools"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker lazygit docker-compose"
