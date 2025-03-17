@@ -17,8 +17,6 @@ if [ $PLATFORM = "Darwin" ]; then
   # Bundles from the default repo (robbyrussell's oh-my-zsh).
   antigen bundle brew
   antigen bundle command-not-found
-  antigen bundle docker
-  antigen bundle docker-compose
   antigen bundle gem
   antigen bundle git
   antigen bundle osx
@@ -138,3 +136,5 @@ _fzf_compgen_dir() {
 # 加载本地配置
 [ -f ~/.local.zshrc ] && source ~/.local.zshrc
 [ -f ~/.localrc ] && source ~/.localrc
+
+[ -f ~/.local/bin/env ] && . "$HOME/.local/bin/env"
