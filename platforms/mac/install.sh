@@ -74,7 +74,7 @@ PACKAGES=(
     ["Basic"]="bash zsh reattach-to-user-namespace antigen findutils"
     ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas z fd fzf ack prettyping mosh ncdu gdu tlrc trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
     ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
-    ["DevTools"]="pyenv pyenv-virtualenv jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker lazygit docker-compose"
+    ["DevTools"]="python3 uv poetry jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller cocoapods gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker lazygit docker-compose"
     ["QuickLookPlugins"]="provisionql qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
     ["CLI"]="1password-cli"
     ["CaskTools"]="squirrel moom dash eudic alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio anythingllm"
@@ -134,22 +134,6 @@ setup_fzf() {
     fi
 }
 
-setup_pyenv() {
-    log_info "检查 Python 环境..."
-    local versions=("2.7.18" "3.10.15")
-
-    for version in "${versions[@]}"; do
-        if ! pyenv versions | grep -q "$version"; then
-            log_warn "安装 Python $version..."
-            pyenv install "$version"
-        else
-            log_success "Python $version 已安装"
-        fi
-    done
-
-    pyenv global "${versions[@]}"
-}
-
 setup_git() {
     log_info "配置 Git..."
     diff-so-fancy --set-defaults
@@ -202,7 +186,6 @@ main() {
 
     # 配置开发环境
     setup_fzf
-    setup_pyenv
     setup_git
     setup_alacritty
 

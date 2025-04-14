@@ -148,12 +148,6 @@ setup_paths() {
 	#export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 	prepend_path_if_exists "$HOME/.cargo/bin"
 
-  # pyenv 配置
-  export PYENV_ROOT="$HOME/.pyenv"
-  command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-
   # nvm 配置
   export NVM_DIR="$HOME/.nvm"
   if [[ "$PLATFORM" == 'Darwin' ]]; then
