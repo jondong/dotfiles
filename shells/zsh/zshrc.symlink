@@ -5,45 +5,66 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Enable profiling (uncomment to debug startup time)
+# zmodload zsh/zprof
+
 #==============================================================================
-# 基础配置
+# 基础配置 - 优化版本
 #==============================================================================
-if [ $PLATFORM = "Darwin" ]; then
-  # Antigen 配置
-  source $(brew --prefix)/share/antigen/antigen.zsh
-  # Load the oh-my-zsh's library.
-  antigen use oh-my-zsh
 
-  # Bundles from the default repo (robbyrussell's oh-my-zsh).
-  antigen bundle brew
-  antigen bundle command-not-found
-  antigen bundle gem
-  antigen bundle git
-  antigen bundle osx
-  antigen bundle pip
-
-  # Syntax highlighting bundle.
-  antigen bundle zsh-users/zsh-completions
-  antigen bundle zsh-users/zsh-autosuggestions
-  antigen bundle zsh-users/zsh-syntax-highlighting
-  antigen bundle paulirish/git-open
-
-  # Load the theme.
-  antigen theme romkatv/powerlevel10k
-
-  # Tell antigen that you're done.
-  antigen apply
+# Check if Zinit is installed, install if not
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit.git "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
+
+# Load Zinit
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load only essential Oh My Zsh components
+zinit snippet OMZ::lib/completion.zsh
+zinit snippet OMZ::lib/history.zsh
+zinit snippet OMZ::lib/key-bindings.zsh
+zinit snippet OMZ::lib/theme-and-appearance.zsh
+
+# Essential bundles (light-weight loading)
+zinit light-mode for \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-autosuggestions \
+    zsh-users/zsh-syntax-highlighting \
+    paulirish/git-open
+
+# Load Oh My Zsh plugins properly
+zinit snippet OMZ::plugins/brew/brew.plugin.zsh
+zinit snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
+zinit snippet OMZ::plugins/git/git.plugin.zsh
+
+# Load powerlevel10k theme
+zinit ice depth=1
+zinit light romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 #==============================================================================
-# 工具函数配置
+# 工具函数配置 - 优化版本
 #==============================================================================
+
+# Lazy loading for explain function
 explain() {
+    if ! command -v curl >/dev/null 2>&1; then
+        echo "curl is required for explain function"
+        return 1
+    fi
+    
 	if [ "$#" -eq 0 ]; then
 		while read -p "Command: " cmd; do
+			[ -z "$cmd" ] && break
 			curl -Gs "https://www.mankier.com/api/explain/?cols="$(tput cols) --data-urlencode "q=$cmd"
 		done
 		echo "Bye!"
@@ -56,9 +77,7 @@ explain() {
 	fi
 }
 
-# http://lifehacker.com/5396183/create-an-awesome-command-line-calculator
-calc() { awk "BEGIN{ print $*  }"; }
-
+# Proxy functions
 set_proxy() {
 	export http_proxy="$1"
 	export https_proxy="$1"
@@ -70,84 +89,132 @@ set_npm_proxy() {
 }
 
 #==============================================================================
-# 插件和补全配置
+# 插件和补全配置 - 优化版本
 #==============================================================================
-# 加载 zsh 文件
-setopt null_glob
-shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh)
 
-# 平台特定配置
-platform_zsh=''
-if [ $PLATFORM = "Darwin" ]; then
-  platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh)
-elif [ $PLATFORM = "Linux" ]; then
-  platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh)
-elif [ $PLATFORM = "Cygwin" ]; then
-  platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh)
+# Optimized file loading - only load essential files
+setopt null_glob
+
+# Cache file list to avoid repeated globbing
+local zsh_cache_file="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_file_cache.zsh"
+local cache_valid=false
+
+if [[ -f "$zsh_cache_file" && -n "$zsh_cache_file"(#qN.mh-24) ]]; then
+    # Cache is less than 24 hours old
+    source "$zsh_cache_file"
+    cache_valid=true
+else
+    # Rebuild cache
+    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}"
+    
+    local shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh(N))
+    local platform_zsh=()
+    
+    case $PLATFORM in
+        Darwin) platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh(N)) ;;
+        Linux) platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh(N)) ;;
+        Cygwin) platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh(N)) ;;
+    esac
+    
+    typeset -U config_files
+    config_files=(${shells_zsh[@]} ${platform_zsh[@]})
+    
+    # Generate cache file
+    print "# Zsh configuration cache - generated on $(date)" > "$zsh_cache_file"
+    for file in ${config_files:#*/path.zsh}; do
+        print "source $file" >> "$zsh_cache_file"
+    done
+    
+    source "$zsh_cache_file"
 fi
 
-typeset -U config_files
-config_files=(${shells_zsh[@]} ${platform_zsh[@]})
-
-# 按顺序加载配置文件
-for file in ${config_files:#*/path.zsh}; do source $file; done
-
-unset config_files
 unsetopt null_glob
 
 #==============================================================================
-# FZF 配置
+# FZF 配置 - 优化版本
 #==============================================================================
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-FD_OPTIONS="--hidden --follow --exclude .git --exclude node_modules"
-export FZF_DEFAULT_OPTS="--no-mouse --height 50% -1 --reverse --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),f2:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy),ctrl-x:execute(rm -i {+})+abort'"
-export FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard || fd --type f --type l $FD_OPTIONS"
-export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
-export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
+# Only load FZF if installed and in interactive mode
+if [[ $- == *i* ]] && [[ -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+    
+    FD_OPTIONS="--hidden --follow --exclude .git --exclude node_modules"
+    export FZF_DEFAULT_OPTS="--no-mouse --height 50% -1 --reverse --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),f2:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy),ctrl-x:execute(rm -i {+})+abort'"
+    export FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard || fd --type f --type l $FD_OPTIONS"
+    export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
+    export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
+fi
 
-# FZF 补全函数
-_fzf_compgen_path() {
-  command fd --hidden --follow --exclude .git --exclude node_modules . "$1"
+# FZF completion functions - only define if FZF is available
+if command -v fzf >/dev/null 2>&1; then
+    _fzf_compgen_path() {
+        command fd --hidden --follow --exclude .git --exclude node_modules . "$1"
+    }
+
+    _fzf_compgen_dir() {
+        command fd --type d --hidden --follow --exclude .git --exclude node_modules . "$1"
+    }
+fi
+
+#==============================================================================
+# 开发环境配置 - 优化版本 (lazy loading)
+#==============================================================================
+
+# Lazy loading functions for heavy tools
+lazy_load() {
+    local cmd="$1"
+    local init_cmd="$2"
+    eval "$cmd() { 
+        unset -f $cmd
+        eval \"$init_cmd\"
+        $cmd \"$@\"
+    }"
 }
 
-_fzf_compgen_dir() {
-  command fd --type d --hidden --follow --exclude .git --exclude node_modules . "$1"
-}
+# iTerm2 integration - only load if in iTerm
+terminal_app=$(ps -o comm= -p "$(ps -o ppid= -p "$$")" 2>/dev/null)
+if [[ "$terminal_app" == *iTerm* ]] && [[ -e "${HOME}/.iterm2_shell_integration.zsh" ]]; then
+    source "${HOME}/.iterm2_shell_integration.zsh"
+fi
+
+# Lazy load autojump if available
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && lazy_load autojump ". $(brew --prefix)/etc/profile.d/autojump.sh"
+
+# Lazy load jenv
+if command -v jenv >/dev/null 2>&1; then
+    lazy_load jenv "eval \$(jenv init -)"
+fi
+
+# Lazy load rbenv
+if [[ -d "$HOME/.rbenv" ]] || command -v rbenv >/dev/null 2>&1; then
+    lazy_load rbenv "eval \$(rbenv init - zsh)"
+fi
+
+# Lazy load direnv
+if command -v direnv >/dev/null 2>&1; then
+    lazy_load direnv "eval \$(direnv hook zsh)"
+fi
 
 #==============================================================================
-# 开发环境配置
+# 其他配置加载 - 优化版本
 #==============================================================================
-# iTerm2 集成
-[[ -e "${HOME}/.iterm2_shell_integration.zsh" ]] && source "${HOME}/.iterm2_shell_integration.zsh"
 
-#==============================================================================
-# 工具配置
-#==============================================================================
-# autojump configuration.
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+# Load local configs only if they exist and are readable
+[[ -r ~/.local.zshrc ]] && source ~/.local.zshrc
+[[ -r ~/.localrc ]] && source ~/.localrc
+[[ -r ~/.local/bin/env ]] && . "$HOME/.local/bin/env"
 
-# z configuration
-. $(brew --prefix)/etc/profile.d/z.sh
+# SDKMAN - load only if directory exists
+if [[ -d "$HOME/.sdkman" ]]; then
+    export SDKMAN_DIR="$HOME/.sdkman"
+    [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
 
-# jenv
-eval "$(jenv init -)"
+# LM Studio
+export PATH="$PATH:/Users/jondong/.lmstudio/bin"
 
-# rbenv
-eval "$(rbenv init - zsh)"
+# HarmonyOS configuration
+export RNOH_C_API_ARCH="1"
 
-# direnv
-eval "$(direnv hook zsh)"
-
-#==============================================================================
-# 其他配置加载
-#==============================================================================
-# 加载本地配置
-[ -f ~/.local.zshrc ] && source ~/.local.zshrc
-[ -f ~/.localrc ] && source ~/.localrc
-
-[ -f ~/.local/bin/env ] && . "$HOME/.local/bin/env"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+# Optional: Print profiling results
+# zprof
