@@ -162,12 +162,12 @@ fi
 
 # Lazy loading functions for heavy tools
 lazy_load() {
-    local cmd="$1"
-    local init_cmd="$2"
-    eval "$cmd() { 
+    local cmd=$1
+    local init_cmd=$2
+    eval "function $cmd {
         unset -f $cmd
-        eval \"$init_cmd\"
-        $cmd \"$@\"
+        eval '$init_cmd'
+        $cmd \"\$@\"
     }"
 }
 
@@ -182,17 +182,17 @@ fi
 
 # Lazy load jenv
 if command -v jenv >/dev/null 2>&1; then
-    lazy_load jenv "eval \$(jenv init -)"
+    lazy_load jenv 'eval "$(jenv init -)"'
 fi
 
 # Lazy load rbenv
 if [[ -d "$HOME/.rbenv" ]] || command -v rbenv >/dev/null 2>&1; then
-    lazy_load rbenv "eval \$(rbenv init - zsh)"
+    lazy_load rbenv 'eval "$(rbenv init - zsh)"'
 fi
 
 # Lazy load direnv
 if command -v direnv >/dev/null 2>&1; then
-    lazy_load direnv "eval \$(direnv hook zsh)"
+    lazy_load direnv 'eval "$(direnv hook zsh)"'
 fi
 
 #==============================================================================
