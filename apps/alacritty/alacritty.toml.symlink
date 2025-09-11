@@ -13,6 +13,6 @@ blur = true
 option_as_alt = "Both"
 
 [font]
-normal.family = "MesloLGS Nerd Font Mono"
-size = 15
+normal.family = "JetBrains Mono"
+size = 14
 offset.y = 1

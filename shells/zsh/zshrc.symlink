@@ -40,7 +40,7 @@ zinit light-mode for \
     paulirish/git-open
 
 # Load Oh My Zsh plugins properly
-zinit snippet OMZ::plugins/brew/brew.plugin.zsh
+#zinit snippet OMZ::plugins/brew/brew.plugin.zsh
 zinit snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
 zinit snippet OMZ::plugins/git/git.plugin.zsh
 
@@ -178,7 +178,7 @@ if [[ "$terminal_app" == *iTerm* ]] && [[ -e "${HOME}/.iterm2_shell_integration.
 fi
 
 # Lazy load autojump if available
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && lazy_load autojump ". $(brew --prefix)/etc/profile.d/autojump.sh"
+#[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && lazy_load autojump ". $(brew --prefix)/etc/profile.d/autojump.sh"
 
 # Lazy load jenv
 if command -v jenv >/dev/null 2>&1; then
