@@ -40,9 +40,13 @@ zinit light-mode for \
     paulirish/git-open
 
 # Load Oh My Zsh plugins properly
-#zinit snippet OMZ::plugins/brew/brew.plugin.zsh
 zinit snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
 zinit snippet OMZ::plugins/git/git.plugin.zsh
+
+# Clean up brew paths if brew is not installed (Linux-specific)
+if [[ "$(uname)" == "Linux" ]] && ! command -v brew >/dev/null 2>&1; then
+    export PATH=$(echo "$PATH" | tr ':' '\n' | grep -vE '(linuxbrew|brew)' | tr '\n' ':' | sed 's/:$//')
+fi
 
 # Load powerlevel10k theme
 zinit ice depth=1
@@ -177,8 +181,12 @@ if [[ "$terminal_app" == *iTerm* ]] && [[ -e "${HOME}/.iterm2_shell_integration.
     source "${HOME}/.iterm2_shell_integration.zsh"
 fi
 
-# Lazy load autojump if available
-#[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && lazy_load autojump ". $(brew --prefix)/etc/profile.d/autojump.sh"
+# Lazy load autojump if available (Linux alternative)
+if [[ -f /usr/share/autojump/autojump.sh ]]; then
+    lazy_load autojump ". /usr/share/autojump/autojump.sh"
+elif command -v brew >/dev/null 2>&1 && [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]]; then
+    lazy_load autojump ". $(brew --prefix)/etc/profile.d/autojump.sh"
+fi
 
 # Lazy load jenv
 if command -v jenv >/dev/null 2>&1; then
@@ -211,10 +219,17 @@ if [[ -d "$HOME/.sdkman" ]]; then
 fi
 
 # LM Studio
-export PATH="$PATH:/Users/jondong/.lmstudio/bin"
+[[ -d "$HOME/.lmstudio/bin" ]] && export PATH="$PATH:$HOME/.lmstudio/bin"
 
 # HarmonyOS configuration
 export RNOH_C_API_ARCH="1"
+
+# Linux-specific PATH additions
+if [[ "$(uname)" == "Linux" ]]; then
+    # Add Linux-specific paths
+    [[ -d "$HOME/.local/bin" ]] && export PATH="$PATH:$HOME/.local/bin"
+    [[ -d "/usr/local/go/bin" ]] && export PATH="$PATH:/usr/local/go/bin"
+fi
 
 # Optional: Print profiling results
 # zprof

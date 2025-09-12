@@ -152,14 +152,18 @@ setup_paths() {
 
   # nvm 配置
   export NVM_DIR="$HOME/.nvm"
-  if [[ "$PLATFORM" == 'Darwin' ]]; then
+  if [[ "$PLATFORM" == 'Darwin' ]] && command -v brew >/dev/null 2>&1; then
       [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"
   elif [[ "$PLATFORM" == 'Linux' ]]; then
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
   fi
 
   # pnpm 配置
-  export PNPM_HOME="$HOME/Library/pnpm"
+  if [[ "$PLATFORM" == 'Darwin' ]]; then
+      export PNPM_HOME="$HOME/Library/pnpm"
+  elif [[ "$PLATFORM" == 'Linux' ]]; then
+      export PNPM_HOME="$HOME/.local/share/pnpm"
+  fi
   case ":$PATH:" in
       *":$PNPM_HOME:"*) ;;
       *) export PATH="$PNPM_HOME:$PATH" ;;
