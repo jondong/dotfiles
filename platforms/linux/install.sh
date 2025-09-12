@@ -3,7 +3,7 @@
 read -e -p "Install Linux for production deployment? (Which means do not install packages for devs) [y/N] " -n 1
 is_production=${REPLY:=n}
 
-packages=(neovim git autojump xclip ssh tree openssl unzip curl tar zsh exfat-fuse eza bat fd-find tree prettyping pipx findutils ack duf)
+packages=(neovim git autojump xclip xsel ssh tree openssl unzip curl tar zsh exfat-fuse eza bat fd-find tree prettyping pipx findutils ack duf)
 if [ ${is_production,,} = 'n' ]; then
   echo "Install packages for development machine."
   packages=("${packages[@]}" git-extras git-lfs git-flow gh shellcheck cmake alacritty mosh ruby ruby-dev source-highlight expect cgdb valgrind clang global cscope exuberant-ctags net-tools ncdu gdu ripgrep gnome-tweak-tool rustup btop highlight fonts-jetbrains-mono fonts-firacode fonts-hack rbenv ruby-build direnv docker-compose icdiff)
