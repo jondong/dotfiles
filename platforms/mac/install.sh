@@ -72,7 +72,7 @@ declare -A PACKAGES
 # 初始化关联数组
 PACKAGES=(
     ["Basic"]="bash zsh reattach-to-user-namespace antigen findutils"
-    ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas fd fzf ack prettyping mosh ncdu gdu tlrc trash rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
+    ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas fd fzf ack prettyping mosh ncdu gdu tlrc rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
     ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
     ["DevTools"]="python3 uv poetry pipx jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller xcode-build-server xcbeautify swiftformat gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker lazygit docker-compose direnv rbenv ruby-build"
     ["QuickLookPlugins"]="provisionql qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
