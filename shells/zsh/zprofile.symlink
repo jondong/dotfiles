@@ -1,6 +1,8 @@
-# this is for zsh login shell settings.
+#==============================================================================
+# Zsh Profile - Platform Detection and Initial Setup
+#==============================================================================
 
-# platform
+# Platform detection function
 setup_platform() {
 	# 如果 PLATFORM 已经设置，则跳过
 	[[ -n "${PLATFORM:-}" ]] && return
@@ -16,165 +18,13 @@ setup_platform() {
 	esac
 }
 
+# Setup platform detection immediately
 setup_platform
 
-# 检查命令是否存在
-command_exists() {
-	command -v "$1" >/dev/null 2>&1
-}
+# Load proxy settings early (before any network operations)
+[[ -f ~/.proxyrc ]] && source ~/.proxyrc
 
-# 检查目录是否已在 PATH 中
-directory_already_in_path() {
-	local dir="${1}"
-	[[ ":${PATH}:" == *":${dir}:"* ]]
-}
+# Set basic environment variables that should be available early
+export DOTFILES_ROOT="$HOME/.dotfiles"
 
-# PATH 管理函数
-_modify_path() {
-	local dir="${1}"
-	local position="${2:-append}"  # 默认为追加
-
-	# 验证目录
-	[[ ! -d "${dir}" ]] && return 1
-	directory_already_in_path "${dir}" && return 0
-
-	# 根据位置添加路径
-	if [[ "${position}" == "prepend" ]]; then
-		export PATH="${dir}:${PATH}"
-	else
-		export PATH="${PATH}:${dir}"
-	fi
-}
-
-# 在 PATH 前添加目录
-prepend_path_if_exists() {
-	_modify_path "${1}" "prepend"
-}
-
-# 在 PATH 后添加目录
-append_path_if_exists() {
-	_modify_path "${1}" "append"
-}
-
-# 在 PATH 前添加当前目录
-prepend_pwd_to_path() {
-	prepend_path_if_exists "$(pwd)"
-}
-
-# 在 PATH 后添加当前目录
-append_pwd_to_path() {
-	append_path_if_exists "$(pwd)"
-}
-
-setup_platform_paths() {
-    local platform_path=""
-
-    # 根据平台确定路径
-    case "$PLATFORM" in
-        "Darwin")
-            platform_path="$DOTFILES_ROOT/platforms/mac"
-            ;;
-        "Linux")
-            platform_path="$DOTFILES_ROOT/platforms/linux"
-            ;;
-        "Cygwin")
-            platform_path="$DOTFILES_ROOT/platforms/win"
-            ;;
-    esac
-
-    # 如果平台路径存在且包含 path.zsh，则加载它
-    if [[ -n "$platform_path" ]]; then
-        local path_file="$platform_path/path.zsh"
-        if [[ -f "$path_file" ]]; then
-            source "$path_file"
-        fi
-    fi
-}
-
-setup_paths() {
-    # 加载平台特定的路径配置
-    setup_platform_paths
-
-	# set PATH so it includes user's private bin if it exists
-	prepend_path_if_exists "$HOME/.local/bin"
-	prepend_path_if_exists "$HOME/bin"
-
-	# Add dotfiles scripts path
-	prepend_path_if_exists "$DOTFILES_ROOT/bin"
-
-	# Scripts in OneDrive
-	export ONEDRIVE_PATH="$HOME/OneDrive"
-	prepend_path_if_exists "$ONEDRIVE_PATH/bin"
-
-	# Go path
-	append_path_if_exists "$HOME/go/bin"
-
-	# Android SDK setup
-	if [ $PLATFORM = 'Darwin' ]; then
-		export ANDROID_SDK=$HOME/Library/Android/sdk
-		export ANDROID_NDK=$HOME/Library/Android/sdk/ndk/current
-	elif [ $PLATFORM = 'Linux' ]; then
-		export ANDROID_SDK=$HOME/Android/Sdk
-		export ANDROID_NDK=$HOME/Android/Sdk/ndk/current
-	fi
-	if [ -d "$ANDROID_SDK" ]; then
-		append_path_if_exists "$ANDROID_SDK/tools"
-		append_path_if_exists "$ANDROID_SDK/tools/bin"
-		append_path_if_exists "$ANDROID_SDK/platform-tools"
-		append_path_if_exists "$ANDROID_SDK/cmdline-tools/latest/bin"
-
-		# Add alias for bazel and others
-		export ANDROID_HOME=$ANDROID_SDK
-		export ANDROID_SDK_ROOT=$ANDROID_SDK
-	else
-		unset ANDROID_SDK
-		unset ANDROID_NDK
-	fi
-	if [ -d "$ANDROID_NDK" ]; then
-		append_path_if_exists "$ANDROID_NDK"
-
-		# Add alias for bazel
-		export ANDROID_NDK_HOME=$ANDROID_NDK
-	else
-		unset ANDROID_NDK
-	fi
-
-	# yarn path
-	if [ $(command_exists yarn) ]; then
-		export PATH=$PATH:"$(yarn global bin)"
-	fi
-
-	# rustup path
-	# Use Tsinghua mirror site tuna.
-	#export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
-	#export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
-	prepend_path_if_exists "$HOME/.cargo/bin"
-
-  # nvm 配置
-  export NVM_DIR="$HOME/.nvm"
-  if [[ "$PLATFORM" == 'Darwin' ]] && command -v brew >/dev/null 2>&1; then
-      [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"
-  elif [[ "$PLATFORM" == 'Linux' ]]; then
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  fi
-
-  # pnpm 配置
-  if [[ "$PLATFORM" == 'Darwin' ]]; then
-      export PNPM_HOME="$HOME/Library/pnpm"
-  elif [[ "$PLATFORM" == 'Linux' ]]; then
-      export PNPM_HOME="$HOME/.local/share/pnpm"
-  fi
-  case ":$PATH:" in
-      *":$PNPM_HOME:"*) ;;
-      *) export PATH="$PNPM_HOME:$PATH" ;;
-  esac
-
-  # RVM
-  append_path_if_exists "$HOME/.rvm/bin"
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-}
-
-setup_paths
-
-# Load proxy setting firstly.
-[ -f ~/.proxyrc ] && source ~/.proxyrc
+# Platform-specific path loading will be handled by the main zshrc

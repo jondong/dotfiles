@@ -1,13 +1,19 @@
-# 基础环境变量
+#==============================================================================
+# Basic Environment Variables - Early Shell Environment
+#==============================================================================
+
+# Basic environment variables that should be available to all shells
 export LC_ALL=en_US.UTF-8
 export EDITOR=nvim
 export DOTFILES_ROOT="$HOME/.dotfiles"
+
+# History settings
 export HISTIGNORE='pwd:exit:fg:bg:top:clear:history:ls:uptime:df:ll:la:gst'
 export HISTCONTROL=ignoredups
 export HISTSIZE=10000
 
-#==============================================================================
-# 开发环境变量配置
-#==============================================================================
+# Project directory
 export PROJECTS=$HOME/projects
+
+# Load Rust environment if available
 [[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
