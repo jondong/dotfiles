@@ -9,6 +9,10 @@ fi
 
 # Setup MacOS-specific paths
 setup_macos_paths() {
+    # Add Homebrew ARM64 path first (for Apple Silicon Macs)
+    prepend_path_if_exists "/opt/homebrew/bin"
+    prepend_path_if_exists "/opt/homebrew/sbin"
+
     # Homebrew paths (if brew is installed)
     if command -v brew >/dev/null 2>&1; then
         local brew_prefix=$(brew --prefix)

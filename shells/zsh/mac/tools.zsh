@@ -36,6 +36,27 @@ setup_macos_tools() {
     # Android SDK
     setup_android_sdk
 
+    # NVM setup - Node Version Manager
+    setup_nvm() {
+        # Check common NVM locations
+        local nvm_dirs=(
+            "$HOME/.nvm"
+            "/opt/homebrew/opt/nvm"
+            "/usr/local/opt/nvm"
+        )
+
+        for nvm_dir in "${nvm_dirs[@]}"; do
+            if [[ -s "$nvm_dir/nvm.sh" ]]; then
+                export NVM_DIR="$nvm_dir"
+                source "$NVM_DIR/nvm.sh"
+                break
+            fi
+        done
+    }
+
+    # Initialize NVM
+    setup_nvm
+
     # Quick Look server (if available)
     if command -v qlmanage >/dev/null 2>&1; then
         alias ql='qlmanage -p 2>/dev/null'
