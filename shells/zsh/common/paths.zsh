@@ -44,6 +44,10 @@ setup_common_paths() {
     # RVM
     append_path_if_exists "$HOME/.rvm/bin"
     [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+    # pyenv
+    export PYENV_ROOT="$HOME/.pyenv"
+    [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 }
 
 # Run common path setup

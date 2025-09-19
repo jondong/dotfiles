@@ -65,3 +65,7 @@ source "$ZSH_CONFIG_DIR/common/final.zsh"
 # 可选: 性能分析 - Optional: Performance profiling
 #==============================================================================
 # zprof
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/jondong/.cache/lm-studio/bin"
+# End of LM Studio CLI section
+

@@ -13,6 +13,9 @@ if [[ -d "$HOME/.sdkman" ]]; then
     [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
+# pyenv setup
+eval "$(pyenv init - zsh)"
+
 # LM Studio
 [[ -d "$HOME/.lmstudio/bin" ]] && export PATH="$PATH:$HOME/.lmstudio/bin"
 
