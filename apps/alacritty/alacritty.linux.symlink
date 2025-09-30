@@ -1,0 +1,29 @@
+# Linux-specific Alacritty configuration
+
+# Linux font configuration (often different rendering)
+[font]
+normal.family = "JetBrains Mono"
+size = 14
+offset.y = 0
+
+# Linux-specific key bindings
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Control"
+action = "ResetFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Equals"
+mods = "Control"
+action = "IncreaseFontSize"
+
+# Linux-specific environment variables
+[env]
+# Common Linux environment variables that might be needed
+LANG = "en_US.UTF-8"
+LC_ALL = "en_US.UTF-8"

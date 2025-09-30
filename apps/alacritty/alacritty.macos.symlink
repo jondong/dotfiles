@@ -1,0 +1,27 @@
+# macOS-specific Alacritty configuration
+
+# macOS window options
+[window]
+option_as_alt = "Both"
+
+# macOS font rendering optimizations
+[font]
+normal.family = "JetBrains Mono"
+size = 15
+offset.y = 1
+
+# macOS-specific key bindings
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Command"
+action = "ResetFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Command"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Equals"
+mods = "Command"
+action = "IncreaseFontSize"
