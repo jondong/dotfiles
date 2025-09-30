@@ -1,0 +1,61 @@
+# Powerlevel10k configuration
+# Optimized for cross-platform compatibility (macOS and Linux)
+# Uses standard fonts without special symbols
+
+# Temporary files
+typeset -g POWERLEVEL9K_CONFIG_DIR=${XDG_CONFIG_HOME:-$HOME/.config}/p10k
+typeset -g POWERLEVEL9K_CACHE_DIR=${XDG_CACHE_HOME:-$HOME/.cache}/p10k
+
+# Prompt segments
+typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
+  os_icon               # OS icon
+  dir                   # Current directory
+  vcs                   # Git status
+  command_execution_time
+  status                # Exit code
+)
+
+typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
+  background_jobs
+  time
+)
+
+# Basic style settings - no special fonts required
+typeset -g POWERLEVEL9K_MODE=nerdfont-complete
+
+# Directory settings
+typeset -g POWERLEVEL9K_DIR_SHORTEN_STRATEGY=truncate_to_unique
+typeset -g POWERLEVEL9K_DIR_SHORTEN_DELIMITER=
+typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=30
+
+# Git settings
+typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=76
+typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=178
+typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=166
+
+# Status settings
+typeset -g POWERLEVEL9K_STATUS_OK=false
+typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=196
+
+# Time format
+typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M}'
+
+# OS icons - using simple text instead of special fonts
+typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='%F{blue}#%f'
+
+# Performance settings
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
+
+# Minimal visual style for better compatibility
+typeset -g POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+typeset -g POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=''
+typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%F{76}❯%f '
+
+# Disable transient prompt to avoid issues
+typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=false
+
+# Execution time
+typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
+typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=1

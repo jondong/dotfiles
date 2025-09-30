@@ -48,6 +48,9 @@ zinit light-mode for \
     zsh-users/zsh-syntax-highlighting \
     paulirish/git-open
 
+# Powerlevel10k theme
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
 # Load Oh My Zsh plugins properly
 zinit snippet OMZ::plugins/command-not-found/command-not-found.plugin.zsh
 zinit snippet OMZ::plugins/git/git.plugin.zsh

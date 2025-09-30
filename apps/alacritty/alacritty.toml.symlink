@@ -13,5 +13,5 @@ option_as_alt = "Both"
 
 [font]
 normal.family = "JetBrains Mono"
-size = 14
+size = 15
 offset.y = 1

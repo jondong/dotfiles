@@ -17,3 +17,8 @@ export PROJECTS=$HOME/projects
 
 # Load Rust environment if available
 [[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+# Powerlevel10k configuration
+if [[ -f "${HOME}/.p10k.zsh" ]]; then
+    source "${HOME}/.p10k.zsh"
+fi
