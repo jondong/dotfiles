@@ -1,0 +1,74 @@
+{
+  "name": "backend-development",
+  "title": "Backend Development Environment",
+  "description": "Complete backend development environment with Node.js, Python, Go, and Java support",
+  "version": "1.0.0",
+  "category": "development",
+  "platforms": ["macos", "linux"],
+  "author": "Dotfiles Team",
+  "homepage": "https://github.com/jondong/dotfiles",
+  "keywords": ["backend", "api", "microservices", "server", "database"],
+  "dependencies": {
+    "templates": ["base-shell"],
+    "system": {
+      "macos": ["brew"],
+      "linux": ["apt"]
+    }
+  },
+  "features": [
+    "Node.js runtime with npm/yarn/pnpm",
+    "Python runtime with pip/venv",
+    "Go programming language",
+    "Java runtime and Maven/Gradle",
+    "Rust programming language",
+    "Database tools (PostgreSQL, MongoDB, Redis)",
+    "API testing tools (Postman, Insomnia)",
+    "Container orchestration (Docker, Kubernetes)",
+    "Message queue systems (RabbitMQ, Apache Kafka)",
+    "Monitoring and logging tools",
+    "Cloud SDK integration"
+  ],
+  "components": {
+    "languages": ["Node.js", "Python", "Go", "Java", "Rust"],
+    "frameworks": ["Express", "FastAPI", "Gin", "Spring Boot", "Actix-web"],
+    "databases": ["PostgreSQL", "MongoDB", "Redis", "MySQL", "SQLite"],
+    "tools": ["Docker", "Kubernetes", "Nginx", "Postman", "Git"],
+    "message_queues": ["RabbitMQ", "Apache Kafka", "Redis Pub/Sub"],
+    "monitoring": ["Prometheus", "Grafana", "ELK Stack", "Jaeger"]
+  },
+  "directories": {
+    "projects": "$HOME/Projects/backend",
+    "apis": "$HOME/Projects/backend/apis",
+    "services": "$HOME/Projects/backend/services",
+    "microservices": "$HOME/Projects/backend/microservices",
+    "databases": "$HOME/Projects/backend/databases",
+    "deployments": "$HOME/Projects/backend/deployments",
+    "monitoring": "$HOME/Projects/backend/monitoring"
+  },
+  "ports": {
+    "api_dev": 3000,
+    "api_prod": 8080,
+    "database": 5432,
+    "redis": 6379,
+    "rabbitmq": 5672,
+    "kafka": 9092,
+    "monitoring": 9090
+  },
+  "performance": {
+    "memory_requirement": "8GB+",
+    "storage_requirement": "30GB+",
+    "parallel_jobs": 8,
+    "cpu_cores": "4+"
+  },
+  "install_order": [
+    "system-packages",
+    "runtimes",
+    "databases",
+    "tools",
+    "api-tools",
+    "monitoring",
+    "ide-config",
+    "project-structure",
+    "validation"
+  ]
+}

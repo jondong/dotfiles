@@ -1,0 +1,68 @@
+{
+  "name": "mobile-development",
+  "title": "Mobile Development Environment",
+  "description": "Complete mobile development environment for iOS, Android, React Native, and Flutter",
+  "version": "1.0.0",
+  "category": "development",
+  "platforms": ["macos", "linux"],
+  "author": "Dotfiles Team",
+  "homepage": "https://github.com/jondong/dotfiles",
+  "keywords": ["mobile", "ios", "android", "react-native", "flutter"],
+  "dependencies": {
+    "templates": ["base-shell"],
+    "system": {
+      "macos": ["brew", "xcode"],
+      "linux": ["android-sdk"]
+    }
+  },
+  "features": [
+    "React Native development setup",
+    "Flutter development environment",
+    "Android SDK and tools",
+    "iOS development tools (macOS only)",
+    "Mobile app testing frameworks",
+    "Device debugging tools",
+    "Code signing and deployment",
+    "Cross-platform development support",
+    "Mobile UI testing tools",
+    "Performance monitoring"
+  ],
+  "components": {
+    "frameworks": ["React Native", "Flutter", "Ionic", "Cordova"],
+    "languages": ["JavaScript/TypeScript", "Dart", "Swift", "Kotlin"],
+    "tools": ["Android Studio", "Xcode", "VS Code", "Reactotron"],
+    "testing": ["Jest", "Detox", "Appium", "Firebase Test Lab"],
+    "deployment": ["Fastlane", "Firebase App Distribution", "App Store Connect"]
+  },
+  "directories": {
+    "projects": "$HOME/Projects/mobile",
+    "react-native": "$HOME/Projects/mobile/react-native",
+    "flutter": "$HOME/Projects/mobile/flutter",
+    "native-ios": "$HOME/Projects/mobile/ios",
+    "native-android": "$HOME/Projects/mobile/android",
+    "hybrid": "$HOME/Projects/mobile/hybrid"
+  },
+  "ports": {
+    "metro": 8081,
+    "flutter-dev": 3000,
+    "android-debug": 5554,
+    "ios-debug": 8080
+  },
+  "performance": {
+    "memory_requirement": "16GB+",
+    "storage_requirement": "50GB+",
+    "parallel_jobs": 4,
+    "cpu_cores": "8+"
+  },
+  "install_order": [
+    "system-requirements",
+    "mobile-sdks",
+    "development-tools",
+    "frameworks",
+    "testing-tools",
+    "deployment-tools",
+    "ide-config",
+    "project-structure",
+    "validation"
+  ]
+}

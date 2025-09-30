@@ -1,0 +1,72 @@
+{
+  "name": "devops",
+  "title": "DevOps Environment",
+  "description": "Complete DevOps environment with CI/CD, infrastructure as code, and monitoring tools",
+  "version": "1.0.0",
+  "category": "operations",
+  "platforms": ["macos", "linux"],
+  "author": "Dotfiles Team",
+  "homepage": "https://github.com/jondong/dotfiles",
+  "keywords": ["devops", "ci-cd", "infrastructure", "monitoring", "automation"],
+  "dependencies": {
+    "templates": ["base-shell"],
+    "system": {
+      "macos": ["brew"],
+      "linux": ["apt"]
+    }
+  },
+  "features": [
+    "Infrastructure as Code tools (Terraform, CloudFormation)",
+    "CI/CD pipeline configuration",
+    "Container orchestration (Kubernetes, Docker Swarm)",
+    "Monitoring and logging (Prometheus, Grafana, ELK)",
+    "Secrets management",
+    "Cloud SDK integration",
+    "Configuration management",
+    "Network and security tools",
+    "Performance monitoring",
+    "Automation and scripting"
+  ],
+  "components": {
+    "iac": ["Terraform", "Ansible", "Pulumi", "CloudFormation"],
+    "ci_cd": ["GitHub Actions", "Jenkins", "GitLab CI", "CircleCI"],
+    "containers": ["Docker", "Kubernetes", "Helm", "Istio"],
+    "monitoring": ["Prometheus", "Grafana", "ELK Stack", "Jaeger"],
+    "cloud": ["AWS CLI", "Google Cloud SDK", "Azure CLI"],
+    "security": ["Vault", "HashiCorp Tools", "Kubernetes Security Tools"],
+    "networking": ["kubectl", "calicoctl", "envoy", "istioctl"]
+  },
+  "directories": {
+    "projects": "$HOME/Projects/devops",
+    "infrastructure": "$HOME/Projects/devops/infrastructure",
+    "pipelines": "$HOME/Projects/devops/pipelines",
+    "monitoring": "$HOME/Projects/devops/monitoring",
+    "scripts": "$HOME/Projects/devops/scripts",
+    "documentation": "$HOME/Projects/devops/docs"
+  },
+  "ports": {
+    "grafana": 3000,
+    "prometheus": 9090,
+    "jenkins": 8080,
+    "kibana": 5601
+  },
+  "performance": {
+    "memory_requirement": "16GB+",
+    "storage_requirement": "100GB+",
+    "parallel_jobs": 8,
+    "cpu_cores": "8+"
+  },
+  "install_order": [
+    "system-packages",
+    "cloud-sdk",
+    "iac-tools",
+    "container-tools",
+    "monitoring-tools",
+    "ci-cd-tools",
+    "security-tools",
+    "networking-tools",
+    "ide-config",
+    "project-structure",
+    "validation"
+  ]
+}

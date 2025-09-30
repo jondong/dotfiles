@@ -1,0 +1,188 @@
+{
+  "system": {
+    "macos": {
+      "brew": {
+        "core": [
+          {"name": "python@3.11", "description": "Python 3.11 programming language"},
+          {"name": "r", "description": "R statistical programming language"},
+          {"name": "jupyterlab", "description": "Web-based interactive development environment"},
+          {"name": "node", "description": "Node.js for JavaScript-based visualization"},
+          {"name": "sqlite", "description": "Lightweight database"},
+          {"name": "postgresql", "description": "PostgreSQL database"},
+          {"name": "redis", "description": "In-memory data structure store"},
+          {"name": "docker", "description": "Container platform"},
+          {"name": "docker-compose", "description": "Multi-container Docker app orchestration"},
+          {"name": "git", "description": "Version control system"},
+          {"name": "wget", "description": "File retrieval utility"},
+          {"name": "curl", "description": "Data transfer utility"}
+        ],
+        "cask": [
+          {"name": "rstudio", "description": "RStudio IDE for R"},
+          {"name": "tableau", "description": "Tableau Desktop (optional)"},
+          {"name": "datagrip", "description": "Database IDE by JetBrains"},
+          {"name": "postman", "description": "API development tool"}
+        ],
+        "ml_tools": [
+          {"name": "tensorflow", "description": "Machine learning framework (pip)"},
+          {"name": "pytorch", "description": "Deep learning framework (pip)"},
+          {"name": "scikit-learn", "description": "Machine learning library (pip)"},
+          {"name": "xgboost", "description": "Gradient boosting framework (pip)"},
+          {"name": "lightgbm", "description": "Gradient boosting framework (pip)"}
+        ]
+      }
+    },
+    "linux": {
+      "apt": {
+        "core": [
+          {"name": "python3.11", "description": "Python 3.11 programming language"},
+          {"name": "python3.11-venv", "description": "Python virtual environment support"},
+          {"name": "python3-pip", "description": "Python package installer"},
+          {"name": "r-base", "description": "R statistical programming language"},
+          {"name": "git", "description": "Version control system"},
+          {"name": "sqlite3", "description": "Lightweight database"},
+          {"name": "postgresql", "description": "PostgreSQL database"},
+          {"name": "redis-server", "description": "In-memory data structure store"},
+          {"name": "docker.io", "description": "Container platform"},
+          {"name": "docker-compose", "description": "Multi-container Docker app orchestration"},
+          {"name": "wget", "description": "File retrieval utility"},
+          {"name": "curl", "description": "Data transfer utility"},
+          {"name": "build-essential", "description": "Build tools for Python packages"},
+          {"name": "python3-dev", "description": "Python development headers"}
+        ]
+      },
+      "snap": [
+        {"name": "rstudio-desktop", "description": "RStudio IDE for R", "classic": true}
+      ]
+    }
+  },
+  "python": {
+    "core": [
+      {"name": "numpy", "version": ">=1.21.0", "description": "Numerical computing library"},
+      {"name": "pandas", "version": ">=1.3.0", "description": "Data manipulation library"},
+      {"name": "matplotlib", "version": ">=3.4.0", "description": "Plotting library"},
+      {"name": "seaborn", "version": ">=0.11.0", "description": "Statistical data visualization"},
+      {"name": "plotly", "version": ">=5.0.0", "description": "Interactive plotting library"},
+      {"name": "scipy", "version": ">=1.7.0", "description": "Scientific computing library"},
+      {"name": "scikit-learn", "version": ">=1.0.0", "description": "Machine learning library"},
+      {"name": "jupyterlab", "version": ">=3.0.0", "description": "Jupyter Lab interface"},
+      {"name": "jupyter", "version": ">=1.0.0", "description": "Jupyter Notebook"},
+      {"name": "ipywidgets", "version": ">=7.6.0", "description": "Interactive widgets"},
+      {"name": "notebook", "version": ">=6.4.0", "description": "Jupyter Notebook interface"}
+    ],
+    "ml": [
+      {"name": "tensorflow", "version": ">=2.8.0", "description": "TensorFlow machine learning framework"},
+      {"name": "torch", "version": ">=1.11.0", "description": "PyTorch deep learning framework"},
+      {"name": "torchvision", "version": ">=0.12.0", "description": "Computer vision for PyTorch"},
+      {"name": "xgboost", "version": ">=1.6.0", "description": "Gradient boosting framework"},
+      {"name": "lightgbm", "version": ">=3.3.0", "description": "Light gradient boosting machine"},
+      {"name": "catboost", "version": ">=1.0.0", "description": "Gradient boosting on categorical features"},
+      {"name": "transformers", "version": ">=4.18.0", "description": "NLP library by Hugging Face"},
+      {"name": "datasets", "version": ">=2.0.0", "description": "Datasets library for NLP"}
+    ],
+    "data": [
+      {"name": "sqlalchemy", "version": ">=1.4.0", "description": "SQL toolkit and ORM"},
+      {"name": "psycopg2-binary", "version": ">=2.9.0", "description": "PostgreSQL adapter"},
+      {"name": "pymongo", "version": ">=4.0.0", "description": "MongoDB driver"},
+      {"name": "redis", "version": ">=4.1.0", "description": "Redis Python client"},
+      {"name": "openpyxl", "version": ">=3.0.0", "description": "Excel file support"},
+      {"name": "xlrd", "version": ">=2.0.0", "description": "Excel file reader"},
+      {"name": "requests", "version": ">=2.27.0", "description": "HTTP library"},
+      {"name": "beautifulsoup4", "version": ">=4.10.0", "description": "HTML parsing library"},
+      {"name": "scrapy", "version": ">=2.5.0", "description": "Web scraping framework"},
+      {"name": "boto3", "version": ">=1.21.0", "description": "AWS SDK for Python"}
+    ],
+    "viz": [
+      {"name": "plotly", "version": ">=5.6.0", "description": "Interactive plotting"},
+      {"name": "bokeh", "version": ">=2.4.0", "description": "Interactive visualization library"},
+      {"name": "altair", "version": ">=4.2.0", "description": "Statistical visualization library"},
+      {"name": "dash", "version": ">=2.0.0", "description": "Analytical web applications"},
+      {"name": "streamlit", "version": ">=1.8.0", "description": "Machine learning app framework"},
+      {"name": "folium", "version": ">=0.12.0", "description": "Map visualization library"},
+      {"name": "wordcloud", "version": ">=1.8.0", "description": "Word cloud generation"},
+      {"name": "networkx", "version": ">=2.8.0", "description": "Network analysis library"}
+    ]
+  },
+  "r": {
+    "core": [
+      {"name": "tidyverse", "description": "Data science framework collection"},
+      {"name": "ggplot2", "description": "Data visualization library"},
+      {"name": "dplyr", "description": "Data manipulation library"},
+      {"name": "readr", "description": "Data reading library"},
+      {"name": "tidyr", "description": "Data tidying library"},
+      {"name": "lubridate", "description": "Date/time manipulation"},
+      {"name": "stringr", "description": "String manipulation"},
+      {"name": "forcats", "description": "Factor manipulation"},
+      {"name": "purrr", "description": "Functional programming tools"}
+    ],
+    "ml": [
+      {"name": "caret", "description": "Machine learning training framework"},
+      {"name": "randomForest", "description": "Random forest algorithm"},
+      {"name": "e1071", "description": "SVM and other algorithms"},
+      {"name": "xgboost", "description": "Gradient boosting framework"},
+      {"name": "glmnet", "description": "Lasso and elastic-net regularization"},
+      {"name": "nnet", "description": "Neural network functions"}
+    ],
+    "data": [
+      {"name": "DBI", "description": "Database interface"},
+      {"name": "RPostgreSQL", "description": "PostgreSQL interface"},
+      {"name": "RMongo", "description": "MongoDB interface"},
+      {"name": "readxl", "description": "Excel file reading"},
+      {"name": "writexl", "description": "Excel file writing"},
+      {"name": "httr", "description": "HTTP client"},
+      {"name": "rvest", "description": "Web scraping"},
+      {"name": "jsonlite", "description": "JSON processing"}
+    ],
+    "viz": [
+      {"name": "plotly", "description": "Interactive plotting"},
+      {"name": "shiny", "description": "Web application framework"},
+      {"name": "leaflet", "description": "Interactive maps"},
+      {"name": "DT", "description": "Data tables display"},
+      {"name": "flexdashboard", "description": "R markdown dashboards"}
+    ]
+  },
+  "jupyter": {
+    "extensions": [
+      {"name": "jupyterlab-git", "description": "Git extension for JupyterLab"},
+      {"name": "jupyterlab-drawio", "description": "Diagrams and flowcharts"},
+      {"name": "jupyterlab-toc", "description": "Table of contents extension"},
+      {"name": "jupyterlab-code-formatter", "description": "Code formatting"},
+      {"name": "jupyterlab-variableInspector", "description": "Variable inspector"},
+      {"name": "jupyter-widgets", "description": "Interactive widgets"}
+    ],
+    "kernels": [
+      {"name": "ipykernel", "description": "Python kernel"},
+      {"name": "IRkernel", "description": "R kernel"},
+      {"name": "xeus-python", "description": "Jupyter kernel for Python"},
+      {"name": "iolanguage-jupyter-kernel", "description": "Io language kernel"}
+    ]
+  },
+  "tools": {
+    "cloud": [
+      {"name": "aws-cli", "description": "Amazon Web Services CLI"},
+      {"name": "gcloud-cli", "description": "Google Cloud CLI"},
+      {"name": "azure-cli", "description": "Microsoft Azure CLI"},
+      {"name": "kubernetes-cli", "description": "Kubernetes command line tool"}
+    ],
+    "databases": [
+      {"name": "dbeaver", "description": "Universal database tool", "cask": true},
+      {"name": "pgadmin", "description": "PostgreSQL management tool", "cask": true},
+      {"name": "mongo-compass", "description": "MongoDB GUI", "cask": true}
+    ]
+  },
+  "vscode": {
+    "extensions": [
+      {"name": "ms-python.python", "description": "Python language support"},
+      {"name": "ms-python.vscode-pylance", "description": "Python language server"},
+      {"name": "ms-toolsai.jupyter", "description": "Jupyter notebook support"},
+      {"name": "ms-toolsai.jupyter-keymap", "description": "Jupyter key shortcuts"},
+      {"name": "ms-toolsai.jupyter-renderers", "description": "Jupyter renderers"},
+      {"name": "RDebugger.r-debugger", "description": "R debugger support"},
+      {"name": "REditorSupport.r", "description": "R language support"},
+      {"name": "Reditorsupport.r-lsp", "description": "R language server"},
+      {"name": "ms-vscode.vscode-json", "description": "JSON support"},
+      {"name": "ms-vscode.vscode-markdown", "description": "Markdown support"},
+      {"name": "formulahendry.code-runner", "description": "Code runner"},
+      {"name": "ms-vscode.vscode-docker", "description": "Docker extension"}
+    ]
+  }
+}

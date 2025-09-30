@@ -1,0 +1,325 @@
+{
+  "system": {
+    "macos": {
+      "brew": {
+        "runtimes": [
+          {"name": "node", "description": "Node.js JavaScript runtime"},
+          {"name": "python@3.11", "description": "Python programming language"},
+          {"name": "go", "description": "Go programming language"},
+          {"name": "openjdk", "description": "OpenJDK Java development kit"},
+          {"name": "rust", "description": "Rust programming language"},
+          {"name": "ruby", "description": "Ruby programming language"}
+        ],
+        "databases": [
+          {"name": "postgresql", "description": "PostgreSQL database server"},
+          {"name": "mongodb-community", "description": "MongoDB NoSQL database"},
+          {"name": "redis", "description": "Redis in-memory data store"},
+          {"name": "mysql", "description": "MySQL database server"},
+          {"name": "sqlite", "description": "SQLite embedded database"}
+        ],
+        "tools": [
+          {"name": "docker", "description": "Docker container platform"},
+          {"name": "docker-compose", "description": "Docker Compose orchestration"},
+          {"name": "kubectl", "description": "Kubernetes command line tool"},
+          {"name": "helm", "description": "Kubernetes package manager"},
+          {"name": "nginx", "description": "Nginx web server"},
+          {"name": "git", "description": "Version control system"},
+          {"name": "wget", "description": "File retrieval utility"},
+          {"name": "curl", "description": "HTTP client tool"},
+          {"name": "jq", "description": "JSON processor"},
+          {"name": "yq", "description": "YAML processor"}
+        ],
+        "build_tools": [
+          {"name": "maven", "description": "Java build tool"},
+          {"name": "gradle", "description": "Java build automation tool"},
+          {"name": "cmake", "description": "Cross-platform build system"},
+          {"name": "make", "description": "Build automation tool"}
+        ],
+        "message_queues": [
+          {"name": "rabbitmq", "description": "RabbitMQ message broker"},
+          {"name": "kafka", "description": "Apache Kafka distributed streaming platform"}
+        ],
+        "monitoring": [
+          {"name": "prometheus", "description": "Monitoring and alerting toolkit"},
+          {"name": "grafana", "description": "Analytics and monitoring platform"},
+          {"name": "elasticsearch", "description": "Search and analytics engine"},
+          {"name": "kibana", "description": "Data visualization for Elasticsearch"}
+        ]
+      },
+      "cask": [
+        {"name": "postman", "description": "API development and testing tool"},
+        {"name": "insomnia", "description": "REST client and API design tool"},
+        {"name": "tableplus", "description": "Modern database management tool"},
+        {"name": "mongoclient", "description": "MongoDB GUI client"},
+        {"name": "pgadmin", "description": "PostgreSQL administration tool"},
+        {"name": "redis-desktop-manager", "description": "Redis GUI client"},
+        {"name": "docker-desktop", "description": "Docker Desktop application"}
+      ]
+    },
+    "linux": {
+      "apt": {
+        "runtimes": [
+          {"name": "nodejs", "description": "Node.js JavaScript runtime"},
+          {"name": "python3.11", "description": "Python programming language"},
+          {"name": "golang-go", "description": "Go programming language"},
+          {"name": "openjdk-17-jdk", "description": "OpenJDK 17 Java development kit"},
+          {"name": "rustc", "description": "Rust programming language compiler"},
+          {"name": "ruby", "description": "Ruby programming language"}
+        ],
+        "databases": [
+          {"name": "postgresql", "description": "PostgreSQL database server"},
+          {"name": "mongodb", "description": "MongoDB NoSQL database"},
+          {"name": "redis-server", "description": "Redis in-memory data store"},
+          {"name": "mysql-server", "description": "MySQL database server"},
+          {"name": "sqlite3", "description": "SQLite embedded database"}
+        ],
+        "tools": [
+          {"name": "docker.io", "description": "Docker container platform"},
+          {"name": "docker-compose", "description": "Docker Compose orchestration"},
+          {"name": "kubectl", "description": "Kubernetes command line tool"},
+          {"name": "nginx", "description": "Nginx web server"},
+          {"name": "git", "description": "Version control system"},
+          {"name": "wget", "description": "File retrieval utility"},
+          {"name": "curl", "description": "HTTP client tool"},
+          {"name": "jq", "description": "JSON processor"}
+        ],
+        "build_tools": [
+          {"name": "maven", "description": "Java build tool"},
+          {"name": "gradle", "description": "Java build automation tool"},
+          {"name": "build-essential", "description": "Compilation tools"},
+          {"name": "cmake", "description": "Cross-platform build system"},
+          {"name": "make", "description": "Build automation tool"}
+        ],
+        "message_queues": [
+          {"name": "rabbitmq-server", "description": "RabbitMQ message broker"}
+        ]
+      },
+      "snap": [
+        {"name": "postman", "description": "API development and testing tool", "classic": true},
+        {"name": "insomnia", "description": "REST client and API design tool"}
+      ]
+    }
+  },
+  "npm": {
+    "global": [
+      {"name": "typescript", "description": "TypeScript compiler"},
+      {"name": "ts-node", "description": "TypeScript execution environment"},
+      {"name": "nodemon", "description": "Monitor for changes and restart Node.js apps"},
+      {"name": "pm2", "description": "Production process manager for Node.js"},
+      {"name": "express", "description": "Fast, unopinionated web framework"},
+      {"name": "fastify", "description": "Fast and low overhead web framework"},
+      {"name": "nestjs", "description": "Progressive Node.js framework"},
+      {"name": "koa", "description": "Next generation web framework"},
+      {"name": "socket.io", "description": "Real-time communication library"},
+      {"name": "jsonwebtoken", "description": "JSON Web Token implementation"},
+      {"name": "bcryptjs", "description": "Password hashing library"},
+      {"name": "helmet", "description": "Security middleware"},
+      {"name": "cors", "description": "Cross-Origin Resource Sharing middleware"},
+      {"name": "compression", "description": "Node.js compression middleware"},
+      {"name": "morgan", "description": "HTTP request logger middleware"},
+      {"name": "winston", "description": "Universal logging library"},
+      {"name": "joi", "description": "Object schema validation"},
+      {"name": "lodash", "description": "Utility library"},
+      {"name": "axios", "description": "Promise based HTTP client"},
+      {"name": "prisma", "description": "Next-generation Node.js ORM"},
+      {"name": "typeorm", "description": "ORM for TypeScript and JavaScript"},
+      {"name": "sequelize", "description": "Multi-dialect ORM"},
+      {"name": "mongoose", "description": "MongoDB object modeling"},
+      {"name": "redis", "description": "Redis client for Node.js"},
+      {"name": "ioredis", "description": "Robust Redis client"},
+      {"name": "amqplib", "description": "AMQP 0-9-1 library for Node.js"},
+      {"name": "kafkajs", "description": "Apache Kafka client for Node.js"},
+      {"name": "bull", "description": "Premium queue package for handling jobs"},
+      {"name": "agenda", "description": "Job scheduling library"}
+    ],
+    "dev": [
+      {"name": "@types/node", "description": "TypeScript definitions for Node.js"},
+      {"name": "@types/express", "description": "TypeScript definitions for Express"},
+      {"name": "@types/jsonwebtoken", "description": "TypeScript definitions for JWT"},
+      {"name": "@types/bcryptjs", "description": "TypeScript definitions for bcryptjs"},
+      {"name": "@types/cors", "description": "TypeScript definitions for CORS"},
+      {"name": "@types/compression", "description": "TypeScript definitions for compression"},
+      {"name": "@types/morgan", "description": "TypeScript definitions for morgan"},
+      {"name": "@types/lodash", "description": "TypeScript definitions for lodash"},
+      {"name": "jest", "description": "Delightful JavaScript testing framework"},
+      {"name": "supertest", "description": "HTTP assertions for Node.js"},
+      {"name": "nodemailer", "description": "Send emails from Node.js"},
+      {"name": "multer", "description": "Middleware for handling multipart/form-data"},
+      {"name": "sharp", "description": "High performance image processing"},
+      {"name": "pdfkit", "description": "PDF generation library"},
+      {"name": "exceljs", "description": "Excel workbook library"},
+      {"name": "csv-parser", "description": "CSV parsing library"},
+      {"name": "swagger-ui-express", "description": "Swagger UI middleware"},
+      {"name": "swagger-jsdoc", "description": "Swagger JSDoc comments"}
+    ]
+  },
+  "python": {
+    "global": [
+      {"name": "pip", "description": "Python package installer"},
+      {"name": "virtualenv", "description": "Virtual environment builder"},
+      {"name": "setuptools", "description": "Library for packaging Python projects"},
+      {"name": "wheel", "description": "Built-package format for Python"}
+    ],
+    "backend": [
+      {"name": "fastapi", "version": ">=0.68.0", "description": "Modern, fast web framework for building APIs"},
+      {"name": "uvicorn", "version": ">=0.15.0", "description": "ASGI server implementation"},
+      {"name": "gunicorn", "version": ">=20.1.0", "description": "WSGI HTTP Server"},
+      {"name": "django", "version": ">=4.0.0", "description": "High-level Python web framework"},
+      {"name": "flask", "version": ">=2.0.0", "description": "Micro web framework"},
+      {"name": "pydantic", "version": ">=1.8.0", "description": "Data validation using Python type annotations"},
+      {"name": "sqlalchemy", "version": ">=1.4.0", "description": "SQL toolkit and ORM"},
+      {"name": "alembic", "version": ">=1.7.0", "description": "Database migration tool"},
+      {"name": "psycopg2-binary", "version": ">=2.9.0", "description": "PostgreSQL adapter for Python"},
+      {"name": "pymongo", "version": ">=4.0.0", "description": "MongoDB driver for Python"},
+      {"name": "redis", "version": ">=4.1.0", "description": "Redis Python client"},
+      {"name": "celery", "version": ">=5.2.0", "description": "Distributed task queue"},
+      {"name": "kombu", "version": ">=5.2.0", "description": "Messaging library for Python"},
+      {"name": "aiokafka", "version": ">=0.7.0", "description": "Kafka client using asyncio"},
+      {"name": "python-jose", "version": ">=3.3.0", "description": "JOSE implementation in Python"},
+      {"name": "passlib", "version": ">=1.7.0", "description": "Password hashing library"},
+      {"name": "bcrypt", "version": ">=3.2.0", "description": "Password hashing library"},
+      {"name": "python-multipart", "version": ">=0.0.5", "description": "Multipart form data support"},
+      {"name": "pillow", "version": ">=9.0.0", "description": "Python Imaging Library"},
+      {"name": "python-magic", "version": ">=0.4.0", "description": "File type detection"},
+      {"name": "pandas", "version": ">=1.3.0", "description": "Data manipulation library"},
+      {"name": "numpy", "version": ">=1.21.0", "description": "Numerical computing library"},
+      {"name": "requests", "version": ">=2.27.0", "description": "HTTP library"},
+      {"name": "httpx", "version": ">=0.23.0", "description": "Async HTTP client"},
+      {"name": "aiofiles", "version": ">=0.8.0", "description": "File operations for asyncio"},
+      {"name": "python-dotenv", "version": ">=0.19.0", "description": "Read .env files"},
+      {"name": "pyyaml", "version": ">=6.0", "description": "YAML parser"},
+      {"name": "jinja2", "version": ">=3.0.0", "description": "Template engine"},
+      {"name": "click", "version": ">=8.0.0", "description": "Command line interface creator"},
+      {"name": "rich", "version": ">=12.0.0", "description": "Rich text and beautiful formatting"},
+      {"name": "typer", "version": ">=0.4.0", "description": "Modern CLI framework"},
+      {"name": "structlog", "version": ">=22.0.0", "description": "Structured logging"},
+      {"name": "loguru", "version": ">=0.6.0", "description": "Simple logging library"}
+    ],
+    "dev": [
+      {"name": "pytest", "version": ">=7.0.0", "description": "Testing framework"},
+      {"name": "pytest-asyncio", "version": ">=0.18.0", "description": "Async support for pytest"},
+      {"name": "pytest-cov", "version": ">=3.0.0", "description": "Coverage plugin for pytest"},
+      {"name": "pytest-mock", "version": ">=3.7.0", "description": "Mock plugin for pytest"},
+      {"name": "httpx", "version": ">=0.23.0", "description": "Async HTTP client for testing"},
+      {"name": "black", "version": ">=22.0.0", "description": "Code formatter"},
+      {"name": "isort", "version": ">=5.10.0", "description": "Import sorter"},
+      {"name": "flake8", "version": ">=4.0.0", "description": "Code linter"},
+      {"name": "mypy", "version": ">=0.950", "description": "Static type checker"},
+      {"name": "pre-commit", "version": ">=2.17.0", "description": "Git pre-commit hooks"},
+      {"name": "bandit", "version": ">=1.7.0", "description": "Security linter"},
+      {"name": "safety", "version": ">=2.0.0", "description": "Dependency vulnerability checker"}
+    ]
+  },
+  "go": {
+    "tools": [
+      {"name": "golang.org/x/tools/cmd/goimports", "description": "Go import formatter"},
+      {"name": "github.com/golangci/golangci-lint/cmd/golangci-lint", "description": "Go linter"},
+      {"name": "github.com/air-verse/air", "description": "Live reload for Go apps"},
+      {"name": "github.com/swaggo/swag/cmd/swag", "description": "Swagger documentation generator"},
+      {"name": "github.com/golang-migrate/migrate", "description": "Database migration tool"},
+      {"name": "github.com/pressly/goose/v3/cmd/goose", "description": "Database migration tool"},
+      {"name": "github.com/golang/mock/mockgen", "description": "Mock generation tool"},
+      {"name": "honnef.co/go/tools/cmd/staticcheck", "description": "Go static analysis"},
+      {"name": "golang.org/x/vuln/cmd/govulncheck", "description": "Vulnerability checker"}
+    ],
+    "libraries": [
+      {"name": "github.com/gin-gonic/gin", "description": "HTTP web framework"},
+      {"name": "github.com/gorilla/mux", "description": "HTTP request router"},
+      {"name": "github.com/labstack/echo/v4", "description": "High performance, extensible web framework"},
+      {"name": "github.com/go-chi/chi/v5", "description": "Lightweight, idiomatic router"},
+      {"name": "github.com/gofiber/fiber/v2", "description": "Express inspired web framework"},
+      {"name": "gorm.io/gorm", "description": "ORM library for Go"},
+      {"name": "github.com/jmoiron/sqlx", "description": "General purpose extensions to database/sql"},
+      {"name": "github.com/lib/pq", "description": "PostgreSQL driver for Go"},
+      {"name": "github.com/go-redis/redis/v8", "description": "Redis client for Go"},
+      {"name": "github.com/streadway/amqp", "description": "Go client for AMQP"},
+      {"name": "github.com/segmentio/kafka-go", "description": "Kafka client for Go"},
+      {"name": "github.com/golang-jwt/jwt/v4", "description": "JSON Web Tokens for Go"},
+      {"name": "github.com/golang-migrate/migrate/v4", "description": "Database migration library"},
+      {"name": "github.com/spf13/viper", "description": "Go configuration library"},
+      {"name": "github.com/spf13/cobra", "description": "A Commander for modern Go CLI interactions"},
+      {"name": "github.com/sirupsen/logrus", "description": "Structured logging library"},
+      {"name": "go.uber.org/zap", "description": "Fast, structured, leveled logging"},
+      {"name": "github.com/stretchr/testify", "description": "Testing toolkit for Go"},
+      {"name": "github.com/golang/mock", "description": "Mocking framework for Go"}
+    ]
+  },
+  "java": {
+    "maven": [
+      {"groupId": "org.springframework.boot", "artifactId": "spring-boot-starter-web", "description": "Spring Boot Web Starter"},
+      {"groupId": "org.springframework.boot", "artifactId": "spring-boot-starter-data-jpa", "description": "Spring Boot Data JPA Starter"},
+      {"groupId": "org.springframework.boot", "artifactId": "spring-boot-starter-security", "description": "Spring Boot Security Starter"},
+      {"groupId": "org.springframework.boot", "artifactId": "spring-boot-starter-validation", "description": "Spring Boot Validation Starter"},
+      {"groupId": "org.springframework.boot", "artifactId": "spring-boot-starter-actuator", "description": "Spring Boot Actuator Starter"},
+      {"groupId": "org.postgresql", "artifactId": "postgresql", "description": "PostgreSQL JDBC Driver"},
+      {"groupId": "mysql", "artifactId": "mysql-connector-java", "description": "MySQL JDBC Driver"},
+      {"groupId": "redis.clients", "artifactId": "jedis", "description": "Redis Java client"},
+      {"groupId": "com.rabbitmq", "artifactId": "amqp-client", "description": "RabbitMQ Java client"},
+      {"groupId": "org.apache.kafka", "artifactId": "kafka-clients", "description": "Apache Kafka Java client"},
+      {"groupId": "io.jsonwebtoken", "artifactId": "jjwt-api", "description": "JWT API"},
+      {"groupId": "io.jsonwebtoken", "artifactId": "jjwt-impl", "description": "JWT Implementation"},
+      {"groupId": "io.jsonwebtoken", "artifactId": "jjwt-jackson", "description": "JWT Jackson integration"},
+      {"groupId": "org.apache.commons", "artifactId": "commons-lang3", "description": "Apache Commons Lang"},
+      {"groupId": "org.apache.commons", "artifactId": "commons-collections4", "description": "Apache Commons Collections"},
+      {"groupId": "com.fasterxml.jackson.core", "artifactId": "jackson-databind", "description": "Jackson data binding"},
+      {"groupId": "org.hibernate.validator", "artifactId": "hibernate-validator", "description": "Hibernate Validator"},
+      {"groupId": "org.projectlombok", "artifactId": "lombok", "description": "Project Lombok"},
+      {"groupId": "org.mapstruct", "artifactId": "mapstruct", "description": "MapStruct code generator"},
+      {"groupId": "org.springdoc", "artifactId": "springdoc-openapi-ui", "description": "SpringDoc OpenAPI UI"},
+      {"groupId": "org.junit.jupiter", "artifactId": "junit-jupiter", "description": "JUnit 5"},
+      {"groupId": "org.mockito", "artifactId": "mockito-core", "description": "Mockito mocking framework"},
+      {"groupId": "org.testcontainers", "artifactId": "testcontainers", "description": "Testcontainers"}
+    ]
+  },
+  "rust": {
+    "crates": [
+      {"name": "actix-web", "description": "Powerful, pragmatic, and extremely fast web framework"},
+      {"name": "rocket", "description": "Web framework with a focus on ease-of-use, expressibility, and speed"},
+      {"name": "tokio", "description": "Runtime for writing reliable asynchronous applications"},
+      {"name": "serde", "description": "Serialization and deserialization framework"},
+      {"name": "serde_json", "description": "JSON support for Serde"},
+      {"name": "sqlx", "description": "SQL toolkit with async support"},
+      {"name": "diesel", "description": "Safe, extensible ORM and Query Builder"},
+      {"name": "redis-rs", "description": "Redis library for Rust"},
+      {"name": "lapin", "description": "AMQP client library"},
+      {"name": "rdkafka", "description": "Kafka client library"},
+      {"name": "jsonwebtoken", "description": "Create and decode JWTs"},
+      {"name": "argon2", "description": "Password hashing"},
+      {"name": "uuid", "description": "Generate and parse UUIDs"},
+      {"name": "chrono", "description": "Date and time library"},
+      {"name": "anyhow", "description": "Flexible concrete Error type"},
+      {"name": "thiserror", "description": "Derive implementations for Error"},
+      {"name": "tracing", "description": "Application-level tracing"},
+      {"name": "log", "description": "Logging library"},
+      {"name": "clap", "description": "Command Line Argument Parser"},
+      {"name": "config", "description": "Layered configuration system"},
+      {"name": "reqwest", "description": "HTTP client"},
+      {"name": "axum", "description": "Ergonomic and modular web framework"},
+      {"name": "warp", "description": "Super-easy, composable web server framework"}
+    ]
+  },
+  "vscode": {
+    "extensions": [
+      {"name": "ms-python.python", "description": "Python language support"},
+      {"name": "ms-python.vscode-pylance", "description": "Python language server"},
+      {"name": "bradlc.vscode-tailwindcss", "description": "Tailwind CSS IntelliSense"},
+      {"name": "ms-vscode.vscode-typescript-next", "description": "TypeScript support"},
+      {"name": "esbenp.prettier-vscode", "description": "Code formatter"},
+      {"name": "ms-vscode.vscode-eslint", "description": "ESLint integration"},
+      {"name": "golang.go", "description": "Go language support"},
+      {"name": "ms-vscode.vscode-java", "description": "Java language support"},
+      {"name": "rust-lang.rust-analyzer", "description": "Rust language support"},
+      {"name": "redhat.vscode-yaml", "description": "YAML language support"},
+      {"name": "ms-kubernetes-tools.vscode-kubernetes-tools", "description": "Kubernetes tools"},
+      {"name": "ms-vscode-remote.remote-containers", "description": "Dev Containers"},
+      {"name": "humao.rest-client", "description": "REST Client extension"},
+      {"name": "ms-vscode.vscode-docker", "description": "Docker extension"},
+      {"name": "formulahendry.code-runner", "description": "Code runner"},
+      {"name": "eamodio.gitlens", "description": "GitLens"},
+      {"name": "streetsidesoftware.code-spell-checker", "description": "Spell checker"},
+      {"name": "gruntfuggly.todo-tree", "description": "TODO tree"},
+      {"name": "ms-vscode.hexeditor", "description": "Hex editor"},
+      {"name": "ms-vscode.vscode-json", "description": "JSON support"}
+    ]
+  }
+}

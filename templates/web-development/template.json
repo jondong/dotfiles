@@ -1,0 +1,24 @@
+{
+    "name": "web-development",
+    "description": "Complete web development environment with modern JavaScript/TypeScript toolchain",
+    "version": "1.0.0",
+    "author": "dotfiles",
+    "created": "2024-01-01T00:00:00Z",
+    "updated": "2024-01-01T00:00:00Z",
+    "platforms": ["macos", "linux"],
+    "tags": ["web", "javascript", "typescript", "react", "vue", "node"],
+    "requirements": {
+        "min_ram_gb": 8,
+        "min_disk_gb": 20,
+        "required_tools": ["git", "node", "npm"]
+    },
+    "features": [
+        "Modern JavaScript/TypeScript development",
+        "Frontend frameworks (React, Vue, Angular)",
+        "Backend API development",
+        "Database tools and clients",
+        "Testing frameworks",
+        "Build tools and bundlers",
+        "Code quality and linting"
+    ]
+}

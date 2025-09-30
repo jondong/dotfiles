@@ -1,0 +1,69 @@
+{
+  "name": "data-science",
+  "title": "Data Science Environment",
+  "description": "Complete data science environment with Python, R, Jupyter, and ML tools",
+  "version": "1.0.0",
+  "category": "development",
+  "platforms": ["macos", "linux"],
+  "author": "Dotfiles Team",
+  "homepage": "https://github.com/jondong/dotfiles",
+  "keywords": ["data-science", "python", "r", "jupyter", "machine-learning"],
+  "dependencies": {
+    "templates": ["base-shell"],
+    "system": {
+      "macos": ["brew"],
+      "linux": ["apt"]
+    }
+  },
+  "features": [
+    "Python 3.10+ with data science packages",
+    "R 4.0+ with tidyverse",
+    "Jupyter Lab & Notebook",
+    "Machine learning frameworks",
+    "Data visualization tools",
+    "Statistical analysis software",
+    "GPU acceleration support",
+    "Environment management with conda",
+    "Database connectivity tools",
+    "Cloud SDK integration"
+  ],
+  "components": {
+    "languages": ["Python", "R", "Julia"],
+    "tools": ["Jupyter", "VSCode", "Docker", "Git"],
+    "libraries": [
+      "numpy", "pandas", "scikit-learn", "tensorflow", "pytorch",
+      "matplotlib", "seaborn", "plotly", "ggplot2"
+    ],
+    "databases": ["PostgreSQL", "MongoDB", "Redis"],
+    "cloud": ["AWS CLI", "Google Cloud SDK", "Azure CLI"]
+  },
+  "directories": {
+    "projects": "$HOME/Projects/data-science",
+    "notebooks": "$HOME/Projects/data-science/notebooks",
+    "datasets": "$HOME/Projects/data-science/datasets",
+    "models": "$HOME/Projects/data-science/models",
+    "experiments": "$HOME/Projects/data-science/experiments"
+  },
+  "ports": {
+    "jupyter": 8888,
+    "jupyter-lab": 8889,
+    "streamlit": 8501,
+    "dash": 8050
+  },
+  "performance": {
+    "memory_requirement": "8GB+",
+    "storage_requirement": "20GB+",
+    "gpu_optional": true,
+    "parallel_jobs": 4
+  },
+  "install_order": [
+    "system-packages",
+    "python",
+    "r",
+    "jupyter",
+    "tools",
+    "ide-config",
+    "datasets",
+    "validation"
+  ]
+}
