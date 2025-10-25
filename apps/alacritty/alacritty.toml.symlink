@@ -21,8 +21,8 @@ columns = 120
 lines = 40
 
 [font]
-normal.family = "JetBrains Mono"
-size = 15
+normal.family = "Fira Code"
+size = 14
 offset.y = 1
 
 # macOS-specific key bindings
