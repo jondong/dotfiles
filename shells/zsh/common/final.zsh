@@ -2,11 +2,6 @@
 # 最终配置加载 - Final Configuration Loading
 #==============================================================================
 
-# Load local configs only if they exist and are readable
-[[ -r ~/.local.zshrc ]] && source ~/.local.zshrc
-[[ -r ~/.localrc ]] && source ~/.localrc
-[[ -r ~/.local/bin/env ]] && . "$HOME/.local/bin/env"
-
 # SDKMAN - load only if directory exists
 if [[ -d "$HOME/.sdkman" ]]; then
     export SDKMAN_DIR="$HOME/.sdkman"

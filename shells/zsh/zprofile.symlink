@@ -21,10 +21,13 @@ setup_platform() {
 # Setup platform detection immediately
 setup_platform
 
+# Set basic environment variables that should be available early
+export DOTFILES_ROOT="$HOME/.dotfiles"
+
 # Load proxy settings early (before any network operations)
 [[ -f ~/.proxyrc ]] && source ~/.proxyrc
 
-# Set basic environment variables that should be available early
-export DOTFILES_ROOT="$HOME/.dotfiles"
+# Set local path 
+[[ -r ~/.localrc ]] && source ~/.localrc
 
 # Platform-specific path loading will be handled by the main zshrc
