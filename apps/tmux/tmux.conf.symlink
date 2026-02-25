@@ -33,8 +33,8 @@ set -g status-left "#[fg=Green]#(whoami)::#[fg=blue]#(hostname -s) "
 set -wg window-status-format "#I:#W" # 状态栏窗口名称格式
 set -wg window-status-current-format " #I:#W#F " # 状态栏当前窗口名称格式(#I：序号，#w：窗口名称，#F：间隔符)
 set -wg window-status-separator "|" # 状态栏窗口名称之间的间隔
-set -wg window-status-current-style "bg=blue" # 状态栏当前窗口名称的样式
-set -wg window-status-last-style "fg=green" # 状态栏最后一个窗口名称的样式
+set -wg window-status-current-style "bg=brown" # 状态栏当前窗口名称的样式
+set -wg window-status-last-style "fg=cyan" # 状态栏最后一个窗口名称的样式
 
 set -g message-style "bg=#202529, fg=#91A8BA" # 指定消息通知的前景、后景色
 set -g default-terminal "screen-256color"
