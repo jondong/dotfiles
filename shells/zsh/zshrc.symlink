@@ -6,7 +6,9 @@ compinit
 # OPENSPEC:END
 
 # OpenClaw Completion
-source "$HOME/.openclaw/completions/openclaw.zsh"
+if [[ -r "$HOME/.openclaw/completions/openclaw.zsh" ]]; then
+  source "$HOME/.openclaw/completions/openclaw.zsh"
+fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
