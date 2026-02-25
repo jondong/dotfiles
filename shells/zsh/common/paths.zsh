@@ -55,3 +55,6 @@ setup_common_paths
 
 # Load proxy settings
 [[ -f ~/.proxyrc ]] && source ~/.proxyrc
+
+# Load local configs only if they exist and are readable
+[[ -r ~/.local/bin/env ]] && . "$HOME/.local/bin/env"

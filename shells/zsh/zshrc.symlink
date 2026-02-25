@@ -1,3 +1,13 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("$HOME/.zsh/completions" $fpath)
+autoload -Uz compinit
+compinit
+# OPENSPEC:END
+
+# OpenClaw Completion
+source "$HOME/.openclaw/completions/openclaw.zsh"
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -69,15 +79,44 @@ source "$ZSH_CONFIG_DIR/common/lazyload.zsh"
 source "$ZSH_CONFIG_DIR/common/final.zsh"
 
 #==============================================================================
-# 可选: 性能分析 - Optional: Performance profiling
+# 插件和补全配置 - 优化版本
 #==============================================================================
-# zprof
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/jondong/.cache/lm-studio/bin"
-# End of LM Studio CLI section
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Optimized file loading - only load essential files
+setopt null_glob
 
-# OpenClaw Completion
-source "/Users/jondong/.openclaw/completions/openclaw.zsh"
+# Cache file list to avoid repeated globbing
+local zsh_cache_file="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_file_cache.zsh"
+local cache_valid=false
+
+if [[ -f "$zsh_cache_file" && -n "$zsh_cache_file"(#qN.mh-24) ]]; then
+    # Cache is less than 24 hours old
+    source "$zsh_cache_file"
+    cache_valid=true
+else
+    # Rebuild cache
+    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}"
+    
+    local shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh(N))
+    local platform_zsh=()
+    
+    case $PLATFORM in
+        Darwin) platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh(N)) ;;
+        Linux) platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh(N)) ;;
+        Cygwin) platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh(N)) ;;
+    esac
+    
+    typeset -U config_files
+    config_files=(${shells_zsh[@]} ${platform_zsh[@]})
+    
+    # Generate cache file
+    print "# Zsh configuration cache - generated on $(date)" > "$zsh_cache_file"
+    for file in ${config_files:#*/path.zsh}; do
+        print "source $file" >> "$zsh_cache_file"
+    done
+    
+    source "$zsh_cache_file"
+fi
+
+unsetopt null_glob
+

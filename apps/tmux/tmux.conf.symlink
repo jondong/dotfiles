@@ -8,6 +8,9 @@ bind C-a send-prefix
 
 # support mouse
 set-option -g mouse on
+set-option -g history-limit 50000
+# 减少 Esc 键延迟（默认 500ms，太慢了）
+set -sg escape-time 10
 
 # Rename your terminals
 set -g set-titles on
@@ -16,6 +19,9 @@ set -g set-titles-string 'tmux :: #(whoami) :: #h :: #(curl ipecho.net/plain;ech
 #setw -g allow-rename off
 
 # Status bar customization
+# 状态栏位置
+set -g status-position bottom
+# 左侧：session 名称
 set -g status-interval 1 # 状态栏刷新时间
 set -g status-bg black
 set -g status-fg yellow
@@ -27,12 +33,18 @@ set -g status-left "#[fg=Green]#(whoami)::#[fg=blue]#(hostname -s) "
 set -wg window-status-format "#I:#W" # 状态栏窗口名称格式
 set -wg window-status-current-format " #I:#W#F " # 状态栏当前窗口名称格式(#I：序号，#w：窗口名称，#F：间隔符)
 set -wg window-status-separator "|" # 状态栏窗口名称之间的间隔
-set -wg window-status-current-style "bg=red" # 状态栏当前窗口名称的样式
-set -wg window-status-last-style "fg=red" # 状态栏最后一个窗口名称的样式
+set -wg window-status-current-style "bg=blue" # 状态栏当前窗口名称的样式
+set -wg window-status-last-style "fg=green" # 状态栏最后一个窗口名称的样式
 
 set -g message-style "bg=#202529, fg=#91A8BA" # 指定消息通知的前景、后景色
 set -g default-terminal "screen-256color"
 set -g base-index 1 # 设置窗口的起始下标为1
+
+# Pan customization
+# 非活动 pane 边框颜色
+set -g pane-border-style 'fg=#333333'
+# 活动 pane 边框颜色（绿色高亮，方便识别当前 pane）
+set -g pane-active-border-style 'fg=#4ec9b0'
 set -g pane-base-index 1 # 设置面板的起始下标为1
 
 set -g monitor-activity on
