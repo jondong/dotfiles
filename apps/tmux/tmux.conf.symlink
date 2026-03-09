@@ -1,3 +1,14 @@
+# TMUX plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tmux-copycat'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-open'
+set -g @plugin 'christoomey/vim-tmux-navigator'
+set -g @plugin 'aserowy/tmux.nvim'
+
 # Set a Ctrl-b shortcut for reloading your tmux config
 bind r source-file ~/.tmux.conf \; display-message "Config reloaded.."
 
@@ -17,24 +28,6 @@ set -g set-titles on
 set -g set-titles-string 'tmux :: #(whoami) :: #h :: #(curl ipecho.net/plain;echo)'
 #setw -g automatic-rename off # 关闭默认重命名机制
 #setw -g allow-rename off
-
-# Status bar customization
-# 状态栏位置
-set -g status-position bottom
-# 左侧：session 名称
-set -g status-interval 1 # 状态栏刷新时间
-set -g status-bg black
-set -g status-fg yellow
-set -g status-left-length 90
-set -g status-right-length 60
-set -g status-justify left
-set -g status-left "#[fg=Green]#(whoami)::#[fg=blue]#(hostname -s) "
-#set -g status-right '#[fg=Cyan]Continuum: #{continuum_status}'
-set -wg window-status-format "#I:#W" # 状态栏窗口名称格式
-set -wg window-status-current-format " #I:#W#F " # 状态栏当前窗口名称格式(#I：序号，#w：窗口名称，#F：间隔符)
-set -wg window-status-separator "|" # 状态栏窗口名称之间的间隔
-set -wg window-status-current-style "bg=brown" # 状态栏当前窗口名称的样式
-set -wg window-status-last-style "fg=cyan" # 状态栏最后一个窗口名称的样式
 
 set -g message-style "bg=#202529, fg=#91A8BA" # 指定消息通知的前景、后景色
 set -g default-terminal "screen-256color"
@@ -64,20 +57,33 @@ if-shell 'test $PLATFORM = "Darwin"' 'source ~/.tmux-osx.conf'
 # Load configurations for Linux.
 if-shell 'test $PLATFORM = "Linux"' 'source ~/.tmux-linux.conf'
 
-# TMUX plugins
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-copycat'
-set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'tmux-plugins/tmux-open'
-set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'aserowy/tmux.nvim'
-
 # Tmux Plugin Settings
 # Setting for resurrect.
 set -g @resurrect-strategy-vim 'session' # 恢复vim会话状态
 set -g @resurrect-strategy-nvim 'session' # 恢复neovim会话状态
+# Continuum
+set -g @continuum-save-interval '15'
+set -g @continuum-restore 'on'
+set -g @resurrect-capture-pane-contents 'on'
+
+
+# Status bar customization
+# 状态栏位置
+set -g status-position bottom
+# 左侧：session 名称
+set -g status-interval 1 # 状态栏刷新时间
+set -g status-bg black
+set -g status-fg yellow
+set -g status-left-length 90
+set -g status-right-length 60
+set -g status-justify left
+set -g status-left "#[fg=Green]#(whoami)::#[fg=blue]#(hostname -s) "
+set -g status-right "♻ #(~/.tmux/plugins/tmux-continuum/scripts/continuum_status.sh) | #[fg=cyan]#S #[default]| %H:%M"
+set -wg window-status-format "#I:#W" # 状态栏窗口名称格式
+set -wg window-status-current-format " #I:#W#F " # 状态栏当前窗口名称格式(#I：序号，#w：窗口名称，#F：间隔符)
+set -wg window-status-separator "|" # 状态栏窗口名称之间的间隔
+set -wg window-status-current-style "bg=brown" # 状态栏当前窗口名称的样式
+set -wg window-status-last-style "fg=cyan" # 状态栏最后一个窗口名称的样式
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
