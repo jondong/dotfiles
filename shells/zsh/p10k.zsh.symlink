@@ -44,7 +44,8 @@ typeset -g POWERLEVEL9K_TIME_FORMAT='%D{%H:%M}'
 typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION='%F{blue}#%f'
 
 # Performance settings
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+# Disable instant prompt to avoid gitstatus initialization issues
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
 # Minimal visual style for better compatibility

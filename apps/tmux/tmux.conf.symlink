@@ -62,8 +62,8 @@ if-shell 'test $PLATFORM = "Linux"' 'source ~/.tmux-linux.conf'
 set -g @resurrect-strategy-vim 'session' # 恢复vim会话状态
 set -g @resurrect-strategy-nvim 'session' # 恢复neovim会话状态
 # Continuum
-set -g @continuum-save-interval '15'
-set -g @continuum-restore 'on'
+#set -g @continuum-save-interval '15'
+#set -g @continuum-restore 'on'
 set -g @resurrect-capture-pane-contents 'on'
 
 
