@@ -11,11 +11,10 @@ if [[ "$PLATFORM" != "Darwin" ]]; then
 fi
 
 # Add Homebrew paths if available
+# Note: PATH manipulation is now handled by mac/path.zsh to ensure correct ordering
 if command -v brew >/dev/null 2>&1; then
-    # Clean up brew paths if needed
     HOMEBREW_PREFIX=$(brew --prefix)
-    prepend_path_if_exists "$HOMEBREW_PREFIX/bin"
-    prepend_path_if_exists "$HOMEBREW_PREFIX/sbin"
+    export HOMEBREW_PREFIX
 fi
 
 # MacOS-specific Android SDK paths

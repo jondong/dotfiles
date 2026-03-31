@@ -9,17 +9,17 @@ fi
 
 # Setup MacOS-specific paths
 setup_macos_paths() {
-    # Add Homebrew ARM64 path first (for Apple Silicon Macs)
-    prepend_path_if_exists "/opt/homebrew/bin"
-    prepend_path_if_exists "/opt/homebrew/sbin"
-
-    # Homebrew paths (if brew is installed)
+    # Homebrew paths for additional binaries (openssl, llvm, etc.)
+    # Note: Main /opt/homebrew/bin/sbin are added at the end of zshrc to ensure correct PATH ordering
     if command -v brew >/dev/null 2>&1; then
         local brew_prefix=$(brew --prefix)
-        prepend_path_if_exists "$brew_prefix/bin"
-        prepend_path_if_exists "$brew_prefix/sbin"
-        prepend_path_if_exists "$brew_prefix/opt/openssl@3/bin"
-        prepend_path_if_exists "$brew_prefix/opt/llvm/bin"
+        # Add optional Homebrew paths that aren't in the main prefix
+        if [[ -d "$brew_prefix/opt/openssl@3/bin" ]]; then
+            export PATH="$brew_prefix/opt/openssl@3/bin:$PATH"
+        fi
+        if [[ -d "$brew_prefix/opt/llvm/bin" ]]; then
+            export PATH="$brew_prefix/opt/llvm/bin:$PATH"
+        fi
     fi
 
     # MacOS Applications paths
