@@ -33,6 +33,9 @@ setup_macos_paths() {
     # Common MacOS development tools
     append_path_if_exists "/usr/local/bin"
     append_path_if_exists "/usr/local/sbin"
+
+    # Antigravity paths
+    prepend_path_if_exists "$HOME/.antigravity/antigravity/bin"
 }
 
 # Run MacOS-specific path setup
