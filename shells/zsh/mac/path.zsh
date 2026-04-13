@@ -9,17 +9,21 @@ fi
 
 # Setup MacOS-specific paths
 setup_macos_paths() {
-    # 先添加主 Homebrew 路径，这样后续 command -v brew 才能工作
-    # 注意：zshrc 末尾还会有逻辑确保这些路径在最前面并去重
-    [[ -d /opt/homebrew/bin ]] && export PATH="/opt/homebrew/bin:$PATH"
-    [[ -d /opt/homebrew/sbin ]] && export PATH="/opt/homebrew/sbin:$PATH"
-    [[ -d /usr/local/bin ]] && export PATH="/usr/local/bin:$PATH"
-    [[ -d /usr/local/sbin ]] && export PATH="/usr/local/sbin:$PATH"
+    # Homebrew paths (Apple Silicon: /opt/homebrew, Intel: /usr/local)
+    # Must be added early, before other PATH manipulations
+    # NOTE: Can't use `command -v brew` here because /opt/homebrew/bin may not be in PATH yet.
+    # Check for the brew binary directly at known locations instead.
+    local brew_prefix=""
+    if [[ -f /opt/homebrew/bin/brew ]]; then
+        brew_prefix="/opt/homebrew"
+    elif [[ -f /usr/local/bin/brew ]]; then
+        brew_prefix="/usr/local"
+    fi
 
-    # Homebrew paths for additional binaries (openssl, llvm, etc.)
-    if command -v brew >/dev/null 2>&1; then
-        local brew_prefix=$(brew --prefix)
-        # Add optional Homebrew paths that aren't in the main prefix
+    if [[ -n "$brew_prefix" ]]; then
+        prepend_path_if_exists "$brew_prefix/bin"
+        prepend_path_if_exists "$brew_prefix/sbin"
+        # Add optional Homebrew paths for specific formulae
         if [[ -d "$brew_prefix/opt/openssl@3/bin" ]]; then
             export PATH="$brew_prefix/opt/openssl@3/bin:$PATH"
         fi

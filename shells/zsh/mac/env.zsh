@@ -11,9 +11,13 @@ if [[ "$PLATFORM" != "Darwin" ]]; then
 fi
 
 # Add Homebrew paths if available
-# Note: PATH manipulation is now handled by mac/path.zsh to ensure correct ordering
-if command -v brew >/dev/null 2>&1; then
-    HOMEBREW_PREFIX=$(brew --prefix)
+# NOTE: Can't use `command -v brew` because /opt/homebrew/bin may not be in PATH yet.
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    HOMEBREW_PREFIX="/opt/homebrew"
+elif [[ -f /usr/local/bin/brew ]]; then
+    HOMEBREW_PREFIX="/usr/local"
+fi
+if [[ -n "$HOMEBREW_PREFIX" ]]; then
     export HOMEBREW_PREFIX
 fi
 
@@ -28,6 +32,9 @@ export PNPM_HOME="$HOME/Library/pnpm"
 # Do not source nvm.sh here - it causes slow shell startup
 # NVM_DIR is exported so tools.zsh can use it for lazy loading
 export NVM_DIR="$HOME/.nvm"
+if [[ -n "$HOMEBREW_PREFIX" ]]; then
+    [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ] && \. "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+fi
 
 # MacOS-specific aliases
 alias ipi='ipconfig getifaddr en0'
