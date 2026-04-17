@@ -9,8 +9,14 @@ fi
 
 # Setup MacOS-specific paths
 setup_macos_paths() {
+    # 先添加主 Homebrew 路径，这样后续 command -v brew 才能工作
+    # 注意：zshrc 末尾还会有逻辑确保这些路径在最前面并去重
+    [[ -d /opt/homebrew/bin ]] && export PATH="/opt/homebrew/bin:$PATH"
+    [[ -d /opt/homebrew/sbin ]] && export PATH="/opt/homebrew/sbin:$PATH"
+    [[ -d /usr/local/bin ]] && export PATH="/usr/local/bin:$PATH"
+    [[ -d /usr/local/sbin ]] && export PATH="/usr/local/sbin:$PATH"
+
     # Homebrew paths for additional binaries (openssl, llvm, etc.)
-    # Note: Main /opt/homebrew/bin/sbin are added at the end of zshrc to ensure correct PATH ordering
     if command -v brew >/dev/null 2>&1; then
         local brew_prefix=$(brew --prefix)
         # Add optional Homebrew paths that aren't in the main prefix
@@ -29,10 +35,6 @@ setup_macos_paths() {
     # MacPorts (if installed)
     append_path_if_exists "/opt/local/bin"
     append_path_if_exists "/opt/local/sbin"
-
-    # Common MacOS development tools
-    append_path_if_exists "/usr/local/bin"
-    append_path_if_exists "/usr/local/sbin"
 
     # Antigravity paths
     prepend_path_if_exists "$HOME/.antigravity/antigravity/bin"

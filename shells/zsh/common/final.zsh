@@ -8,8 +8,10 @@ if [[ -d "$HOME/.sdkman" ]]; then
     [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-# pyenv setup
-eval "$(pyenv init - zsh)"
+# pyenv setup - 仅在 pyenv 存在时才初始化
+if command -v pyenv >/dev/null 2>&1; then
+    eval "$(pyenv init - zsh)"
+fi
 
 # LM Studio
 [[ -d "$HOME/.lmstudio/bin" ]] && export PATH="$PATH:$HOME/.lmstudio/bin"

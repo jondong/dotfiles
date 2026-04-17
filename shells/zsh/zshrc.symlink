@@ -122,7 +122,6 @@ fi
 
 unsetopt null_glob
 
-
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/jondong/.lmstudio/bin"
 # End of LM Studio CLI section
@@ -138,13 +137,19 @@ export PATH=/Users/jondong/.opencode/bin:$PATH
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 #==============================================================================
 # Ensure Homebrew is at the front of PATH (fixes brew doctor warning)
 #==============================================================================
-if [[ "$PLATFORM" == "Darwin" ]] && command -v brew >/dev/null 2>&1; then
+if [[ "$PLATFORM" == "Darwin" ]]; then
     # Remove any existing /opt/homebrew or /usr/local/Homebrew paths from PATH
     PATH=$(echo "$PATH" | tr ':' '\n' | grep -v '^/opt/homebrew' | grep -v '^/usr/local/Homebrew' | tr '\n' ':')
-    # Prepend Homebrew paths at the very front
-    export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+    # Prepend Homebrew paths at the very front (不依赖 brew 命令本身，避免鸡生蛋问题)
+    [[ -d /opt/homebrew/bin ]] && export PATH="/opt/homebrew/bin:$PATH"
+    [[ -d /opt/homebrew/sbin ]] && export PATH="/opt/homebrew/sbin:$PATH"
 fi
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/jondong/.docker/completions $fpath)
+# End of Docker CLI completions

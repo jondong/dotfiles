@@ -31,3 +31,6 @@ export DOTFILES_ROOT="$HOME/.dotfiles"
 [[ -r ~/.localrc ]] && source ~/.localrc
 
 # Platform-specific path loading will be handled by the main zshrc
+
+# Added by Obsidian
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
