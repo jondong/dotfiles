@@ -49,11 +49,8 @@ setup_macos_tools() {
 
         if [[ -n "$nvm_dir" ]]; then
             export NVM_DIR="$nvm_dir"
-            # Lazy load nvm - only source when nvm command is invoked
-            lazy_load nvm "source \"$NVM_DIR/nvm.sh\""
-            # Also lazy load common nvm commands
-            lazy_load npm 'export PATH="$NVM_DIR/versions/node/$(nvm version default)/bin:$PATH"'
-            lazy_load node 'export PATH="$NVM_DIR/versions/node/$(nvm version default)/bin:$PATH"'
+            # Lazy load nvm - source nvm.sh on first invocation and auto-use default version
+            lazy_load nvm "source \"$NVM_DIR/nvm.sh\" && nvm use default >/dev/null 2>&1"
         fi
     }
 
