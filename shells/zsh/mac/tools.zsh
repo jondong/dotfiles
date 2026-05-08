@@ -36,25 +36,28 @@ setup_macos_tools() {
     # Android SDK
     setup_android_sdk
 
-    # NVM setup - Node Version Manager
+    # NVM setup - Node Version Manager (lazy loaded)
     setup_nvm() {
         # Check common NVM locations
-        local nvm_dirs=(
-            "$HOME/.nvm"
-            "/opt/homebrew/opt/nvm"
-            "/usr/local/opt/nvm"
-        )
-
-        for nvm_dir in "${nvm_dirs[@]}"; do
-            if [[ -s "$nvm_dir/nvm.sh" ]]; then
-                export NVM_DIR="$nvm_dir"
-                source "$NVM_DIR/nvm.sh"
+        local nvm_dir=""
+        for dir in "$HOME/.nvm" "/opt/homebrew/opt/nvm" "/usr/local/opt/nvm"; do
+            if [[ -s "$dir/nvm.sh" ]]; then
+                nvm_dir="$dir"
                 break
             fi
         done
+
+        if [[ -n "$nvm_dir" ]]; then
+            export NVM_DIR="$nvm_dir"
+            # Lazy load nvm - only source when nvm command is invoked
+            lazy_load nvm "source \"$NVM_DIR/nvm.sh\""
+            # Also lazy load common nvm commands
+            lazy_load npm 'export PATH="$NVM_DIR/versions/node/$(nvm version default)/bin:$PATH"'
+            lazy_load node 'export PATH="$NVM_DIR/versions/node/$(nvm version default)/bin:$PATH"'
+        fi
     }
 
-    # Initialize NVM
+    # Setup NVM (lazy loading)
     setup_nvm
 
     # Quick Look server (if available)

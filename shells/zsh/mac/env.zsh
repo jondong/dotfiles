@@ -24,11 +24,10 @@ export ANDROID_NDK=$HOME/Library/Android/sdk/ndk/current
 # MacOS-specific PNPM path
 export PNPM_HOME="$HOME/Library/pnpm"
 
-# NVM setup for MacOS via Homebrew
+# NVM setup for MacOS via Homebrew - NOW LAZY LOADED in mac/tools.zsh
+# Do not source nvm.sh here - it causes slow shell startup
+# NVM_DIR is exported so tools.zsh can use it for lazy loading
 export NVM_DIR="$HOME/.nvm"
-if command -v brew >/dev/null 2>&1; then
-    [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ] && \. "$(brew --prefix)/opt/nvm/nvm.sh"
-fi
 
 # MacOS-specific aliases
 alias ipi='ipconfig getifaddr en0'

@@ -8,9 +8,11 @@ if [[ -d "$HOME/.sdkman" ]]; then
     [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 fi
 
-# pyenv setup - 仅在 pyenv 存在时才初始化
+# pyenv setup - 仅在 pyenv 存在时才初始化，且禁用自动 rehash
+# rehash 会在安装新 python 版本时手动执行，不需要每次启动 shell 都执行
 if command -v pyenv >/dev/null 2>&1; then
-    eval "$(pyenv init - zsh)"
+    export PYENV_INIT=true
+    eval "$(pyenv init - zsh --no-rehash)"
 fi
 
 # LM Studio
