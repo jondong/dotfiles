@@ -25,11 +25,15 @@ LOG_LEVEL=${LOG_LEVEL:-$INFO}
 
 # Logging functions
 log_debug() {
-    [[ $LOG_LEVEL -le $DEBUG ]] && echo -e "${PURPLE}[DEBUG]${NC} $1" >&2
+    if [[ $LOG_LEVEL -le $DEBUG ]]; then
+        echo -e "${PURPLE}[DEBUG]${NC} $1" >&2
+    fi
 }
 
 log_info() {
-    [[ $LOG_LEVEL -le $INFO ]] && echo -e "${BLUE}[INFO]${NC} $1"
+    if [[ $LOG_LEVEL -le $INFO ]]; then
+        echo -e "${BLUE}[INFO]${NC} $1"
+    fi
 }
 
 log_success() {
@@ -37,15 +41,21 @@ log_success() {
 }
 
 log_warn() {
-    [[ $LOG_LEVEL -le $WARN ]] && echo -e "${YELLOW}[WARN]${NC} $1" >&2
+    if [[ $LOG_LEVEL -le $WARN ]]; then
+        echo -e "${YELLOW}[WARN]${NC} $1" >&2
+    fi
 }
 
 log_error() {
-    [[ $LOG_LEVEL -le $ERROR ]] && echo -e "${RED}[ERROR]${NC} $1" >&2
+    if [[ $LOG_LEVEL -le $ERROR ]]; then
+        echo -e "${RED}[ERROR]${NC} $1" >&2
+    fi
 }
 
 log_fatal() {
-    [[ $LOG_LEVEL -le $FATAL ]] && echo -e "${RED}[FATAL]${NC} $1" >&2
+    if [[ $LOG_LEVEL -le $FATAL ]]; then
+        echo -e "${RED}[FATAL]${NC} $1" >&2
+    fi
 }
 
 # Progress indicator

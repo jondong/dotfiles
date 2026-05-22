@@ -4,9 +4,9 @@
 # Provides reusable utilities across all scripts
 
 # Source common dependencies
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "$SCRIPT_DIR/logging.sh"
-source "$SCRIPT_DIR/platform-detect.sh"
+__UTILS_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$__UTILS_DIR/logging.sh"
+source "$__UTILS_DIR/platform-detect.sh"
 
 # File and directory utilities
 ensure_dir() {
@@ -92,7 +92,7 @@ version_compare() {
 
 # Configuration utilities
 get_dotfiles_root() {
-    local script_dir="$(cd "$(dirname "${BASH_SOURCE[1]}")/.." && pwd)"
+    local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
     echo "$script_dir"
 }
 

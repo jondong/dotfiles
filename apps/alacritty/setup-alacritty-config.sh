@@ -82,7 +82,7 @@ mods = "Command"
 action = "IncreaseFontSize"
 EOF
         ;;
-    linux)
+    linux|Linux)
         cat > "$CONFIG_DIR/alacritty.toml" << 'EOF'
 # Alacritty Terminal Configuration
 # Generated for platform: Linux

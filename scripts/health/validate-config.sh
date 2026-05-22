@@ -276,13 +276,13 @@ validate_single_config() {
 
     if [[ $validation_result -eq 0 ]]; then
         status_ok "$description: Valid"
-        ((PASSED_VALIDATIONS++))
+        PASSED_VALIDATIONS=$((PASSED_VALIDATIONS + 1))
     else
         status_error "$description: Invalid"
-        ((FAILED_VALIDATIONS++))
+        FAILED_VALIDATIONS=$((FAILED_VALIDATIONS + 1))
     fi
 
-    ((TOTAL_VALIDATIONS++))
+    TOTAL_VALIDATIONS=$((TOTAL_VALIDATIONS + 1))
 }
 
 validate_symlinks() {
@@ -293,10 +293,10 @@ validate_symlinks() {
 
     while IFS= read -r symlink; do
         if [[ -n "$symlink" ]]; then
-            ((total_checked++))
-            ((broken_symlinks++))
+            total_checked=$((total_checked + 1))
+            broken_symlinks=$((broken_symlinks + 1))
             status_error "Broken symlink: $symlink"
-            ((FAILED_VALIDATIONS++))
+            FAILED_VALIDATIONS=$((FAILED_VALIDATIONS + 1))
         fi
     done < <(find_broken_symlinks "$HOME" | head -10)
 
@@ -304,8 +304,8 @@ validate_symlinks() {
 
     if [[ $broken_symlinks -eq 0 ]]; then
         status_ok "No broken symlinks found"
-        ((PASSED_VALIDATIONS++))
-        ((TOTAL_VALIDATIONS++))
+        PASSED_VALIDATIONS=$((PASSED_VALIDATIONS + 1))
+        TOTAL_VALIDATIONS=$((TOTAL_VALIDATIONS + 1))
     fi
 }
 
@@ -316,8 +316,8 @@ validate_dotfiles_integrity() {
 
     if ! is_git_repo "$dotfiles_root"; then
         status_error "Dotfiles is not a git repository"
-        ((FAILED_VALIDATIONS++))
-        ((TOTAL_VALIDATIONS++))
+        FAILED_VALIDATIONS=$((FAILED_VALIDATIONS + 1))
+        TOTAL_VALIDATIONS=$((TOTAL_VALIDATIONS + 1))
         return
     fi
 
@@ -327,12 +327,12 @@ validate_dotfiles_integrity() {
 
     if [[ $uncommitted_files -eq 0 ]]; then
         status_ok "No uncommitted changes"
-        ((PASSED_VALIDATIONS++))
+        PASSED_VALIDATIONS=$((PASSED_VALIDATIONS + 1))
     else
         status_warn "$uncommitted_files uncommitted files"
-        ((FAILED_VALIDATIONS++))
+        FAILED_VALIDATIONS=$((FAILED_VALIDATIONS + 1))
     fi
-    ((TOTAL_VALIDATIONS++))
+    TOTAL_VALIDATIONS=$((TOTAL_VALIDATIONS + 1))
 
     # Check for common issues
     local issues_found=0
@@ -340,13 +340,13 @@ validate_dotfiles_integrity() {
     # Check for large files
     if find "$dotfiles_root" -type f -size +10M 2>/dev/null | grep -q .; then
         status_warn "Found files larger than 10MB in dotfiles"
-        ((issues_found++))
+        issues_found=$((issues_found + 1))
     fi
 
     # Check for binary files
     if find "$dotfiles_root" -type f -name "*.exe" -o -name "*.dll" -o -name "*.so" 2>/dev/null | grep -q .; then
         status_warn "Found binary files in dotfiles"
-        ((issues_found++))
+        issues_found=$((issues_found + 1))
     fi
 
     # Check for sensitive files
@@ -354,18 +354,18 @@ validate_dotfiles_integrity() {
     for pattern in "${sensitive_patterns[@]}"; do
         if find "$dotfiles_root" -name "*$pattern*" 2>/dev/null | grep -q .; then
             status_warn "Found potential sensitive files: $pattern"
-            ((issues_found++))
+            issues_found=$((issues_found + 1))
         fi
     done
 
     if [[ $issues_found -eq 0 ]]; then
         status_ok "No repository integrity issues found"
-        ((PASSED_VALIDATIONS++))
+        PASSED_VALIDATIONS=$((PASSED_VALIDATIONS + 1))
     else
         status_error "Found $issues_found repository integrity issues"
-        ((FAILED_VALIDATIONS++))
+        FAILED_VALIDATIONS=$((FAILED_VALIDATIONS + 1))
     fi
-    ((TOTAL_VALIDATIONS++))
+    TOTAL_VALIDATIONS=$((TOTAL_VALIDATIONS + 1))
 }
 
 validate_platform_configs() {
@@ -387,11 +387,11 @@ validate_platform_configs() {
             for config in "${macos_configs[@]}"; do
                 if [[ -f "$config" ]]; then
                     status_ok "macOS config exists: $(basename "$config")"
-                    ((PASSED_VALIDATIONS++))
+                    PASSED_VALIDATIONS=$((PASSED_VALIDATIONS + 1))
                 else
                     log_debug "macOS config not found: $(basename "$config")"
                 fi
-                ((TOTAL_VALIDATIONS++))
+                TOTAL_VALIDATIONS=$((TOTAL_VALIDATIONS + 1))
             done
             ;;
         "linux")
@@ -405,11 +405,11 @@ validate_platform_configs() {
             for config in "${linux_configs[@]}"; do
                 if [[ -f "$config" ]]; then
                     status_ok "Linux config exists: $(basename "$config")"
-                    ((PASSED_VALIDATIONS++))
+                    PASSED_VALIDATIONS=$((PASSED_VALIDATIONS + 1))
                 else
                     log_debug "Linux config not found: $(basename "$config")"
                 fi
-                ((TOTAL_VALIDATIONS++))
+                TOTAL_VALIDATIONS=$((TOTAL_VALIDATIONS + 1))
             done
             ;;
     esac

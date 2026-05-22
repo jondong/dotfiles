@@ -11,6 +11,7 @@ source "$SCRIPT_DIR/common/utils.sh"
 
 # Configuration
 readonly DOTFILES_ROOT=$(get_dotfiles_root)
+
 readonly BACKUP_DIR="$HOME/.dotfiles-backups"
 readonly LOCK_FILE="$HOME/.dotfiles-manager.lock"
 
@@ -70,7 +71,7 @@ install_dotfiles() {
     local processed_files=0
 
     while IFS= read -r -d '' symlink_file; do
-        ((total_files++))
+        total_files=$((total_files + 1))
         local basename_file=$(basename "$symlink_file")
         local target_name
 
@@ -116,7 +117,7 @@ install_dotfiles() {
         else
             if safe_symlink "$source_path" "$target_path" "$BACKUP_DIR"; then
                 status_ok "Installed: $target_name"
-                ((processed_files++))
+                processed_files=$((processed_files + 1))
             else
                 status_error "Failed to install: $target_name"
             fi
@@ -195,7 +196,7 @@ backup_configurations() {
             local backup_file="$current_backup_dir/$relative_path"
             ensure_dir "$(dirname "$backup_file")"
             cp "$file" "$backup_file"
-            ((backed_up_files++))
+            backed_up_files=$((backed_up_files + 1))
             log_debug "Backed up: $relative_path"
         fi
     done < <(find "$HOME" -maxdepth 3 -type f -print0 2>/dev/null)
@@ -205,7 +206,7 @@ backup_configurations() {
     for config in "${critical_configs[@]}"; do
         if [[ -f "$HOME/$config" ]]; then
             cp "$HOME/$config" "$current_backup_dir/"
-            ((backed_up_files++))
+            backed_up_files=$((backed_up_files + 1))
         fi
     done
 
@@ -266,7 +267,7 @@ restore_configurations() {
 
             ensure_dir "$(dirname "$target_path")"
             cp "$file" "$target_path"
-            ((restored_files++))
+            restored_files=$((restored_files + 1))
             log_info "Restored: $relative_path"
         done < <(find "$backup_dir" -type f ! -name "backup_info.txt" -print0)
 
@@ -295,16 +296,16 @@ show_status() {
 
     while IFS= read -r -d '' file; do
         if [[ -L "$file" ]]; then
-            ((total_symlinks++))
+            total_symlinks=$((total_symlinks + 1))
             if is_dotfile_managed "$file"; then
-                ((managed_symlinks++))
+                managed_symlinks=$((managed_symlinks + 1))
             fi
         fi
     done < <(find "$HOME" -maxdepth 3 -type l -print0 2>/dev/null)
 
     while IFS= read -r symlink; do
         if [[ -n "$symlink" ]]; then
-            ((broken_symlinks++))
+            broken_symlinks=$((broken_symlinks + 1))
         fi
     done < <(find_broken_symlinks "$HOME" | head -20)
 
@@ -315,7 +316,7 @@ show_status() {
 
     # Backup status
     echo -e "\n${WHITE}Backup Status:${NC}"
-    local backup_count=$(ls -1 "$BACKUP_DIR" 2>/dev/null | grep '^backup_' | wc -l || echo "0")
+    local backup_count=$(ls -1 "$BACKUP_DIR" 2>/dev/null | grep '^backup_' | wc -l | tr -d ' ')
     echo "  Available backups: $backup_count"
     if [[ $backup_count -gt 0 ]]; then
         local latest_backup=$(ls -1t "$BACKUP_DIR"/backup_* 2>/dev/null | head -1)
@@ -336,14 +337,14 @@ run_doctor() {
     # Check repository integrity
     if ! is_git_repo "$DOTFILES_ROOT"; then
         status_error "Not a git repository"
-        ((issues_found++))
+        issues_found=$((issues_found + 1))
     fi
 
     # Check for broken symlinks
     local broken_count=$(find_broken_symlinks "$HOME" | wc -l)
     if [[ $broken_count -gt 0 ]]; then
         status_error "Found $broken_count broken symlinks"
-        ((issues_found++))
+        issues_found=$((issues_found + 1))
     fi
 
     # Check for uncommitted changes
@@ -352,7 +353,7 @@ run_doctor() {
         local uncommitted=$(git status --porcelain 2>/dev/null | wc -l)
         if [[ $uncommitted -gt 0 ]]; then
             status_warn "$uncommitted uncommitted changes"
-            ((issues_found++))
+            issues_found=$((issues_found + 1))
         fi
     fi
 
@@ -360,7 +361,7 @@ run_doctor() {
     if [[ -x "$SCRIPT_DIR/health/validate-config.sh" ]]; then
         if ! "$SCRIPT_DIR/health/validate-config.sh" >/dev/null 2>&1; then
             status_warn "Some configuration files have issues"
-            ((issues_found++))
+            issues_found=$((issues_found + 1))
         fi
     fi
 
@@ -393,7 +394,7 @@ clean_backups() {
         while IFS= read -r backup; do
             if [[ -n "$backup" && -d "$backup" ]]; then
                 rm -rf "$backup"
-                ((removed_count++))
+                removed_count=$((removed_count + 1))
                 log_info "Removed: $(basename "$backup")"
             fi
         done <<< "$backups_to_remove"

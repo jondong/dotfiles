@@ -25,8 +25,8 @@ check_symlinks() {
     # Check for broken symlinks in home directory
     while IFS= read -r symlink; do
         if [[ -n "$symlink" ]]; then
-            ((total_symlinks++))
-            ((broken_symlinks++))
+            total_symlinks=$((total_symlinks + 1))
+            broken_symlinks=$((broken_symlinks + 1))
             status_error "Broken symlink: $symlink"
         fi
     done < <(find_broken_symlinks "$HOME" | head -20)  # Limit to first 20
@@ -37,29 +37,29 @@ check_symlinks() {
 
     while IFS= read -r -d '' file; do
         if [[ -L "$file" ]]; then
-            ((dotfile_symlinks++))
+            dotfile_symlinks=$((dotfile_symlinks + 1))
             if is_dotfile_managed "$file"; then
-                ((managed_symlinks++))
+                managed_symlinks=$((managed_symlinks + 1))
             fi
         fi
     done < <(find "$HOME" -maxdepth 2 -type l -print0 2>/dev/null)
 
     if [[ $broken_symlinks -eq 0 ]]; then
         status_ok "No broken symlinks found"
-        ((PASSED_CHECKS++))
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
     else
         status_error "Found $broken_symlinks broken symlinks"
-        ((ERROR_CHECKS++))
+        ERROR_CHECKS=$((ERROR_CHECKS + 1))
     fi
 
     if [[ $dotfile_symlinks -gt 0 ]]; then
         local percentage=$((managed_symlinks * 100 / dotfile_symlinks))
         if [[ $percentage -gt 80 ]]; then
             status_ok "$managed_symlinks/$dotfile_symlinks symlinks managed by dotfiles ($percentage%)"
-            ((PASSED_CHECKS++))
+            PASSED_CHECKS=$((PASSED_CHECKS + 1))
         else
             status_warn "Only $managed_symlinks/$dotfile_symlinks symlinks managed ($percentage%)"
-            ((WARNING_CHECKS++))
+            WARNING_CHECKS=$((WARNING_CHECKS + 1))
         fi
     fi
 
@@ -75,29 +75,31 @@ check_shell_environment() {
 
     for config in "${shell_configs[@]}"; do
         if [[ -f "$config" ]]; then
-            if bash -n "$config" 2>/dev/null; then
+            local shell_type="bash"
+            [[ "$config" == *"zsh"* ]] && shell_type="zsh"
+            if $shell_type -n "$config" 2>/dev/null; then
                 status_ok "Shell config syntax OK: $(basename "$config")"
-                ((configs_ok++))
+                configs_ok=$((configs_ok + 1))
             else
                 status_error "Shell config syntax error: $(basename "$config")"
-                ((ERROR_CHECKS++))
+                ERROR_CHECKS=$((ERROR_CHECKS + 1))
             fi
         else
             status_warn "Missing shell config: $(basename "$config")"
-            ((WARNING_CHECKS++))
+            WARNING_CHECKS=$((WARNING_CHECKS + 1))
         fi
-        ((TOTAL_CHECKS++))
+        TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
     done
 
     # Check if shell loads without errors
     if timeout 10s zsh -i -c 'echo "Shell test OK"' >/dev/null 2>&1; then
         status_ok "Interactive shell loads without errors"
-        ((PASSED_CHECKS++))
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
     else
         status_error "Interactive shell has errors"
-        ((ERROR_CHECKS++))
+        ERROR_CHECKS=$((ERROR_CHECKS + 1))
     fi
-    ((TOTAL_CHECKS++))
+    TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
 }
 
 check_tools_installation() {
@@ -113,13 +115,13 @@ check_tools_installation() {
         if command_exists "$tool"; then
             local version=$($tool --version 2>/dev/null | head -1 || echo "version unknown")
             status_ok "$tool: $version"
-            ((PASSED_CHECKS++))
+            PASSED_CHECKS=$((PASSED_CHECKS + 1))
         else
             status_error "Missing essential tool: $tool"
-            ((essential_missing++))
-            ((ERROR_CHECKS++))
+            essential_missing=$((essential_missing + 1))
+            ERROR_CHECKS=$((ERROR_CHECKS + 1))
         fi
-        ((TOTAL_CHECKS++))
+        TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
     done
 
     # Check optional tools
@@ -127,12 +129,12 @@ check_tools_installation() {
         if command_exists "$tool"; then
             local version=$($tool --version 2>/dev/null | head -1 || echo "version unknown")
             status_ok "$tool: $version"
-            ((PASSED_CHECKS++))
+            PASSED_CHECKS=$((PASSED_CHECKS + 1))
         else
             status_warn "Optional tool not installed: $tool"
-            ((WARNING_CHECKS++))
+            WARNING_CHECKS=$((WARNING_CHECKS + 1))
         fi
-        ((TOTAL_CHECKS++))
+        TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
     done
 
     # Summary for essential tools
@@ -163,29 +165,29 @@ check_config_files() {
                 # Validate TOML files
                 if timeout 5s alacritty --config-file "$config_file" --help >/dev/null 2>&1; then
                     status_ok "$description: Valid configuration"
-                    ((PASSED_CHECKS++))
+                    PASSED_CHECKS=$((PASSED_CHECKS + 1))
                 else
                     status_error "$description: Invalid configuration"
-                    ((ERROR_CHECKS++))
+                    ERROR_CHECKS=$((ERROR_CHECKS + 1))
                 fi
             elif [[ "$config_file" == *.json ]] && command_exists jq; then
                 # Validate JSON files
                 if jq . "$config_file" >/dev/null 2>&1; then
                     status_ok "$description: Valid JSON"
-                    ((PASSED_CHECKS++))
+                    PASSED_CHECKS=$((PASSED_CHECKS + 1))
                 else
                     status_error "$description: Invalid JSON"
-                    ((ERROR_CHECKS++))
+                    ERROR_CHECKS=$((ERROR_CHECKS + 1))
                 fi
             else
                 status_ok "$description: File exists"
-                ((PASSED_CHECKS++))
+                PASSED_CHECKS=$((PASSED_CHECKS + 1))
             fi
         else
             status_warn "$description: Not found"
-            ((WARNING_CHECKS++))
+            WARNING_CHECKS=$((WARNING_CHECKS + 1))
         fi
-        ((TOTAL_CHECKS++))
+        TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
     done
 }
 
@@ -196,45 +198,45 @@ check_performance() {
     local disk_usage=$(df "$HOME" | awk 'NR==2 {print $5}' | sed 's/%//')
     if [[ $disk_usage -lt 80 ]]; then
         status_ok "Disk usage: ${disk_usage}%"
-        ((PASSED_CHECKS++))
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
     elif [[ $disk_usage -lt 90 ]]; then
         status_warn "Disk usage: ${disk_usage}% (getting high)"
-        ((WARNING_CHECKS++))
+        WARNING_CHECKS=$((WARNING_CHECKS + 1))
     else
         status_error "Disk usage: ${disk_usage}% (critical)"
-        ((ERROR_CHECKS++))
+        ERROR_CHECKS=$((ERROR_CHECKS + 1))
     fi
-    ((TOTAL_CHECKS++))
+    TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
 
     # Check memory usage (Linux only)
     if [[ $(detect_platform) == "linux" ]] && [[ -f /proc/meminfo ]]; then
         local mem_usage=$(free | awk 'NR==2{printf "%.0f", $3*100/$2}')
         if [[ $mem_usage -lt 80 ]]; then
             status_ok "Memory usage: ${mem_usage}%"
-            ((PASSED_CHECKS++))
+            PASSED_CHECKS=$((PASSED_CHECKS + 1))
         elif [[ $mem_usage -lt 90 ]]; then
             status_warn "Memory usage: ${mem_usage}% (getting high)"
-            ((WARNING_CHECKS++))
+            WARNING_CHECKS=$((WARNING_CHECKS + 1))
         else
             status_error "Memory usage: ${mem_usage}% (critical)"
-            ((ERROR_CHECKS++))
+            ERROR_CHECKS=$((ERROR_CHECKS + 1))
         fi
-        ((TOTAL_CHECKS++))
+        TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
     fi
 
     # Check shell startup time
     local startup_time=$(time_command zsh -i -c 'exit' 2>/dev/null)
     if (( $(echo "$startup_time < 2.0" | bc -l) )); then
         status_ok "Shell startup time: ${startup_time}s"
-        ((PASSED_CHECKS++))
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
     elif (( $(echo "$startup_time < 5.0" | bc -l) )); then
         status_warn "Shell startup time: ${startup_time}s (slow)"
-        ((WARNING_CHECKS++))
+        WARNING_CHECKS=$((WARNING_CHECKS + 1))
     else
         status_error "Shell startup time: ${startup_time}s (very slow)"
-        ((ERROR_CHECKS++))
+        ERROR_CHECKS=$((ERROR_CHECKS + 1))
     fi
-    ((TOTAL_CHECKS++))
+    TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
 }
 
 check_network() {
@@ -243,22 +245,22 @@ check_network() {
     # Check internet connectivity
     if is_online; then
         status_ok "Internet connectivity: OK"
-        ((PASSED_CHECKS++))
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
     else
         status_warn "Internet connectivity: Limited or offline"
-        ((WARNING_CHECKS++))
+        WARNING_CHECKS=$((WARNING_CHECKS + 1))
     fi
-    ((TOTAL_CHECKS++))
+    TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
 
     # Check GitHub connectivity (for dotfiles updates)
     if curl -s --connect-timeout 5 https://github.com > /dev/null; then
         status_ok "GitHub connectivity: OK"
-        ((PASSED_CHECKS++))
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
     else
         status_warn "GitHub connectivity: Limited"
-        ((WARNING_CHECKS++))
+        WARNING_CHECKS=$((WARNING_CHECKS + 1))
     fi
-    ((TOTAL_CHECKS++))
+    TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
 }
 
 check_dotfiles_repo() {
@@ -268,16 +270,16 @@ check_dotfiles_repo() {
 
     if is_git_repo "$dotfiles_root"; then
         status_ok "Dotfiles is a git repository"
-        ((PASSED_CHECKS++))
+        PASSED_CHECKS=$((PASSED_CHECKS + 1))
 
         # Check git status
         local status_output=$(git_repo_status "$dotfiles_root")
         if [[ "$status_output" == *"Modified: 0"* ]] && [[ "$status_output" == *"Ahead: 0"* ]]; then
             status_ok "Repository is clean and up to date"
-            ((PASSED_CHECKS++))
+            PASSED_CHECKS=$((PASSED_CHECKS + 1))
         else
             status_warn "Repository has uncommitted changes or is not up to date"
-            ((WARNING_CHECKS++))
+            WARNING_CHECKS=$((WARNING_CHECKS + 1))
         fi
 
         # Check for recent activity
@@ -285,7 +287,7 @@ check_dotfiles_repo() {
         status_info "Last commit: $last_commit"
     else
         status_error "Dotfiles is not a git repository"
-        ((ERROR_CHECKS++))
+        ERROR_CHECKS=$((ERROR_CHECKS + 1))
     fi
 
     ((TOTAL_CHECKS += 2))
@@ -297,21 +299,31 @@ check_security() {
     # Check file permissions
     local ssh_dir="$HOME/.ssh"
     if [[ -d "$ssh_dir" ]]; then
-        local ssh_perms=$(stat -f "%A" "$ssh_dir" 2>/dev/null || stat -c "%a" "$ssh_dir" 2>/dev/null)
+        local ssh_perms
+        if [[ "$(uname)" == "Darwin" ]]; then
+            ssh_perms=$(stat -f "%A" "$ssh_dir" 2>/dev/null)
+        else
+            ssh_perms=$(stat -c "%a" "$ssh_dir" 2>/dev/null)
+        fi
         if [[ "$ssh_perms" == "700" ]]; then
             status_ok "SSH directory permissions: $ssh_perms"
-            ((PASSED_CHECKS++))
+            PASSED_CHECKS=$((PASSED_CHECKS + 1))
         else
             status_warn "SSH directory permissions: $ssh_perms (should be 700)"
-            ((WARNING_CHECKS++))
+            WARNING_CHECKS=$((WARNING_CHECKS + 1))
         fi
-        ((TOTAL_CHECKS++))
+        TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
 
         # Check SSH key permissions
-        find "$ssh_dir" -name "id_*" -type f ! -perm 600 | while read -r key; do
-            status_error "SSH key has incorrect permissions: $(basename "$key")"
-            ((ERROR_CHECKS++))
-            ((TOTAL_CHECKS++))
+        find "$ssh_dir" -name "id_*" -type f ! -name "*.pub" ! -perm 600 | while read -r key; do
+            status_error "SSH private key has incorrect permissions: $(basename "$key") (should be 600)"
+            ERROR_CHECKS=$((ERROR_CHECKS + 1))
+            TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
+        done
+        find "$ssh_dir" -name "id_*.pub" -type f ! -perm 644 | while read -r key; do
+            status_warn "SSH public key has incorrect permissions: $(basename "$key") (should be 644)"
+            WARNING_CHECKS=$((WARNING_CHECKS + 1))
+            TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
         done
     fi
 
@@ -321,12 +333,12 @@ check_security() {
         if [[ -f "$config" ]]; then
             if grep -qi "api_key\|secret\|password\|token" "$config" 2>/dev/null; then
                 status_warn "Potential secrets found in: $(basename "$config")"
-                ((WARNING_CHECKS++))
+                WARNING_CHECKS=$((WARNING_CHECKS + 1))
             else
                 status_ok "No obvious secrets in: $(basename "$config")"
-                ((PASSED_CHECKS++))
+                PASSED_CHECKS=$((PASSED_CHECKS + 1))
             fi
-            ((TOTAL_CHECKS++))
+            TOTAL_CHECKS=$((TOTAL_CHECKS + 1))
         fi
     done
 }

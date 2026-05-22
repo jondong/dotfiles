@@ -45,7 +45,7 @@ set -g monitor-activity on
 # 保持当前路径
 bind c new-window -c "#{pane_current_path}"
 bind % split-window -h -c "#{pane_current_path}"
-bind '"' split-window -c "#{pane_current_path}"'"'
+bind '"' split-window -c "#{pane_current_path}"
 
 # 复制模式
 setw -g mode-keys vi # 开启vi风格后，支持vi的C-d、C-u、hjkl等快捷键

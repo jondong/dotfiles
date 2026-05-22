@@ -145,7 +145,7 @@ select_development_environment() {
     for env in "${!ENVIRONMENTS[@]}"; do
         echo "$index) ${ENVIRONMENTS[$env]}"
         env_list+=("$env")
-        ((index++))
+        index=$((index + 1))
     done
 
     echo

@@ -1,1 +1,1 @@
-0 7 * * * /home/jonathan/.local/bin/gitup > /home/jonathan/logs/gitup.log
+0 7 * * * /home/jondong/.local/bin/gitup > /home/jondong/logs/gitup.log
