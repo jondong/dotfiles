@@ -17,7 +17,6 @@ readonly CACHE_FILE="$LOGS_DIR/symlink_cache"
 AUTO_MODE=false
 VERBOSE=false
 WITH_PACKAGES=false
-ENVIRONMENT=""
 SKIP_HEALTH=false
 SKIP_UPDATE=false
 
@@ -37,7 +36,6 @@ show_help() {
 
 安装组件:
     --with-packages         运行平台包安装脚本 (platforms/*/install.sh)
-    --env ENV               应用开发环境模板 (web/backend/mobile/data-science/devops)
 
 高级选项:
     --skip-health           跳过安装后健康检查
@@ -46,7 +44,6 @@ show_help() {
 示例:
     bootstrap.sh --auto
     bootstrap.sh --with-packages --auto
-    bootstrap.sh --env web --with-packages --auto
 EOF
 }
 
@@ -100,13 +97,10 @@ check_prerequisites() {
 # Platform detection
 #==============================================================================
 detect_platform() {
-    local platform_name
-    platform_name=$(uname)
-    case "${platform_name:0:6}" in
+    case "$(uname)" in
         Darwin) echo "Darwin" ;;
         Linux)  echo "Linux" ;;
-        CYGWIN) echo "Cygwin" ;;
-        *)      log_error "不支持的平台: $platform_name"; exit 1 ;;
+        *)      log_error "不支持的平台: $(uname)"; exit 1 ;;
     esac
 }
 
@@ -208,9 +202,6 @@ install_dotfiles() {
             Linux)
                 find -H "$DOTFILES_ROOT" -maxdepth 3 \( -name "*.symlink" -o -name "*.linuxsymlink" \) > "$CACHE_FILE"
                 ;;
-            Cygwin)
-                find -H "$DOTFILES_ROOT" -maxdepth 3 \( -name "*.symlink" -o -name "*.winsymlink" \) > "$CACHE_FILE"
-                ;;
         esac
         log_success "文件扫描完成，结果已缓存"
     else
@@ -240,7 +231,6 @@ install_dotfiles() {
 setup_zsh() {
     log_info "配置 Zsh..."
 
-    # Install zsh if not present
     if ! command -v zsh >/dev/null 2>&1; then
         log_info "安装 Zsh..."
         local platform
@@ -248,11 +238,9 @@ setup_zsh() {
         case "$platform" in
             Darwin) brew install zsh ;;
             Linux)  sudo apt update && sudo apt install -y zsh ;;
-            Cygwin) pact install zsh ;;
         esac
     fi
 
-    # Change default shell to zsh
     if [[ "$SHELL" != *"zsh" ]]; then
         log_info "设置默认 shell 为 Zsh..."
         if [[ "$AUTO_MODE" == "true" ]]; then
@@ -260,9 +248,7 @@ setup_zsh() {
         else
             read -p "是否将 Zsh 设为默认 shell? [Y/n] " -n 1 -r
             echo
-            if [[ $REPLY =~ ^[Nn]$ ]]; then
-                log_info "跳过设置默认 shell"
-            else
+            if [[ ! $REPLY =~ ^[Nn]$ ]]; then
                 chsh -s "$(command -v zsh)"
             fi
         fi
@@ -277,7 +263,6 @@ setup_zsh() {
 setup_tmux() {
     log_info "配置 Tmux..."
 
-    # Install tmux if not present
     if ! command -v tmux >/dev/null 2>&1; then
         log_info "安装 Tmux..."
         local platform
@@ -285,11 +270,9 @@ setup_tmux() {
         case "$platform" in
             Darwin) brew install tmux ;;
             Linux)  sudo apt install -y tmux ;;
-            Cygwin) pact install tmux ;;
         esac
     fi
 
-    # Install Tmux Plugin Manager
     if [[ ! -d "$TMUX_PLUGIN_DIR" ]]; then
         mkdir -p "$TMUX_PLUGIN_DIR"
         retry_command "git clone https://github.com/tmux-plugins/tpm '$TMUX_PLUGIN_DIR'"
@@ -301,32 +284,14 @@ setup_tmux() {
 }
 
 #==============================================================================
-# Banner and system info
+# Banner
 #==============================================================================
 show_banner() {
     echo ""
     echo -e "\033[1;37m╔══════════════════════════════════════════════════════════════╗\033[0m"
     echo -e "\033[1;37m║                    Dotfiles Installer                       ║\033[0m"
-    echo -e "\033[1;37m║              Cross-Platform Setup Tool                      ║\033[0m"
     echo -e "\033[1;37m╚══════════════════════════════════════════════════════════════╝\033[0m"
     echo ""
-}
-
-show_system_info() {
-    if [[ -f "$DOTFILES_ROOT/scripts/common/utils.sh" ]]; then
-        source "$DOTFILES_ROOT/scripts/common/utils.sh"
-        
-        echo -e "\033[1;37m=== 系统信息 ===\033[0m"
-        log_info "平台: $(detect_platform)"
-        
-        if [[ "$(detect_platform)" == "linux" ]]; then
-            log_info "发行版: $(detect_linux_distro)"
-        fi
-        
-        log_info "Shell: $(detect_shell)"
-        log_info "包管理器: $(detect_package_manager)"
-        echo ""
-    fi
 }
 
 #==============================================================================
@@ -340,10 +305,6 @@ install_packages() {
     case "$platform" in
         Darwin) install_script="$DOTFILES_ROOT/platforms/mac/install.sh" ;;
         Linux)  install_script="$DOTFILES_ROOT/platforms/linux/install.sh" ;;
-        Cygwin)
-            log_warn "Cygwin 平台暂无包安装脚本"
-            return 0
-            ;;
     esac
 
     if [[ ! -f "$install_script" ]]; then
@@ -361,34 +322,18 @@ install_packages() {
 }
 
 #==============================================================================
-# Environment template (optional)
-#==============================================================================
-apply_environment_template() {
-    local env="$1"
-    local template_script="$DOTFILES_ROOT/templates/template-manager.sh"
-
-    if [[ ! -f "$template_script" ]]; then
-        log_warn "未找到模板管理器: $template_script"
-        return 0
-    fi
-
-    log_info "应用开发环境模板: $env"
-    bash "$template_script" apply "$env"
-}
-
-#==============================================================================
 # Health check
 #==============================================================================
 run_health_check() {
-    local health_script="$DOTFILES_ROOT/scripts/health/health-check.sh"
+    local doctor="$DOTFILES_ROOT/scripts/doctor.sh"
 
-    if [[ ! -f "$health_script" ]]; then
-        log_warn "未找到健康检查脚本: $health_script"
+    if [[ ! -f "$doctor" ]]; then
+        log_warn "未找到 doctor 脚本: $doctor"
         return 0
     fi
 
     log_info "运行系统健康检查..."
-    bash "$health_script" | tail -20
+    bash "$doctor" --auto
 }
 
 #==============================================================================
@@ -402,8 +347,7 @@ show_summary() {
     echo ""
     echo "下一步:"
     echo "  1. 重启终端或运行: source ~/.zshrc"
-    echo "  2. 运行健康检查: $DOTFILES_ROOT/scripts/health/health-check.sh"
-    echo "  3. 查看状态: $DOTFILES_ROOT/scripts/dotfile-manager.sh status"
+    echo "  2. 运行健康检查: $DOTFILES_ROOT/scripts/doctor.sh"
     echo ""
 }
 
@@ -411,7 +355,6 @@ show_summary() {
 # Main
 #==============================================================================
 main() {
-    # Parse arguments
     while [[ $# -gt 0 ]]; do
         case "$1" in
             -h|--help)
@@ -430,14 +373,6 @@ main() {
                 WITH_PACKAGES=true
                 shift
                 ;;
-            --env)
-                if [[ -z "${2:-}" ]]; then
-                    log_error "--env 需要指定环境名称"
-                    exit 1
-                fi
-                ENVIRONMENT="$2"
-                shift 2
-                ;;
             --skip-health)
                 SKIP_HEALTH=true
                 shift
@@ -454,10 +389,8 @@ main() {
         esac
     done
 
-    # Show banner
     show_banner
 
-    # Phase 1: Self-contained stage
     log_info "Phase 1: 前置检查..."
     check_prerequisites
 
@@ -481,28 +414,16 @@ main() {
     log_info "Phase 1: 配置 Tmux..."
     setup_tmux
 
-    # Phase 2: Enhancement stage
-    log_info "Phase 2: 加载增强功能..."
-    show_system_info
-
-    # Phase 3: Optional components
     if [[ "$WITH_PACKAGES" == "true" ]]; then
-        log_info "Phase 3: 安装系统包..."
+        log_info "Phase 2: 安装系统包..."
         install_packages
     fi
 
-    if [[ -n "$ENVIRONMENT" ]]; then
-        log_info "Phase 3: 应用环境模板..."
-        apply_environment_template "$ENVIRONMENT"
-    fi
-
-    # Phase 4: Validation
     if [[ "$SKIP_HEALTH" != "true" ]]; then
-        log_info "Phase 4: 健康检查..."
+        log_info "Phase 3: 健康检查..."
         run_health_check
     fi
 
-    # Summary
     show_summary
 }
 

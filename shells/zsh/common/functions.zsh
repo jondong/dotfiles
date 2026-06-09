@@ -18,7 +18,6 @@ setup_platform() {
 	local platform_name
 	platform_name="$(uname)"
 	case "${platform_name}" in
-		CYGWIN*)  export PLATFORM="Cygwin" ;;
 		Darwin*)  export PLATFORM="Darwin" ;;
 		Linux*)   export PLATFORM="Linux"  ;;
 		*)        export PLATFORM="${platform_name:0:6}" ;;

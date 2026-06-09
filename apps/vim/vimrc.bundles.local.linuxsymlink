@@ -1,5 +1,0 @@
-if filereadable(expand("~/.dotfiles/apps/vim/vimrc.bundles.common"))
-  source ~/.dotfiles/apps/vim/vimrc.bundles.common
-endif
-
-Plugin 'vim-scripts/a.vim'

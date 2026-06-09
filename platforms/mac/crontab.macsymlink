@@ -1,1 +1,0 @@
-0 7 * * * /opt/homebrew/bin/gitup > /Users/jondong/logs/gitup.log

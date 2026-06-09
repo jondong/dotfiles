@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-git status -s --untracked-files=normal | cut -d ' ' -f 2 | xargs rm -rf
