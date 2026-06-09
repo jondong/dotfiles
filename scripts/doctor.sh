@@ -39,6 +39,14 @@ check_symlinks() {
     local broken=0
     local total=0
 
+    local platform
+    platform=$(uname)
+    local -a patterns
+    case "$platform" in
+        Darwin) patterns=(-name "*.symlink" -o -name "*.macsymlink") ;;
+        *)      patterns=(-name "*.symlink" -o -name "*.linuxsymlink") ;;
+    esac
+
     while IFS= read -r src; do
         [[ -z "$src" ]] && continue
         local name
@@ -59,7 +67,7 @@ check_symlinks() {
         else
             ok ".$name"
         fi
-    done < <(find "$DOTFILES_ROOT" -maxdepth 3 \( -name "*.symlink" -o -name "*.macsymlink" -o -name "*.linuxsymlink" \) 2>/dev/null)
+    done < <(find "$DOTFILES_ROOT" -maxdepth 3 \( "${patterns[@]}" \) 2>/dev/null)
 
     echo "  $((total - broken))/$total symlinks valid"
 

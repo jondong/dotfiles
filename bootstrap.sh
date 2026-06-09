@@ -284,6 +284,25 @@ setup_tmux() {
 }
 
 #==============================================================================
+# Ghostty setup (XDG path, can't use .symlink convention)
+#==============================================================================
+setup_ghostty() {
+    local src="$DOTFILES_ROOT/apps/ghostty/config"
+    local dst="$HOME/.config/ghostty/config"
+
+    [[ ! -f "$src" ]] && return 0
+
+    mkdir -p "$(dirname "$dst")"
+
+    if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
+        log_success "ghostty 配置已链接"
+    else
+        ln -sf "$src" "$dst"
+        log_success "已创建链接: $dst -> $src"
+    fi
+}
+
+#==============================================================================
 # Banner
 #==============================================================================
 show_banner() {
@@ -413,6 +432,9 @@ main() {
 
     log_info "Phase 1: 配置 Tmux..."
     setup_tmux
+
+    log_info "Phase 1: 配置 Ghostty..."
+    setup_ghostty
 
     if [[ "$WITH_PACKAGES" == "true" ]]; then
         log_info "Phase 2: 安装系统包..."
