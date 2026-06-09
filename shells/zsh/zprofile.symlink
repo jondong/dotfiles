@@ -2,37 +2,20 @@
 # Zsh Profile - Platform Detection and Initial Setup
 #==============================================================================
 
-# Platform detection function
-setup_platform() {
-	# 如果 PLATFORM 已经设置，则跳过
-	[[ -n "${PLATFORM:-}" ]] && return
+if [[ -z "${PLATFORM:-}" ]]; then
+    case "$(uname)" in
+        CYGWIN*)  export PLATFORM="Cygwin" ;;
+        Darwin*)  export PLATFORM="Darwin" ;;
+        Linux*)   export PLATFORM="Linux"  ;;
+        *)        export PLATFORM="$(uname | cut -c1-6)" ;;
+    esac
+fi
 
-	# 获取平台名称并规范化
-	local platform_name
-	platform_name="$(uname)"
-	case "${platform_name}" in
-		CYGWIN*)  export PLATFORM="Cygwin" ;;
-		Darwin*)  export PLATFORM="Darwin" ;;
-		Linux*)   export PLATFORM="Linux"  ;;
-		*)        export PLATFORM="${platform_name:0:6}" ;;
-	esac
-}
-
-# Setup platform detection immediately
-setup_platform
-
-# Set basic environment variables that should be available early
 export DOTFILES_ROOT="$HOME/.dotfiles"
 
-# Load proxy settings early (before any network operations)
 [[ -f ~/.proxyrc ]] && source ~/.proxyrc
-
-# Set local path 
 [[ -r ~/.localrc ]] && source ~/.localrc
 
-# Platform-specific path loading will be handled by the main zshrc
-
-# Added by Obsidian (macOS only)
 if [[ "$PLATFORM" == "Darwin" ]]; then
     export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
 fi

@@ -1,144 +1,43 @@
-# OPENSPEC:START
-# OpenSpec shell completions configuration
-fpath=("$HOME/.zsh/completions" $fpath)
-autoload -Uz compinit
-compinit
-# OPENSPEC:END
-
-# OpenClaw Completion
-if [[ -r "$HOME/.openclaw/completions/openclaw.zsh" ]]; then
-  source "$HOME/.openclaw/completions/openclaw.zsh"
-fi
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-#==============================================================================
-# 新的 Zsh 配置加载器 - New Zsh Configuration Loader
-#==============================================================================
+if [[ -z "${PLATFORM:-}" ]]; then
+    case "$(uname)" in
+        CYGWIN*)  export PLATFORM="Cygwin" ;;
+        Darwin*)  export PLATFORM="Darwin" ;;
+        Linux*)   export PLATFORM="Linux"  ;;
+        *)        export PLATFORM="$(uname | cut -c1-6)" ;;
+    esac
+fi
 
-# Enable profiling (uncomment to debug startup time)
-# zmodload zsh/zprof
-
-# Get the directory where the configuration files are located
-# When sourced from ~/.zshrc, we need to get the real directory of the symlink
 if [[ -L "$HOME/.zshrc" ]]; then
     ZSH_CONFIG_DIR="${HOME}/.dotfiles/shells/zsh"
 else
-    # Fallback for when it's run directly
     ZSH_CONFIG_DIR="${0:A:h}"
 fi
 
-#==============================================================================
-# 阶段 1: 加载基础配置 - Load base configurations
-#==============================================================================
 source "$ZSH_CONFIG_DIR/common/base.zsh"
-
-#==============================================================================
-# 阶段 2: 加载函数定义 - Load function definitions
-#==============================================================================
 source "$ZSH_CONFIG_DIR/common/functions.zsh"
-
-#==============================================================================
-# 阶段 3: 设置 PATH 和基本环境 - Setup PATH and basic environment
-#==============================================================================
 source "$ZSH_CONFIG_DIR/common/paths.zsh"
 
-#==============================================================================
-# 阶段 4: 平台检测和特定配置 - Platform detection and specific configs
-#==============================================================================
-
-# Load platform-specific environment
 if [[ "$PLATFORM" == "Darwin" ]]; then
-    # MacOS-specific configurations
     source "$ZSH_CONFIG_DIR/mac/env.zsh"
     source "$ZSH_CONFIG_DIR/mac/path.zsh"
     source "$ZSH_CONFIG_DIR/mac/tools.zsh"
+    [[ -f "$DOTFILES_ROOT/platforms/mac/aliases.zsh" ]] && source "$DOTFILES_ROOT/platforms/mac/aliases.zsh"
 elif [[ "$PLATFORM" == "Linux" ]]; then
-    # Linux-specific configurations
     source "$ZSH_CONFIG_DIR/linux/env.zsh"
     source "$ZSH_CONFIG_DIR/linux/path.zsh"
     source "$ZSH_CONFIG_DIR/linux/tools.zsh"
+    [[ -f "$DOTFILES_ROOT/platforms/linux/aliases.zsh" ]] && source "$DOTFILES_ROOT/platforms/linux/aliases.zsh"
 elif [[ "$PLATFORM" == "Cygwin" ]]; then
-    # Windows/Cygwin-specific configurations (if needed)
     echo "Cygwin platform detected - platform-specific configs not yet implemented"
 fi
 
-#==============================================================================
-# 阶段 5: 加载通用工具配置 - Load common tool configurations
-#==============================================================================
 source "$ZSH_CONFIG_DIR/common/aliases.zsh"
 source "$ZSH_CONFIG_DIR/common/fzf.zsh"
 source "$ZSH_CONFIG_DIR/common/lazyload.zsh"
+source "$ZSH_CONFIG_DIR/common/dev-tools.zsh"
 
-#==============================================================================
-# 阶段 6: 最终配置和清理 - Final configuration and cleanup
-#==============================================================================
 source "$ZSH_CONFIG_DIR/common/final.zsh"
-
-#==============================================================================
-# 插件和补全配置 - 优化版本
-#==============================================================================
-
-# Optimized file loading - only load essential files
-setopt null_glob
-
-# Cache file list to avoid repeated globbing
-local zsh_cache_file="${XDG_CACHE_HOME:-$HOME/.cache}/zsh_file_cache.zsh"
-local cache_valid=false
-
-if [[ -f "$zsh_cache_file" && -n "$zsh_cache_file"(#qN.mh-24) ]]; then
-    # Cache is less than 24 hours old
-    source "$zsh_cache_file"
-    cache_valid=true
-else
-    # Rebuild cache
-    mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}"
-    
-    local shells_zsh=($DOTFILES_ROOT/shells/zsh/**/*.zsh(N))
-    local platform_zsh=()
-    
-    case $PLATFORM in
-        Darwin) platform_zsh=($DOTFILES_ROOT/platforms/mac/**/*.zsh(N)) ;;
-        Linux) platform_zsh=($DOTFILES_ROOT/platforms/linux/**/*.zsh(N)) ;;
-        Cygwin) platform_zsh=($DOTFILES_ROOT/platforms/win/**/*.zsh(N)) ;;
-    esac
-    
-    typeset -U config_files
-    config_files=(${shells_zsh[@]} ${platform_zsh[@]})
-    
-    # Generate cache file
-    print "# Zsh configuration cache - generated on $(date)" > "$zsh_cache_file"
-    for file in ${config_files:#*/path.zsh}; do
-        print "source $file" >> "$zsh_cache_file"
-    done
-    
-    source "$zsh_cache_file"
-fi
-
-unsetopt null_glob
-
-# Added by LM Studio CLI (lms)
-[[ -d "$HOME/.lmstudio/bin" ]] && export PATH="$PATH:$HOME/.lmstudio/bin"
-# End of LM Studio CLI section
-
-#export PATH=$PATH:$HOME/bin/depot_tools
-
-# opencode
-[[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-
-# The following lines have been added by Docker Desktop to enable Docker CLI completions.
-fpath=($HOME/.docker/completions $fpath)
-# End of Docker CLI completions

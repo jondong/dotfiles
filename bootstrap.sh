@@ -1,35 +1,29 @@
 #!/usr/bin/env bash
 
-set -euo pipefail  # 启用严格模式
+set -euo pipefail
 
-# 常量定义
 readonly DOTFILES_ROOT="$HOME/.dotfiles"
 readonly LOGS_DIR="$HOME/logs"
-readonly VIM_CONFIG_DIR="$HOME/.spf13-vim-3"
 readonly TMUX_PLUGIN_DIR="$HOME/.tmux/plugins/tpm"
 readonly CACHE_FILE="$LOGS_DIR/symlink_cache"
 
-# 帮助文档
 show_help() {
     cat << EOF
 用法: $(basename "$0") [选项]
 
 选项:
     -h, --help      显示帮助信息
-    --with-vim      包含 vim 配置（默认跳过）
     --with-tmux     包含 tmux 配置（默认跳过）
     --auto          自动模式，跳过交互式确认
     --parallel      启用并行下载优化
 EOF
 }
 
-# 日志函数
 log_info() { printf "  [ \033[00;34m..\033[0m ] %s" "$1"; }
 log_user() { printf "\r  [ \033[0;33m?\033[0m ] %s " "$1"; }
 log_success() { printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"; }
 log_error() { printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "$1"; echo ''; }
 
-# 重试机制函数
 retry_command() {
     local cmd="$1" retries=3 timeout=30
     for ((i=1; i<=retries; i++)); do
@@ -46,7 +40,6 @@ retry_command() {
     return 1
 }
 
-# 检查必要条件
 check_prerequisites() {
     local missing_tools=()
     
@@ -60,7 +53,6 @@ check_prerequisites() {
     fi
 }
 
-# 检测系统平台
 detect_platform() {
     local platform_name
     platform_name=$(uname)
@@ -72,13 +64,12 @@ detect_platform() {
     esac
 }
 
-# 安装必要的包
 install_prerequisites() {
     local platform=$1
     case "$platform" in
-        Darwin) brew install git vim ;;
-        Linux)  sudo apt update && sudo apt install -y git vim ;;
-        Cygwin) pact install git vim ;;
+        Darwin) brew install git ;;
+        Linux)  sudo apt update && sudo apt install -y git ;;
+        Cygwin) pact install git ;;
     esac
 }
 
@@ -87,15 +78,12 @@ link_file() {
     local overwrite='' backup='' skip=''
     local action=''
 
-    # 如果目标已存在
     if [[ -f "$dst" || -d "$dst" || -L "$dst" ]]; then
-        # 如果已经是正确的软链接，跳过
         if [[ "$(readlink "$dst")" == "$src" ]]; then
             log_success "已存在正确的链接: $dst"
             return
         fi
 
-        # 自动模式直接跳过
         if [[ "$auto_mode" == "true" ]]; then
             log_success "自动模式: 跳过已存在文件 $dst"
             return
@@ -138,23 +126,10 @@ link_file() {
         fi
     fi
 
-    # 创建软链接
     ln -sf "$src" "$dst"
     log_success "已创建链接: $src -> $dst"
 }
 
-setup_vim() {
-    if [[ ! -d "$VIM_CONFIG_DIR" ]]; then
-        log_info "安装 vim 配置...\n"
-        retry_command "curl -fsSL https://j.mp/spf13-vim3 | sh"
-    else
-        log_info "更新 vim 配置...\n"
-        retry_command "curl -fsSL https://j.mp/spf13-vim3 -o - | sh"
-    fi
-    log_success "Vim 配置完成"
-}
-
-# 安装 Tmux 配置
 setup_tmux() {
     if [[ ! -d "$TMUX_PLUGIN_DIR" ]]; then
         mkdir -p "$TMUX_PLUGIN_DIR"
@@ -179,12 +154,10 @@ install_dotfiles() {
     local files_to_link
     files_to_link=""
 
-    # 使用缓存或重新扫描文件
     if [[ ! -f "$CACHE_FILE" || "$DOTFILES_ROOT" -nt "$CACHE_FILE" ]]; then
         log_info "扫描 symlink 文件...\n"
         mkdir -p "$(dirname "$CACHE_FILE")"
         
-        # 根据平台选择要链接的文件
         case "$platform" in
             Darwin)
                 find -H "$DOTFILES_ROOT" -maxdepth 3 \( -name "*.symlink" -o -name "*.macsymlink" \) > "$CACHE_FILE"
@@ -203,31 +176,25 @@ install_dotfiles() {
 
     files_to_link=$(cat "$CACHE_FILE")
 
-    # 如果没有找到文件，提前返回
     if [[ -z "$files_to_link" ]]; then
         log_info "没有找到需要链接的文件\n"
         return
     fi
 
-    # 处理每个找到的文件
     while IFS= read -r src; do
         [[ -z "$src" ]] && continue
-        # 移除扩展名作为目标文件名
         local dst
         dst="$HOME/.$(basename "${src%.*}")"
         link_file "$src" "$dst"
     done <<< "$files_to_link"
 }
 
-# 主函数
 main() {
-    local platform skip_vim=true skip_tmux=true auto_mode=false parallel_mode=false
+    local platform skip_tmux=true auto_mode=false parallel_mode=false
 
-    # 参数解析
     while [[ $# -gt 0 ]]; do
         case "$1" in
             -h|--help) show_help; exit 0 ;;
-            --with-vim) skip_vim=false ;;
             --with-tmux) skip_tmux=false ;;
             --auto) auto_mode=true ;;
             --parallel) parallel_mode=true ;;
@@ -236,47 +203,24 @@ main() {
         shift
     done
 
-    # 检查必要条件
     check_prerequisites
 
     platform=$(detect_platform)
     install_prerequisites "$platform"
 
-    # 创建日志目录
     mkdir -p "$LOGS_DIR"
 
-    # 安装/更新 dotfiles
     if [[ ! -d "$DOTFILES_ROOT" ]]; then
         log_info "首次安装 dotfiles...\n"
         retry_command "git clone https://github.com/jondong/dotfiles.git '$DOTFILES_ROOT'"
     else
         log_info "更新 dotfiles...\n"
-        retry_command "cd '$DOTFILES_ROOT' && git stash && git pull --rebase origin master && (git stash pop || true)"
+        retry_command "cd '$DOTFILES_ROOT' && git pull --autostash --rebase origin master"
     fi
     install_dotfiles "$platform"
 
-    # 配置 Vim 和 Tmux
-    if [[ "$parallel_mode" == "true" && ("$skip_vim" == "false" || "$skip_tmux" == "false") ]]; then
-        log_info "并行模式: 同时安装 vim 和 tmux 配置...\n"
-        
-        # 并行执行
-        {
-            if [[ "$skip_vim" == "false" ]]; then
-                setup_vim &
-            fi
-            if [[ "$skip_tmux" == "false" ]]; then
-                setup_tmux &
-            fi
-            wait
-        }
-    else
-        # 串行执行
-        if [[ "$skip_vim" == "false" ]]; then
-            setup_vim
-        fi
-        if [[ "$skip_tmux" == "false" ]]; then
-            setup_tmux
-        fi
+    if [[ "$skip_tmux" == "false" ]]; then
+        setup_tmux
     fi
 
     log_success "配置完成!"
