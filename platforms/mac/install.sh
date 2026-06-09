@@ -3,7 +3,24 @@
 # macOS 软件安装脚本
 #==============================================================================
 
-set -e # 遇到错误立即退出
+set -e
+
+#==============================================================================
+# Argument parsing
+#==============================================================================
+AUTO_MODE=false
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --auto)
+            AUTO_MODE=true
+            shift
+            ;;
+        *)
+            shift
+            ;;
+    esac
+done
 
 #==============================================================================
 # 工具函数
@@ -20,24 +37,23 @@ log_success() {
     echo -e "\033[0;32m[OK] $1\033[0m"
 }
 
-# 检查命令是否存在
+log_error() {
+    echo -e "\033[0;31m[ERROR] $1\033[0m"
+}
+
 check_command() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# 检查 Homebrew 包是否已安装
 check_brew_package() {
     brew list "$1" >/dev/null 2>&1
 }
 
-# 检查 Homebrew Cask 包是否已安装
 check_brew_cask() {
     brew list --cask "$1" >/dev/null 2>&1
 }
 
-# 获取所有已安装的包（包括 cask）
 get_installed_packages() {
-    # 获取所有已安装的包（包括 cask）
     local installed_formulae
     local installed_casks
     installed_formulae=$(brew list --formula)
@@ -46,18 +62,8 @@ get_installed_packages() {
 }
 
 #==============================================================================
-# Homebrew 更新
-#==============================================================================
-update_homebrew() {
-    log_info "更新 Homebrew..."
-    brew update
-    brew upgrade
-}
-
-#==============================================================================
 # 包配置
 #==============================================================================
-# 确保 bash 版本至少为 4.0
 if ((BASH_VERSINFO[0] < 4)); then
     echo "需要 bash 4.0 或更高版本"
     echo "当前 bash 版本: $BASH_VERSION"
@@ -66,10 +72,8 @@ if ((BASH_VERSINFO[0] < 4)); then
     exit 1
 fi
 
-# 显式声明关联数组
 declare -A PACKAGES
 
-# 初始化关联数组
 PACKAGES=(
     ["Basic"]="bash zsh reattach-to-user-namespace antigen findutils"
     ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas fd fzf ack prettyping mosh ncdu gdu tlrc rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
@@ -86,23 +90,19 @@ PACKAGES=(
 install_packages() {
     local category="$1"
     local -a packages
-    # 使用 read -ra 更安全地将字符串拆分为数组
     IFS=' ' read -ra packages <<<"$2"
     local install_cmd="brew install"
 
     log_info "检查${category}..."
 
-    # 检查是否为 cask 包类别
     if [[ "${category}" == "CaskTools" ]]; then
         install_cmd="${install_cmd} --cask"
     fi
 
-    # 获取所有已安装的包
     local installed_packages
     installed_packages=$(get_installed_packages)
     local missing_packages=()
 
-    # 检查哪些包需要安装
     for package in "${packages[@]}"; do
         if ! echo "$installed_packages" | grep -q "\b${package}\b"; then
             missing_packages+=("$package")
@@ -111,7 +111,6 @@ install_packages() {
         fi
     done
 
-    # 批量安装缺失的包
     if [ ${#missing_packages[@]} -gt 0 ]; then
         log_warn "安装缺失的包: ${missing_packages[*]}"
         if ! $install_cmd "${missing_packages[@]}"; then
@@ -146,13 +145,11 @@ setup_alacritty() {
 
     log_info "配置 Alacritty..."
 
-    # 检查配置目录是否存在
     if [ ! -d "$config_dir" ]; then
         log_info "创建 Alacritty 配置目录..."
         mkdir -p "$config_dir"
     fi
 
-    # 检查主题目录是否存在
     if [ ! -d "$theme_dir" ]; then
         log_info "克隆 Alacritty 主题..."
         git clone "$theme_repo" "$theme_dir"
@@ -168,16 +165,20 @@ setup_alacritty() {
 # 主函数
 #==============================================================================
 main() {
-    # 检查 Homebrew
     if ! check_command brew; then
         log_error "Homebrew 未安装，请先安装 Homebrew"
         exit 1
     fi
 
-    # 更新 Homebrew
-    log_info "更新 Homebrew..."
-    brew update
-    brew upgrade
+    # Update Homebrew (skip in auto mode for speed)
+    if [[ "$AUTO_MODE" == "true" ]]; then
+        log_info "Auto mode: 仅更新 Homebrew 索引..."
+        brew update
+    else
+        log_info "更新 Homebrew..."
+        brew update
+        brew upgrade
+    fi
 
     # 安装所有包
     for category in "${!PACKAGES[@]}"; do
@@ -196,5 +197,4 @@ main() {
     log_success "所有工具检查和安装完成！"
 }
 
-# 执行主函数
 main

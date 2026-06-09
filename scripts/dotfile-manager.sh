@@ -23,7 +23,6 @@ Dotfiles Configuration Manager
 Usage: dotfile-manager <command> [options]
 
 Commands:
-    install     Install dotfiles to system
     update      Update existing configurations
     sync        Sync configurations across systems
     backup      Backup current configurations
@@ -42,7 +41,6 @@ Options:
     --dry-run           Show what would be done without executing
 
 Examples:
-    dotfile-manager install --verbose
     dotfile-manager update --force
     dotfile-manager backup --yes
     dotfile-manager status
@@ -462,7 +460,7 @@ main() {
                 dry_run=true
                 shift
                 ;;
-            install|update|sync|backup|restore|status|doctor|health|validate|clean)
+            update|sync|backup|restore|status|doctor|health|validate|clean)
                 command="$1"
                 shift
                 ;;
@@ -476,16 +474,13 @@ main() {
 
     # Acquire lock for operations that modify state
     case "$command" in
-        install|update|backup|restore|clean)
+        update|backup|restore|clean)
             acquire_lock
             ;;
     esac
 
     # Execute command
     case "$command" in
-        install)
-            install_dotfiles "$force" "$dry_run"
-            ;;
         update)
             update_dotfiles "$force" "$dry_run"
             ;;
