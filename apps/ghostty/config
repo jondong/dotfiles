@@ -52,4 +52,6 @@ theme = Bright Lights
 #font-family = Fira Code
 #font-family = Hack Nerd Font Mono
 font-family = SourceCodePro Nerd Font
-font-size = 15
+font-size = 13
+
+command = tmux new-session -A -s main
