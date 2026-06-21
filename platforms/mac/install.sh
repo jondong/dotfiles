@@ -12,13 +12,13 @@ AUTO_MODE=false
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
-        --auto)
-            AUTO_MODE=true
-            shift
-            ;;
-        *)
-            shift
-            ;;
+    --auto)
+        AUTO_MODE=true
+        shift
+        ;;
+    *)
+        shift
+        ;;
     esac
 done
 
@@ -78,10 +78,10 @@ PACKAGES=(
     ["Basic"]="bash zsh reattach-to-user-namespace antigen findutils"
     ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas fd fzf ack prettyping mosh ncdu gdu tlrc rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
     ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
-    ["DevTools"]="python3 uv poetry pipx jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller xcode-build-server xcbeautify swiftformat gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite lazydocker lazygit docker-compose direnv rbenv ruby-build"
+    ["DevTools"]="python3 uv poetry pipx jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller xcode-build-server xcbeautify swiftformat gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite docker lazydocker lazygit docker-compose direnv rbenv ruby-build"
     ["QuickLookPlugins"]="provisionql qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
     ["CLI"]="1password-cli"
-    ["CaskTools"]="squirrel moom dash eudic alacritty muzzle the-unarchiver visual-studio-code docker android-studio lm-studio anythingllm"
+    ["CaskTools"]="squirrel moom dash eudic alacritty muzzle the-unarchiver visual-studio-code android-studio jordanbaird-ice"
 )
 
 #==============================================================================
