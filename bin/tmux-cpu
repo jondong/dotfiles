@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Cross-platform tmux status helper: 1-minute load average, colored by severity.
+
+set -euo pipefail
+
+load=''
+cores=1
+
+case "$(uname -s)" in
+  Darwin)
+    # vm.loadavg returns "{ 0.42 0.50 0.60 }"
+    load=$(sysctl -n vm.loadavg | tr -d '{}' | awk '{print $1}')
+    cores=$(sysctl -n hw.ncpu)
+    ;;
+  Linux)
+    load=$(awk '{print $1}' /proc/loadavg)
+    cores=$(nproc 2>/dev/null || grep -c '^processor' /proc/cpuinfo)
+    ;;
+  *)
+    # Unknown system: don't try to parse localized uptime output.
+    load=""
+    ;;
+esac
+
+# If we couldn't determine load, show a placeholder instead of failing silently.
+if [ -z "$load" ]; then
+  echo "#[fg=colour240]--"
+  exit 0
+fi
+
+# Normalize load against core count for a consistent threshold.
+ratio=$(awk -v load="$load" -v cores="$cores" 'BEGIN { printf "%.2f", load / cores }')
+
+# Choose color based on normalized load.
+if awk "BEGIN { exit !($ratio >= 1.5) }"; then
+  color="colour196"
+elif awk "BEGIN { exit !($ratio >= 0.7) }"; then
+  color="colour178"
+else
+  color="colour76"
+fi
+
+echo "#[fg=$color]${load}"

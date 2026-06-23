@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Cross-platform tmux status helper: current weather with local cache.
+# Uses wttr.in; cache expires after 15 minutes to avoid blocking the status bar.
+
+set -euo pipefail
+
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/tmux-status"
+CACHE_FILE="$CACHE_DIR/weather"
+DEFAULT="--"
+
+mkdir -p "$CACHE_DIR"
+
+# Determine file modification time in seconds since epoch (portable macOS/Linux).
+mtime() {
+  local file="$1"
+  if command -v stat >/dev/null 2>&1; then
+    if stat -f %m "$file" >/dev/null 2>&1; then
+      stat -f %m "$file"
+    else
+      stat -c %Y "$file"
+    fi
+  else
+    echo 0
+  fi
+}
+
+refresh_cache() {
+  local tmp
+  tmp=$(mktemp "${TMPDIR:-/tmp}/tmux-weather.XXXXXX")
+  # wttr.in can be slow; cap DNS/connect and total time to avoid blocking the status bar.
+  if curl -fsSL --connect-timeout 2 --max-time 5 'https://wttr.in/?format=%c+%t' >"$tmp" 2>/dev/null; then
+    mv "$tmp" "$CACHE_FILE"
+  else
+    rm -f "$tmp"
+  fi
+}
+
+if [ ! -f "$CACHE_FILE" ]; then
+  refresh_cache
+else
+  now=$(date +%s)
+  last=$(mtime "$CACHE_FILE")
+  if [ $((now - last)) -gt 900 ]; then
+    refresh_cache
+  fi
+fi
+
+if [ -f "$CACHE_FILE" ] && [ -s "$CACHE_FILE" ]; then
+  cat "$CACHE_FILE"
+else
+  echo "$DEFAULT"
+fi
