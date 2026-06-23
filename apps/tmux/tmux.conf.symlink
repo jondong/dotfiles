@@ -17,11 +17,11 @@ set-option -g history-limit 50000
 # 减少 Esc 键延迟（默认 500ms，太慢了）
 set -sg escape-time 10
 
-# Rename your terminals
-set -g set-titles on
-set -g set-titles-string 'tmux :: #(whoami) :: #h :: #(curl ipecho.net/plain;echo)'
-#setw -g automatic-rename off # 关闭默认重命名机制
-#setw -g allow-rename off
+# Window/tab title is managed by Ghostty (see apps/ghostty/config). Disabling
+# set-titles avoids a per-status-interval `curl ipecho.net/plain` call and the
+# verbose "tmux :: user :: host :: ip" format. Ghostty falls back to its default
+# (typically the working directory / command).
+set -g set-titles off
 
 set -g message-style "bg=#202529, fg=#91A8BA" # 指定消息通知的前景、后景色
 set -g default-terminal "screen-256color"
