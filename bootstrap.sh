@@ -284,13 +284,21 @@ setup_tmux() {
 }
 
 #==============================================================================
-# Ghostty setup (XDG path, can't use .symlink convention)
+# Ghostty setup (XDG path on Linux, Library path on macOS)
 #==============================================================================
 setup_ghostty() {
     local src="$DOTFILES_ROOT/apps/ghostty/config"
-    local dst="$HOME/.config/ghostty/config"
-
     [[ ! -f "$src" ]] && return 0
+
+    local dst=""
+    case "$(uname)" in
+        Darwin)
+            dst="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+            ;;
+        *)
+            dst="$HOME/.config/ghostty/config"
+            ;;
+    esac
 
     mkdir -p "$(dirname "$dst")"
 

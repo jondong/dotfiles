@@ -5,13 +5,15 @@
 # Fix vim empty register issue. Use an absolute path because Ghostty on macOS
 # launches commands via /usr/bin/login + bash --noprofile --norc, so PATH does
 # not include /opt/homebrew/bin and the bare binary name would not be found.
-set -g default-command '/opt/homebrew/bin/reattach-to-user-namespace -l /bin/zsh'
+# Support both Apple Silicon (/opt/homebrew) and Intel (/usr/local) Homebrew prefixes.
+if-shell 'test -x /opt/homebrew/bin/reattach-to-user-namespace' 'set -g default-command "/opt/homebrew/bin/reattach-to-user-namespace -l /bin/zsh"'
+if-shell 'test -x /usr/local/bin/reattach-to-user-namespace' 'set -g default-command "/usr/local/bin/reattach-to-user-namespace -l /bin/zsh"'
 
 # On Apple Silicon Macs, Homebrew installs tmux under /opt/homebrew/bin, but
 # tmux run-shell/status scripts use a minimal PATH that does not include it.
 # Provide a sane PATH for plugin scripts. New pane shells rebuild their own PATH
 # from the shell's rc files, so this mainly affects tmux internals.
-if-shell 'test -x /opt/homebrew/bin/tmux' 'set-environment -g PATH "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"'
+if-shell 'test -x /opt/homebrew/bin/tmux -o -x /usr/local/bin/tmux' 'set-environment -g PATH "/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"'
 
 # Update default binding of `Enter` to also use copy-pipe
 #unbind -Tcopy-mode-vi Enter

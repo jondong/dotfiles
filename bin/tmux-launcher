@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Cross-platform tmux launcher for Ghostty.
+# Ghostty starts the command with a minimal PATH, so we resolve tmux explicitly
+# rather than relying on a bare binary name or a hardcoded Homebrew prefix.
+
+resolve_tmux() {
+  case "$(uname -s)" in
+    Darwin)
+      for prefix in /opt/homebrew /usr/local; do
+        if [[ -x "$prefix/bin/tmux" ]]; then
+          echo "$prefix/bin/tmux"
+          return 0
+        fi
+      done
+      ;;
+  esac
+
+  # Fallback to PATH lookup (works on Linux and as a last resort on macOS).
+  if command -v tmux >/dev/null 2>&1; then
+    command -v tmux
+    return 0
+  fi
+
+  return 1
+}
+
+tmux_bin=$(resolve_tmux) || {
+  echo "tmux-launcher: tmux not found" >&2
+  exit 1
+}
+
+exec "$tmux_bin" "$@"

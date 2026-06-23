@@ -54,8 +54,7 @@ theme = Bright Lights
 font-family = JetBrainsMono Nerd Font
 font-size = 15
 
-# 使用绝对路径：
-# Ghostty 在 macOS 上会通过 /usr/bin/login + bash --noprofile --norc 启动命令，
-# 此时 bash 的 PATH 是 /usr/bin:/bin，不会包含 /opt/homebrew/bin（Homebrew on Apple Silicon）。
-# 直接用绝对路径避免依赖 PATH 查找。
-command = /opt/homebrew/bin/tmux new-session -A -s main
+# 使用跨平台 wrapper：
+# Ghostty 启动命令时的 PATH 很精简（macOS 上甚至不含 /opt/homebrew/bin），
+# 直接写死 /opt/homebrew/bin/tmux 会在 Linux 上找不到。通过 wrapper 动态解析 tmux 路径。
+command = /bin/sh -c 'exec "$HOME/.dotfiles/bin/tmux-launcher" new-session -A -s main'
