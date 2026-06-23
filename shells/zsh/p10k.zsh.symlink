@@ -8,11 +8,12 @@ typeset -g POWERLEVEL9K_CACHE_DIR=${XDG_CACHE_HOME:-$HOME/.cache}/p10k
 
 # Prompt segments
 typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
-  os_icon               # OS icon
-  dir                   # Current directory
-  vcs                   # Git status
+  machine_alias           # machine identity badge
+  os_icon                 # OS icon
+  dir                     # current directory
+  vcs                     # git status
   command_execution_time
-  status                # Exit code
+  status                  # exit code
 )
 
 typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(

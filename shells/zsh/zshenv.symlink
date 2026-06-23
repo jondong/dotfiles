@@ -18,6 +18,11 @@ export PROJECTS=$HOME/projects
 # Load Rust environment if available
 [[ -s "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
 
+# Machine identity must be loaded before powerlevel10k config
+if [[ -f "${DOTFILES_ROOT}/shells/zsh/common/machine-identity.zsh" ]]; then
+    source "${DOTFILES_ROOT}/shells/zsh/common/machine-identity.zsh"
+fi
+
 # Powerlevel10k configuration
 if [[ -f "${HOME}/.p10k.zsh" ]]; then
     source "${HOME}/.p10k.zsh"
