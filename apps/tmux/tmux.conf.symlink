@@ -1,12 +1,6 @@
 # TMUX plugins
 set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-resurrect'
-set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @plugin 'tmux-plugins/tmux-copycat'
-set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-open'
-set -g @plugin 'christoomey/vim-tmux-navigator'
 set -g @plugin 'aserowy/tmux.nvim'
 
 # Set a Ctrl-b shortcut for reloading your tmux config
@@ -50,22 +44,20 @@ bind '"' split-window -c "#{pane_current_path}"
 # 复制模式
 setw -g mode-keys vi # 开启vi风格后，支持vi的C-d、C-u、hjkl等快捷键
 bind -T copy-mode-vi v send-keys -X begin-selection
-bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
 
 # Load configurations for Mac.
 if-shell 'test $(uname -s) = "Darwin"' 'source ~/.tmux-osx.conf'
-# Load configurations for Linux.
-if-shell 'test $(uname -s) = "Linux"' 'source ~/.tmux-linux.conf'
 
-# Tmux Plugin Settings
-# Setting for resurrect.
-set -g @resurrect-strategy-vim 'session' # 恢复vim会话状态
-set -g @resurrect-strategy-nvim 'session' # 恢复neovim会话状态
-# Continuum
-#set -g @continuum-save-interval '15'
-#set -g @continuum-restore 'on'
-set -g @resurrect-capture-pane-contents 'on'
+# Useful defaults (inlined from tmux-sensible after removing the plugin).
+set -g focus-events on
+set -g status-keys emacs
+set -g aggressive-resize on
+set -g display-time 4000
 
+# Easier switching between next/prev window.
+bind C-p previous-window
+bind C-n next-window
 
 # Status bar customization (aligned with p10k dark minimal style)
 set -g status-position bottom
