@@ -2,8 +2,10 @@
 # https://github.com/ChrisJohnsen/tmux-MacOSX-pasteboard
 # run: `brew install reattach-to-user-namespace`
 
-# Fix vim empty register issue
-set -g default-command 'reattach-to-user-namespace -l $SHELL'
+# Fix vim empty register issue. Use an absolute path because Ghostty on macOS
+# launches commands via /usr/bin/login + bash --noprofile --norc, so PATH does
+# not include /opt/homebrew/bin and the bare binary name would not be found.
+set -g default-command '/opt/homebrew/bin/reattach-to-user-namespace -l /bin/zsh'
 
 # On Apple Silicon Macs, Homebrew installs tmux under /opt/homebrew/bin, but
 # tmux run-shell/status scripts use a minimal PATH that does not include it.

@@ -51,7 +51,7 @@
 theme = Bright Lights
 #font-family = Fira Code
 #font-family = Hack Nerd Font Mono
-font-family = SourceCodePro Nerd Font
+font-family = JetBrainsMono Nerd Font
 font-size = 15
 
 # 使用绝对路径：
