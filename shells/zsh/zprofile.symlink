@@ -20,5 +20,6 @@ if [[ "$PLATFORM" == "Darwin" ]]; then
     export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
 fi
 
-# Hermes Agent — ensure ~/.local/bin is on PATH
-export PATH="$HOME/.local/bin:$PATH"
+# User-local binaries must be available to login shells before .zshrc loads.
+typeset -U path PATH
+path=("$HOME/.local/bin" $path)

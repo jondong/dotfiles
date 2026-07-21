@@ -6,12 +6,12 @@
 
 [[ -d "$HOME/.lmstudio/bin" ]] && export PATH="$PATH:$HOME/.lmstudio/bin"
 
-[[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
+# Run the OpenCode installer with --no-modify-path; PATH is managed here.
+prepend_path_if_exists "$HOME/.opencode/bin"
 
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
 
 fpath=($HOME/.docker/completions $fpath)
 
