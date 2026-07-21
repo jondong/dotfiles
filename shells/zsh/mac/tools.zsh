@@ -66,10 +66,6 @@ setup_macos_tools() {
     if command -v pbcopy >/dev/null 2>&1 && command -v pbpaste >/dev/null 2>&1; then
         alias pbc='pbcopy'
         alias pbp='pbpaste'
-        # Add FZF copy binding if FZF is available
-        if command -v fzf >/dev/null 2>&1; then
-            export FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --bind='ctrl-y:execute-silent(echo {+} | pbcopy)'"
-        fi
     fi
 
     # Finder integration

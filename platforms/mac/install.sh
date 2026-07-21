@@ -121,18 +121,6 @@ install_packages() {
     fi
 }
 
-#==============================================================================
-# 配置函数
-#==============================================================================
-setup_fzf() {
-    if [[ ! -f ~/.fzf.zsh ]]; then
-        log_info "配置 FZF..."
-        "$(brew --prefix)/opt/fzf/install" --all
-    else
-        log_success "FZF 已配置"
-    fi
-}
-
 setup_git() {
     log_info "配置 Git..."
     diff-so-fancy --set-defaults
@@ -186,7 +174,6 @@ main() {
     done
 
     # 配置开发环境
-    setup_fzf
     setup_git
     setup_alacritty
 

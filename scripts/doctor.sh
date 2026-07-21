@@ -123,7 +123,7 @@ check_tools() {
     local platform
     platform=$(uname)
 
-    local tools=("git" "curl" "zsh" "tmux")
+    local tools=("git" "curl" "zsh" "tmux" "fzf" "fd" "bat")
     [[ "$platform" == "Darwin" || "$platform" == "Linux" ]] && tools+=("nvim")
 
     for tool in "${tools[@]}"; do
@@ -137,10 +137,7 @@ check_tools() {
 
     if [[ $missing -gt 0 ]]; then
         ISSUES=$((ISSUES + 1))
-        case "$platform" in
-            Darwin) warn "Install with: brew install ${tools[*]}" ;;
-            Linux)  warn "Install with: sudo apt install ${tools[*]}" ;;
-        esac
+        warn "Install missing tools with: $DOTFILES_ROOT/bootstrap.sh --with-packages"
     fi
 }
 

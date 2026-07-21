@@ -241,18 +241,41 @@ else
 fi
 
 #==============================================================================
-# Install fzf (non-interactive)
+# Install/update fzf without modifying shell configuration
 #==============================================================================
 
-if [[ ! -d ~/.fzf ]]; then
+fzf_dir="$HOME/.fzf"
+
+if [[ -e "$fzf_dir" && ! -d "$fzf_dir/.git" ]]; then
+    log_err "$fzf_dir exists but is not an fzf Git repository; leaving it unchanged."
+    exit 1
+elif [[ ! -d "$fzf_dir" ]]; then
     log_info "Installing fzf..."
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    git clone --depth 1 https://github.com/junegunn/fzf.git "$fzf_dir"
+else
+    log_info "Updating fzf..."
+    git -C "$fzf_dir" pull --ff-only
 fi
 
-if [[ -d ~/.fzf ]]; then
-    log_info "Running fzf installer (non-interactive)..."
-    ~/.fzf/install --all --no-bash --no-fish || log_warn "fzf install script had issues"
+log_info "Installing the fzf binary..."
+"$fzf_dir/install" --bin
+
+if [[ ! -x "$fzf_dir/bin/fzf" ]]; then
+    log_err "fzf installer did not create $fzf_dir/bin/fzf"
+    exit 1
 fi
+
+mkdir -p "$HOME/.local/bin"
+fzf_link="$HOME/.local/bin/fzf"
+if [[ (-e "$fzf_link" || -L "$fzf_link") &&
+      (! -L "$fzf_link" || "$(readlink "$fzf_link")" != "$fzf_dir/bin/fzf") ]]; then
+    log_err "$fzf_link already exists and is not managed by this installer; leaving it unchanged."
+    exit 1
+fi
+
+ln -sfn "$fzf_dir/bin/fzf" "$fzf_link"
+hash -r
+log_ok "fzf installed: $fzf_link"
 
 #==============================================================================
 # Install pyenv
