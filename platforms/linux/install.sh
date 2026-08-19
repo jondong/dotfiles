@@ -71,7 +71,7 @@ dev_packages=(
 
 install_apt_package() {
     local pkg="$1"
-    if dpkg -l "$pkg" &>/dev/null | grep -q "^ii"; then
+    if dpkg-query -W -f='${db:Status-Abbrev}' "$pkg" 2>/dev/null | grep -q '^ii'; then
         log_ok "$pkg is already installed."
         return 0
     fi
@@ -79,6 +79,38 @@ install_apt_package() {
         log_ok "Installed $pkg"
     else
         log_warn "Failed to install $pkg (may not exist in apt)"
+        return 1
+    fi
+}
+
+install_herdr() {
+    if command -v herdr &>/dev/null || [[ -x "$HOME/.local/bin/herdr" ]]; then
+        log_ok "Herdr is already installed."
+        return 0
+    fi
+
+    log_info "Installing Herdr from the official installer..."
+    local installer
+    installer=$(mktemp)
+
+    if ! curl -fsSL https://herdr.dev/install.sh -o "$installer"; then
+        rm -f "$installer"
+        log_warn "Failed to download the Herdr installer."
+        return 1
+    fi
+
+    if ! bash "$installer"; then
+        rm -f "$installer"
+        log_warn "Herdr installation failed."
+        return 1
+    fi
+    rm -f "$installer"
+    hash -r
+
+    if command -v herdr &>/dev/null || [[ -x "$HOME/.local/bin/herdr" ]]; then
+        log_ok "Herdr installed successfully."
+    else
+        log_warn "Herdr installer completed, but the binary was not found."
         return 1
     fi
 }
@@ -133,7 +165,6 @@ install_lazydocker() {
     log_info "Installing lazydocker..."
     local tmpfile
     tmpfile=$(mktemp)
-    trap "rm -f '$tmpfile'" EXIT
 
     if curl -fsSL https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh -o "$tmpfile"; then
         bash "$tmpfile"
@@ -141,6 +172,7 @@ install_lazydocker() {
     else
         log_warn "Failed to download lazydocker install script. Skipping."
     fi
+    rm -f "$tmpfile"
 }
 
 #==============================================================================
@@ -150,7 +182,7 @@ install_lazydocker() {
 if [[ "$AUTO_MODE" == "true" ]]; then
     log_info "Auto mode: skipping LibreOffice removal prompt"
 else
-    read -e -p "Remove LibreOffice? [y/N] " -n 1
+    read -e -r -p "Remove LibreOffice? [y/N] " -n 1
     echo
     remove_libreoffice=${REPLY:=n}
     remove_libreoffice=${remove_libreoffice,,}
@@ -204,6 +236,8 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
 
+install_herdr || log_warn "Herdr is unavailable; Ghostty will fall back to a login shell."
+
 #==============================================================================
 # Install snap packages
 #==============================================================================
@@ -226,6 +260,7 @@ pipx ensurepath >/dev/null 2>&1 || true
 
 log_info "Setting up Rust..."
 if [[ -f "$HOME/.cargo/env" ]]; then
+    # shellcheck disable=SC1091
     source "$HOME/.cargo/env"
 fi
 

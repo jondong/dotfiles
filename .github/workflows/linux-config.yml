@@ -1,0 +1,36 @@
+name: Linux config
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install test dependencies
+        run: sudo apt-get update && sudo apt-get install -y shellcheck zsh
+
+      - name: Check shell scripts
+        run: |
+          bash -n bootstrap.sh scripts/doctor.sh platforms/linux/install.sh \
+            bin/herdr-launcher scripts/test-linux-config.sh
+          shellcheck bootstrap.sh scripts/doctor.sh platforms/linux/install.sh \
+            bin/herdr-launcher scripts/test-linux-config.sh
+
+      - name: Test Linux paths and fallback
+        run: scripts/test-linux-config.sh
+
+      - name: Install and validate Herdr
+        run: |
+          curl -fsSL https://herdr.dev/install.sh | sh
+          HERDR_CONFIG_PATH="$GITHUB_WORKSPACE/apps/herdr/config.toml" \
+            "$HOME/.local/bin/herdr" config check
+          env -i HOME="$HOME" SHELL=/bin/bash PATH=/usr/bin:/bin \
+            "$GITHUB_WORKSPACE/bin/herdr-launcher" --version

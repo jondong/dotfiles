@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Cross-platform Herdr launcher for Ghostty.
+# Ghostty starts commands with a minimal PATH, so resolve Herdr explicitly.
+
+resolve_herdr() {
+  local candidate
+
+  for candidate in \
+    "$HOME/.local/bin/herdr" \
+    /opt/homebrew/bin/herdr \
+    /usr/local/bin/herdr; do
+    if [[ -x "$candidate" ]]; then
+      echo "$candidate"
+      return 0
+    fi
+  done
+
+  if command -v herdr >/dev/null 2>&1; then
+    command -v herdr
+    return 0
+  fi
+
+  return 1
+}
+
+if herdr_bin=$(resolve_herdr); then
+  exec "$herdr_bin" "$@"
+fi
+
+echo "herdr-launcher: Herdr not found; falling back to a login shell" >&2
+
+fallback_shell=${SHELL:-/bin/sh}
+if [[ ! -x "$fallback_shell" ]]; then
+  fallback_shell=/bin/sh
+fi
+
+exec "$fallback_shell" -l

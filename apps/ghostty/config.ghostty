@@ -1,9 +1,7 @@
 # This is the configuration file for Ghostty.
 #
-# This template file has been automatically created at the following
-# path since Ghostty couldn't find any existing config files on your system:
-#
-#   /Users/jondong/Library/Application Support/com.mitchellh.ghostty/config
+# This file is managed by ~/.dotfiles and deployed to Ghostty's
+# platform-specific configuration directory by bootstrap.sh.
 #
 # The template does not set any default options, since Ghostty ships
 # with sensible defaults for all options. Users should only need to set
@@ -55,6 +53,6 @@ font-family = JetBrainsMono Nerd Font
 font-size = 15
 
 # 使用跨平台 wrapper：
-# Ghostty 启动命令时的 PATH 很精简（macOS 上甚至不含 /opt/homebrew/bin），
-# 直接写死 /opt/homebrew/bin/tmux 会在 Linux 上找不到。通过 wrapper 动态解析 tmux 路径。
-command = /bin/sh -c 'exec "$HOME/.dotfiles/bin/tmux-launcher" new-session -A -s main'
+# Ghostty 启动命令时的 PATH 很精简，launcher 会在常见安装位置查找 Herdr；
+# 如果 Herdr 尚未安装，则显示提示并回退到登录 shell。
+command = /bin/sh -c 'exec "$HOME/.dotfiles/bin/herdr-launcher"'

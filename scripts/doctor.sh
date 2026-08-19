@@ -59,8 +59,8 @@ check_symlinks() {
                 warn "$dst exists but is not a symlink"
             else
                 fail "$dst -> $src (missing)"
-                broken=$((broken + 1))
             fi
+            broken=$((broken + 1))
         elif [[ "$(readlink "$dst")" != "$src" ]]; then
             fail "$dst points to wrong target: $(readlink "$dst")"
             broken=$((broken + 1))
@@ -68,6 +68,55 @@ check_symlinks() {
             ok ".$name"
         fi
     done < <(find "$DOTFILES_ROOT" -maxdepth 3 \( "${patterns[@]}" \) 2>/dev/null)
+
+    local ghostty_dst
+    local ghostty_legacy_dst
+    case "$platform" in
+        Darwin)
+            ghostty_dst="$HOME/Library/Application Support/com.mitchellh.ghostty/config.ghostty"
+            ghostty_legacy_dst="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+            ;;
+        *)
+            local config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+            ghostty_dst="$config_home/ghostty/config.ghostty"
+            ghostty_legacy_dst="$config_home/ghostty/config"
+            ;;
+    esac
+
+    local -a app_sources=(
+        "$DOTFILES_ROOT/apps/ghostty/config.ghostty"
+        "$DOTFILES_ROOT/apps/herdr/config.toml"
+    )
+    local -a app_targets=(
+        "$ghostty_dst"
+        "$HOME/.config/herdr/config.toml"
+    )
+    local i src dst
+
+    for ((i = 0; i < ${#app_sources[@]}; i++)); do
+        src=${app_sources[$i]}
+        dst=${app_targets[$i]}
+        [[ ! -f "$src" ]] && continue
+        total=$((total + 1))
+
+        if [[ ! -L "$dst" ]]; then
+            if [[ -e "$dst" ]]; then
+                warn "$dst exists but is not a symlink"
+            else
+                fail "$dst -> $src (missing)"
+            fi
+            broken=$((broken + 1))
+        elif [[ "$(readlink "$dst")" != "$src" ]]; then
+            fail "$dst points to wrong target: $(readlink "$dst")"
+            broken=$((broken + 1))
+        else
+            ok "${dst#"$HOME"/}"
+        fi
+    done
+
+    if [[ -e "$ghostty_legacy_dst" || -L "$ghostty_legacy_dst" ]]; then
+        warn "Legacy Ghostty config may override config.ghostty: $ghostty_legacy_dst"
+    fi
 
     echo "  $((total - broken))/$total symlinks valid"
 
@@ -95,7 +144,7 @@ check_shell_syntax() {
              "$DOTFILES_ROOT/shells/zsh/mac"/*.zsh; do
         [[ ! -f "$f" ]] && continue
         total=$((total + 1))
-        local rel="${f#$DOTFILES_ROOT/}"
+        local rel="${f#"$DOTFILES_ROOT"/}"
         if zsh -n "$f" 2>/dev/null; then
             ok "$rel"
         else
@@ -142,7 +191,48 @@ check_tools() {
 }
 
 #==============================================================================
-# 4. Zinit
+# 4. Application configs
+#==============================================================================
+check_app_configs() {
+    echo -e "\n${BLUE}== Application Configs ==${NC}"
+
+    local launcher="$DOTFILES_ROOT/bin/herdr-launcher"
+    if [[ -x "$launcher" ]]; then
+        ok "Herdr launcher is executable"
+    else
+        fail "Herdr launcher is missing or not executable: $launcher"
+        ISSUES=$((ISSUES + 1))
+    fi
+
+    if ! command -v herdr >/dev/null 2>&1; then
+        warn "herdr not installed; Ghostty will fall back to a login shell"
+        warn "Install with: curl -fsSL https://herdr.dev/install.sh | sh"
+    else
+        ok "Herdr: $(herdr --version)"
+        if herdr config check >/dev/null 2>&1; then
+            ok "Herdr config: $(herdr --help 2>&1 | sed -n 's/^Config:[[:space:]]*//p')"
+        else
+            fail "Herdr config is invalid"
+            herdr config check 2>&1 | sed 's/^/    /'
+            ISSUES=$((ISSUES + 1))
+        fi
+    fi
+
+    local ghostty_config="$DOTFILES_ROOT/apps/ghostty/config.ghostty"
+    if ! command -v ghostty >/dev/null 2>&1; then
+        warn "ghostty not installed or not in PATH"
+        warn "See: https://ghostty.org/docs/install/binary"
+    elif ghostty +validate-config --config-file="$ghostty_config" >/dev/null 2>&1; then
+        ok "Ghostty config: $ghostty_config"
+    else
+        fail "Ghostty config is invalid: $ghostty_config"
+        ghostty +validate-config --config-file="$ghostty_config" 2>&1 | sed 's/^/    /'
+        ISSUES=$((ISSUES + 1))
+    fi
+}
+
+#==============================================================================
+# 5. Zinit
 #==============================================================================
 check_zinit() {
     echo -e "\n${BLUE}== Zinit ==${NC}"
@@ -156,7 +246,7 @@ check_zinit() {
 }
 
 #==============================================================================
-# 5. Git status
+# 6. Git status
 #==============================================================================
 check_git() {
     echo -e "\n${BLUE}== Git Status ==${NC}"
@@ -193,6 +283,7 @@ main() {
     check_symlinks
     check_shell_syntax
     check_tools
+    check_app_configs
     check_zinit
     check_git
 

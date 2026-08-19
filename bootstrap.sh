@@ -287,27 +287,47 @@ setup_tmux() {
 # Ghostty setup (XDG path on Linux, Library path on macOS)
 #==============================================================================
 setup_ghostty() {
-    local src="$DOTFILES_ROOT/apps/ghostty/config"
+    local src="$DOTFILES_ROOT/apps/ghostty/config.ghostty"
     [[ ! -f "$src" ]] && return 0
 
     local dst=""
+    local legacy_dst=""
     case "$(uname)" in
         Darwin)
-            dst="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+            dst="$HOME/Library/Application Support/com.mitchellh.ghostty/config.ghostty"
+            legacy_dst="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
             ;;
-        *)
-            dst="$HOME/.config/ghostty/config"
+        Linux)
+            local config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+            dst="$config_home/ghostty/config.ghostty"
+            legacy_dst="$config_home/ghostty/config"
             ;;
     esac
 
     mkdir -p "$(dirname "$dst")"
+    link_file "$src" "$dst"
 
-    if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
-        log_success "ghostty 配置已链接"
-    else
-        ln -sf "$src" "$dst"
-        log_success "已创建链接: $dst -> $src"
+    # Ghostty loads legacy `config` after `config.ghostty`, so an old managed
+    # link could override the new configuration. Remove only the link that
+    # this repository previously managed; leave user-owned files untouched.
+    if [[ -L "$legacy_dst" && "$(readlink "$legacy_dst")" == "$DOTFILES_ROOT/apps/ghostty/config" ]]; then
+        unlink "$legacy_dst"
+        log_success "已移除旧 Ghostty 配置链接: $legacy_dst"
+    elif [[ -e "$legacy_dst" || -L "$legacy_dst" ]]; then
+        log_warn "旧 Ghostty 配置仍存在，可能覆盖 config.ghostty: $legacy_dst"
     fi
+}
+
+#==============================================================================
+# Herdr setup (XDG path on Linux and macOS)
+#==============================================================================
+setup_herdr() {
+    local src="$DOTFILES_ROOT/apps/herdr/config.toml"
+    [[ ! -f "$src" ]] && return 0
+
+    local dst="$HOME/.config/herdr/config.toml"
+    mkdir -p "$(dirname "$dst")"
+    link_file "$src" "$dst"
 }
 
 #==============================================================================
@@ -443,6 +463,9 @@ main() {
 
     log_info "Phase 1: 配置 Ghostty..."
     setup_ghostty
+
+    log_info "Phase 1: 配置 Herdr..."
+    setup_herdr
 
     if [[ "$WITH_PACKAGES" == "true" ]]; then
         log_info "Phase 2: 安装系统包..."

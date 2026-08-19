@@ -1,0 +1,7 @@
+# Managed by ~/.dotfiles. Keep only settings that differ from Herdr defaults.
+
+# Avoid first-run onboarding writing back into this tracked file.
+onboarding = false
+
+[keys]
+prefix = "ctrl+a"
