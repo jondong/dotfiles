@@ -3,6 +3,8 @@ set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-open'
 set -g @plugin 'aserowy/tmux.nvim'
 
+set -g extended-keys on
+
 # Set a Ctrl-b shortcut for reloading your tmux config
 bind r source-file ~/.tmux.conf \; display-message "Config reloaded.."
 
