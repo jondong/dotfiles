@@ -290,32 +290,41 @@ setup_ghostty() {
     local src="$DOTFILES_ROOT/apps/ghostty/config.ghostty"
     [[ ! -f "$src" ]] && return 0
 
-    local dst=""
-    local legacy_dst=""
+    local dsts=()
+    local legacy_dsts=()
+    local config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
     case "$(uname)" in
         Darwin)
-            dst="$HOME/Library/Application Support/com.mitchellh.ghostty/config.ghostty"
-            legacy_dst="$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+            dsts+=("$HOME/Library/Application Support/com.mitchellh.ghostty/config.ghostty")
+            legacy_dsts+=("$HOME/Library/Application Support/com.mitchellh.ghostty/config")
+            # Ghostty also reads the XDG path on macOS; keep it in sync and
+            # clean up the stale link older versions of this script created.
+            dsts+=("$config_home/ghostty/config.ghostty")
+            legacy_dsts+=("$config_home/ghostty/config")
             ;;
         Linux)
-            local config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
-            dst="$config_home/ghostty/config.ghostty"
-            legacy_dst="$config_home/ghostty/config"
+            dsts+=("$config_home/ghostty/config.ghostty")
+            legacy_dsts+=("$config_home/ghostty/config")
             ;;
     esac
 
-    mkdir -p "$(dirname "$dst")"
-    link_file "$src" "$dst"
+    local dst legacy_dst
+    for dst in "${dsts[@]}"; do
+        mkdir -p "$(dirname "$dst")"
+        link_file "$src" "$dst"
+    done
 
     # Ghostty loads legacy `config` after `config.ghostty`, so an old managed
-    # link could override the new configuration. Remove only the link that
+    # link could override the new configuration. Remove only the links that
     # this repository previously managed; leave user-owned files untouched.
-    if [[ -L "$legacy_dst" && "$(readlink "$legacy_dst")" == "$DOTFILES_ROOT/apps/ghostty/config" ]]; then
-        unlink "$legacy_dst"
-        log_success "已移除旧 Ghostty 配置链接: $legacy_dst"
-    elif [[ -e "$legacy_dst" || -L "$legacy_dst" ]]; then
-        log_warn "旧 Ghostty 配置仍存在，可能覆盖 config.ghostty: $legacy_dst"
-    fi
+    for legacy_dst in "${legacy_dsts[@]}"; do
+        if [[ -L "$legacy_dst" && "$(readlink "$legacy_dst")" == "$DOTFILES_ROOT/apps/ghostty/config" ]]; then
+            unlink "$legacy_dst"
+            log_success "已移除旧 Ghostty 配置链接: $legacy_dst"
+        elif [[ -e "$legacy_dst" || -L "$legacy_dst" ]]; then
+            log_warn "旧 Ghostty 配置仍存在，可能覆盖 config.ghostty: $legacy_dst"
+        fi
+    done
 }
 
 #==============================================================================
