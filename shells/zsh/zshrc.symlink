@@ -41,3 +41,21 @@ source "$ZSH_CONFIG_DIR/common/lazyload.zsh"
 source "$ZSH_CONFIG_DIR/common/dev-tools.zsh"
 
 source "$ZSH_CONFIG_DIR/common/final.zsh"
+
+# opencode
+export PATH=/Users/jondong/.opencode/bin:$PATH
+
+# >>> otty shell integration >>>
+# Added by Otty — toggle in Settings > Shell > Shell Integration.
+# Inert unless launched by Otty (it sets $OTTY_SHELL_INTEGRATION).
+if [ -n "$OTTY_SHELL_INTEGRATION" ] && [ -r "$OTTY_SHELL_INTEGRATION/otty-integration.zsh" ]; then
+  . "$OTTY_SHELL_INTEGRATION/otty-integration.zsh"
+fi
+# <<< otty shell integration <<<
+
+# kimi-code
+export PATH="/Users/jondong/.kimi-code/bin:$PATH"
+
+# jojo-cli
+export PATH="/Users/jondong/.jojo-cli:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
