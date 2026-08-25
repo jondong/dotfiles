@@ -178,6 +178,19 @@ check_tools() {
     for tool in "${tools[@]}"; do
         if command -v "$tool" >/dev/null 2>&1; then
             ok "$tool: $(command -v "$tool")"
+            continue
+        fi
+        # Debian/Ubuntu names these binaries differently (fd-find -> fdfind, bat -> batcat);
+        # the shell config aliases them, so accept the alternate name on Linux.
+        local alt=""
+        if [[ "$platform" == "Linux" ]]; then
+            case "$tool" in
+                fd)  alt="fdfind" ;;
+                bat) alt="batcat" ;;
+            esac
+        fi
+        if [[ -n "$alt" ]] && command -v "$alt" >/dev/null 2>&1; then
+            ok "$tool: $(command -v "$alt") (as $alt)"
         else
             fail "$tool: not installed"
             missing=$((missing + 1))
