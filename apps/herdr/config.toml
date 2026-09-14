@@ -5,3 +5,18 @@ onboarding = false
 
 [keys]
 prefix = "ctrl+a"
+
+[ui]
+agent_panel_sort = "spaces"
+
+status_indicators = "symbols"
+show_agent_labels_on_pane_borders = true
+[theme]
+name = "tokyo-night"
+auto_switch = false
+
+[ui.sound]
+enabled = true
+
+[ui.toast]
+delivery = "herdr"
