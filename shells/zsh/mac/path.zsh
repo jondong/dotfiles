@@ -30,6 +30,8 @@ setup_macos_paths() {
         if [[ -d "$brew_prefix/opt/llvm/bin" ]]; then
             export PATH="$brew_prefix/opt/llvm/bin:$PATH"
         fi
+        # rustup is keg-only: cargo/rustc proxies live here
+        prepend_path_if_exists "$brew_prefix/opt/rustup/bin"
     fi
 
     # MacOS Applications paths
