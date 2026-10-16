@@ -1,51 +1,85 @@
 # dotfiles
 
-Personal system settings across Linux and macOS.
+Personal development environment for macOS and Linux, set up with one command.
 
-## Installation
+This repository keeps my shell, terminal and tool configuration in one place,
+so a new machine can be brought to the same working state quickly and existing
+machines stay in sync.
+
+## What it provides
+
+- **Zsh environment**: a modular zsh setup split into shared and
+  platform-specific parts, with zinit plugins, the Powerlevel10k prompt, lazy
+  loading for heavy tools, and common aliases and functions.
+- **Terminal workflow**: configuration for Ghostty, tmux and Herdr. Ghostty
+  opens straight into Herdr or tmux, and tmux has a status bar with CPU load
+  and weather.
+- **fzf integration**: fuzzy search for files, directories and shell history,
+  configured the same way on every platform.
+- **Package installation** (optional): installs the CLI tools, developer
+  tools, fonts and apps I use, through Homebrew on macOS and apt/snap on
+  Linux.
+- **Utility scripts** in `bin/`, available on `PATH`: terminal launchers,
+  tmux status helpers, encrypted zip helpers and a few git and macOS tools.
+- **Health check**: `scripts/doctor.sh` verifies links, required tools and app
+  configs, and can repair common problems.
+
+## Quick start
 
 ```bash
 bash <(curl https://raw.githubusercontent.com/jondong/dotfiles/master/bootstrap.sh -L)
 ```
 
-## Options
+This clones the repository to `~/.dotfiles`, links the config files into
+place, and sets up zsh, tmux, Ghostty and Herdr configs. Run it again at any
+time to pull updates and re-link.
+
+To also install all packages without prompts:
 
 ```bash
-./bootstrap.sh --with-packages --auto   # full automated setup
-./scripts/doctor.sh                     # check & repair config
+~/.dotfiles/bootstrap.sh --with-packages --auto
 ```
+
+On macOS, package installation needs [Homebrew](https://brew.sh).
+
+## Usage
+
+```bash
+./bootstrap.sh [options]
+```
+
+| Option | Description |
+| --- | --- |
+| `--auto` | Non-interactive; keep existing files instead of asking |
+| `--with-packages` | Also run the platform package installer |
+| `--skip-update` | Don't `git pull` before installing |
+| `--skip-health` | Skip the health check at the end |
+| `-v`, `--verbose` | Show more detail |
+
+Check or repair an existing setup:
+
+```bash
+~/.dotfiles/scripts/doctor.sh
+```
+
+## How it works
+
+Files ending in `.symlink` are linked into `$HOME` as dotfiles on every
+platform (`zshrc.symlink` becomes `~/.zshrc`). `.macsymlink` and
+`.linuxsymlink` files are linked only on that platform. App configs in `apps/`
+are linked to each app's own config location by `bootstrap.sh`.
 
 ## Layout
 
-- `bootstrap.sh` — single entry point
-- `apps/` — application configs (symlinked to their platform-specific locations)
-- `platforms/` — OS-specific package installers
-- `shells/zsh/` — zsh configuration
-- `scripts/doctor.sh` — health check
+```
+bootstrap.sh     Single entry point
+apps/            Ghostty, Herdr and tmux configs
+bin/             Utility scripts (added to PATH)
+platforms/       Per-OS package installers and aliases (mac/, linux/)
+shells/zsh/      Zsh config: common/, mac/, linux/ and the top-level rc files
+scripts/         doctor.sh health check, Linux config test
+```
 
-## fzf
+## License
 
-fzf is installed per platform and configured centrally in
-`shells/zsh/common/fzf.zsh`. macOS uses Homebrew; Linux tracks the latest
-upstream release from `~/.fzf`. The shared configuration does not depend on a
-generated `~/.fzf.zsh` file.
-
-- `Ctrl-T` — select files and directories
-- `Ctrl-R` — search shell history
-- `Alt-C` — change to a selected directory
-- `**<Tab>` — fuzzy-complete paths and directories
-- `F2` — toggle the preview in file and directory pickers
-- `Ctrl-Y` — copy a file or history selection when a supported clipboard tool
-  is available
-
-## Herdr
-
-Herdr settings are managed in `apps/herdr/config.toml` and linked to
-`~/.config/herdr/config.toml`. Ghostty settings are managed in
-`apps/ghostty/config.ghostty`; Linux uses
-`${XDG_CONFIG_HOME:-$HOME/.config}/ghostty/config.ghostty`.
-
-Ghostty starts Herdr through `bin/herdr-launcher`; if Herdr is unavailable,
-the launcher falls back to a login shell. On Debian/Ubuntu, Herdr is installed
-by `./bootstrap.sh --with-packages`. Install Ghostty using the package provided
-for your Linux distribution.
+See [LICENSE](LICENSE).

@@ -64,6 +64,15 @@ get_installed_packages() {
 #==============================================================================
 # 包配置
 #==============================================================================
+if ((BASH_VERSINFO[0] < 4)) && [[ -z "${DOTFILES_BASH_REEXEC:-}" ]]; then
+    for _b in /opt/homebrew/bin/bash /usr/local/bin/bash; do
+        if [[ -x "$_b" ]] && "$_b" -c '((BASH_VERSINFO[0] >= 4))' 2>/dev/null; then
+            export DOTFILES_BASH_REEXEC=1
+            if [[ "$AUTO_MODE" == "true" ]]; then exec "$_b" "$0" --auto; else exec "$_b" "$0"; fi
+        fi
+    done
+fi
+
 if ((BASH_VERSINFO[0] < 4)); then
     echo "需要 bash 4.0 或更高版本"
     echo "当前 bash 版本: $BASH_VERSION"
@@ -75,13 +84,13 @@ fi
 declare -A PACKAGES
 
 PACKAGES=(
-    ["Basic"]="bash zsh reattach-to-user-namespace antigen findutils"
-    ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas fd fzf ack prettyping mosh ncdu gdu tlrc rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo"
+    ["Basic"]="bash zsh reattach-to-user-namespace findutils"
+    ["Utilities"]="neovim zellij ssh-copy-id wget tree autojump btop bat mas fd fzf ack prettyping mosh ncdu gdu tlrc rsync ripgrep highlight ca-certificates ccat duf the_silver_searcher fliqlo herdr"
     ["Fonts"]="freetype font-anonymice-nerd-font font-jetbrains-mono-nerd-font font-meslo-lg-nerd-font"
-    ["DevTools"]="python3 uv poetry pipx jenv nvm rustup cmake shellcheck gitup ghi yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller xcode-build-server xcbeautify swiftformat gh ghi gibo git-extras git-flow git-lfs git-open git-quick-stats sqlite docker lazydocker lazygit docker-compose direnv rbenv ruby-build"
-    ["QuickLookPlugins"]="provisionql qlmarkdown qlprettypatch qlvideo quicklook-json webpquicklook"
+    ["DevTools"]="python3 uv poetry pipx jenv nvm rustup cmake shellcheck gitup yarn icdiff diff-so-fancy tokei openjdk openssl openssh krb5 imagemagick ios-deploy ideviceinstaller xcode-build-server xcbeautify swiftformat gh ghi gibo git-extras git-lfs git-open git-quick-stats sqlite docker lazydocker lazygit docker-compose direnv rbenv ruby-build"
+    ["QuickLookPlugins"]="provisionql qlmarkdown quicklook-video"
     ["CLI"]="1password-cli"
-    ["CaskTools"]="squirrel moom dash eudic alacritty muzzle the-unarchiver visual-studio-code android-studio jordanbaird-ice"
+    ["CaskTools"]="ghostty eudic muzzle the-unarchiver visual-studio-code android-studio"
 )
 
 #==============================================================================
@@ -126,29 +135,6 @@ setup_git() {
     diff-so-fancy --set-defaults
 }
 
-setup_alacritty() {
-    local config_dir="$HOME/.config/alacritty"
-    local theme_dir="$config_dir/themes"
-    local theme_repo="https://github.com/alacritty/alacritty-theme.git"
-
-    log_info "配置 Alacritty..."
-
-    if [ ! -d "$config_dir" ]; then
-        log_info "创建 Alacritty 配置目录..."
-        mkdir -p "$config_dir"
-    fi
-
-    if [ ! -d "$theme_dir" ]; then
-        log_info "克隆 Alacritty 主题..."
-        git clone "$theme_repo" "$theme_dir"
-    else
-        log_info "更新 Alacritty 主题..."
-        git -C "$theme_dir" pull
-    fi
-
-    log_success "Alacritty 配置完成"
-}
-
 #==============================================================================
 # 主函数
 #==============================================================================
@@ -175,7 +161,6 @@ main() {
 
     # 配置开发环境
     setup_git
-    setup_alacritty
 
     # 清理
     log_info "清理旧版本..."

@@ -58,7 +58,7 @@ core_packages=(
 )
 
 dev_packages=(
-    git-extras git-lfs git-flow gh shellcheck cmake alacritty mosh
+    git-extras git-lfs gh shellcheck cmake mosh
     ruby ruby-dev source-highlight expect cgdb valgrind clang global
     cscope exuberant-ctags net-tools ncdu gdu ripgrep gnome-tweaks
     rustup btop highlight fonts-jetbrains-mono fonts-firacode fonts-hack
@@ -244,6 +244,7 @@ install_herdr || log_warn "Herdr is unavailable; Ghostty will fall back to a log
 
 log_info "Installing snap packages..."
 sudo snap install --classic zellij || log_warn "Failed to install zellij via snap"
+sudo snap install --classic ghostty || log_warn "Failed to install ghostty via snap"
 sudo snap install diff-so-fancy || log_warn "Failed to install diff-so-fancy via snap"
 
 #==============================================================================

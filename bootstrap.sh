@@ -65,7 +65,10 @@ retry_command() {
         if [[ "$VERBOSE" == "true" ]]; then
             log_info "执行: $cmd (尝试 $i/$retries)"
         fi
-        if timeout "$timeout" bash -c "$cmd"; then
+        local tbin=""
+        if command -v timeout >/dev/null 2>&1; then tbin="timeout $timeout"
+        elif command -v gtimeout >/dev/null 2>&1; then tbin="gtimeout $timeout"; fi
+        if $tbin bash -c "$cmd"; then
             return 0
         fi
         if [[ $i -lt $retries ]]; then
@@ -236,7 +239,7 @@ setup_zsh() {
         local platform
         platform=$(detect_platform)
         case "$platform" in
-            Darwin) brew install zsh ;;
+            Darwin) if command -v brew >/dev/null 2>&1; then brew install zsh; else log_warn "未安装 Homebrew，跳过 zsh 安装"; fi ;;
             Linux)  sudo apt update && sudo apt install -y zsh ;;
         esac
     fi
@@ -268,7 +271,7 @@ setup_tmux() {
         local platform
         platform=$(detect_platform)
         case "$platform" in
-            Darwin) brew install tmux ;;
+            Darwin) if command -v brew >/dev/null 2>&1; then brew install tmux; else log_warn "未安装 Homebrew，跳过 tmux 安装"; fi ;;
             Linux)  sudo apt install -y tmux ;;
         esac
     fi
