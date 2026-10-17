@@ -29,7 +29,7 @@ case "$(hostname -s)" in
   # Mac fleet - blue/cyan family
   mac-p)   MACHINE_NAME="MAC-P"  ; MACHINE_COLOR=33  ;;  # blue
   mac-w)   MACHINE_NAME="MAC-W"  ; MACHINE_COLOR=37  ;;  # cyan
-  mac-m)   MACHINE_NAME="MAC-M"  ; MACHINE_COLOR=62  ;;  # indigo
+  mac-mini) MACHINE_NAME="MAC-MINI" ; MACHINE_COLOR=39  ;;  # teal
 
   # Local Linux - green family
   desk)    MACHINE_NAME="DESK"   ; MACHINE_COLOR=28  ;;  # green
