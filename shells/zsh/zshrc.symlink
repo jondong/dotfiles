@@ -40,4 +40,7 @@ source "$ZSH_CONFIG_DIR/common/fzf.zsh"
 source "$ZSH_CONFIG_DIR/common/lazyload.zsh"
 source "$ZSH_CONFIG_DIR/common/dev-tools.zsh"
 
+# Secrets (API keys etc.) - per-machine file at ~/.secrets.zsh, never in the repo
+[[ -r "$HOME/.secrets.zsh" ]] && source "$HOME/.secrets.zsh"
+
 source "$ZSH_CONFIG_DIR/common/final.zsh"
