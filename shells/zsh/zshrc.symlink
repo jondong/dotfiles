@@ -11,11 +11,7 @@ if [[ -z "${PLATFORM:-}" ]]; then
     esac
 fi
 
-if [[ -L "$HOME/.zshrc" ]]; then
-    ZSH_CONFIG_DIR="${HOME}/.dotfiles/shells/zsh"
-else
-    ZSH_CONFIG_DIR="${0:A:h}"
-fi
+ZSH_CONFIG_DIR="${DOTFILES_ROOT:-$HOME/.dotfiles}/shells/zsh"
 
 source "$ZSH_CONFIG_DIR/common/base.zsh"
 source "$ZSH_CONFIG_DIR/common/functions.zsh"
